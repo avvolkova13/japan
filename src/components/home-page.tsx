@@ -233,19 +233,19 @@ export function HomePage() {
       </header>
 
       <main>
-        <section className="hero section-pad" aria-labelledby="hero-title">
-          <div className="hero-copy reveal-item">
+        <section className="hero hero-motion section-pad" aria-labelledby="hero-title">
+          <div className="hero-motion-copy">
             <p className="overline">Японский уход, собранный осознанно</p>
-            <h1 id="hero-title">Тихий ритуал для кожи каждый день.</h1>
-            <p className="hero-description">Японская косметика, средства для здоровья и бьюти-ритуалы для современного ритма жизни.</p>
-            <div className="hero-actions">
-              <a className="button button-dark" href="#category">Смотреть подборку <span aria-hidden="true">↗</span></a>
+            <h1 id="hero-title"><span>Тихий</span><span>ритуал</span><span>для кожи.</span></h1>
+            <div className="hero-motion-footer">
+              <p className="hero-description">Японская косметика, средства для здоровья и бьюти-ритуалы для современного ритма жизни.</p>
+              <a className="button button-dark" href="#category"><span className="button-arrow" aria-hidden="true">↘</span><span className="button-label">Смотреть подборку</span></a>
             </div>
           </div>
-          <div className="hero-visual reveal-item">
-            <VisualImage label="Оригинальная композиция ухода KANSO" src="/images/kanso/hero.png" tone="tone-hero" />
-            <div className="hero-caption"><span>01 / 01</span><span>Оригинальный визуал KANSO</span></div>
+          <div className="hero-product-stage">
+            <VisualImage className="hero-product-image" label="Кушон AMARANTH Dr.Soie" src="/images/kanso/products/amaranth-dr-soie.png" tone="tone-hero" />
           </div>
+          <div className="hero-caption"><span>01 / 01</span><span>Оригинальный визуал KANSO</span></div>
         </section>
 
         <section className="brand-rail section-pad-small" id="brands" aria-label="Избранные бренды">
@@ -295,11 +295,11 @@ export function HomePage() {
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
-          <div className="collection-inner"><div className="collection-copy"><p className="micro-label">Собранная коллекция</p><h2 id="collection-title">Увлажняющий уход</h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals">Смотреть коллекцию <span aria-hidden="true">↗</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/face.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
+          <div className="collection-inner"><div className="collection-copy"><p className="micro-label">Собранная коллекция</p><h2 id="collection-title">Увлажняющий уход</h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true">↘</span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/face.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
         </section>
 
         <section className="section-pad quiz-section" aria-labelledby="quiz-title">
-          <div><p className="micro-label">Личная отправная точка</p><h2 id="quiz-title">Найти свой ритуал</h2><p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p></div><button className="button button-dark" type="button" onClick={() => setNotice("Квиз пока находится в демонстрационном состоянии.")}>Пройти квиз <span aria-hidden="true">↗</span></button>
+          <div><p className="micro-label">Личная отправная точка</p><h2 id="quiz-title">Найти свой ритуал</h2><p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p></div><button className="button button-dark" type="button" onClick={() => setNotice("Квиз пока находится в демонстрационном состоянии.")}><span className="button-arrow" aria-hidden="true">↘</span><span className="button-label">Пройти квиз</span></button>
         </section>
 
         <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">
