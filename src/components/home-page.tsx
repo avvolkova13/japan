@@ -190,7 +190,7 @@ export function HomePage() {
           </button>
           <nav className={`desktop-nav ${mobileMenuOpen ? "is-mobile-open" : ""}`} aria-label="Основная навигация">
             <button className={`nav-link catalog-trigger ${catalogOpen ? "is-active" : ""}`} type="button" onClick={() => setCatalogOpen((open) => !open)} aria-expanded={catalogOpen}>
-              Каталог <span aria-hidden="true">⌄</span>
+              Каталог <span className="catalog-chevron" aria-hidden="true" />
             </button>
             <a className="nav-link" href="#new-arrivals" onClick={closeMobileMenu}>Новинки</a>
             <a className="nav-link" href="#best-sellers" onClick={closeMobileMenu}>Хиты продаж</a>

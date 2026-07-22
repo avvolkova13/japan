@@ -147,14 +147,20 @@ input:focus-visible {
   color: var(--graphite);
 }
 
-.catalog-trigger span {
+.catalog-chevron {
   display: inline-block;
-  margin-left: 4px;
+  width: 5px;
+  height: 5px;
+  margin: 0 0 3px 8px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
   transition: transform 220ms var(--ease-soft);
 }
 
-.catalog-trigger.is-active span {
-  transform: rotate(180deg);
+.catalog-trigger.is-active .catalog-chevron {
+  margin-bottom: -2px;
+  transform: rotate(225deg);
 }
 
 .menu-trigger {
