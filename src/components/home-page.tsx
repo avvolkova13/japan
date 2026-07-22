@@ -275,8 +275,8 @@ export function HomePage() {
             <div className="product-grid new-arrivals-grid">
               {newArrivals.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}
             </div>
+            <div className="section-cta"><a className="text-link" href="#new-arrivals">Все новинки <span aria-hidden="true">↗</span></a></div>
           </div>
-          <div className="section-cta"><a className="text-link" href="#new-arrivals">Все новинки <span aria-hidden="true">↗</span></a></div>
         </section>
 
         <section className="section-pad best-sellers-section" id="best-sellers" aria-labelledby="best-sellers-title">
