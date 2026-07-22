@@ -853,6 +853,7 @@ input:focus-visible {
 
 .collection-copy h2 {
   max-width: 8ch;
+  overflow-wrap: anywhere;
 }
 
 .collection-copy > p {
@@ -860,7 +861,7 @@ input:focus-visible {
 }
 
 .collection-visual .visual-placeholder {
-  aspect-ratio: 0.88;
+  aspect-ratio: 1.08;
 }
 
 .collection-products {
