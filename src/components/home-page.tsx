@@ -58,18 +58,21 @@ function VisualImage({
   tone = "tone-pearl",
   className = "",
   secondary = false,
+  overlayText,
 }: {
   label: string;
   src: string;
   tone?: string;
   className?: string;
   secondary?: boolean;
+  overlayText?: string;
 }) {
   return (
     <div
       className={`visual-placeholder visual-image ${tone} ${secondary ? "visual-placeholder-secondary" : ""} ${className}`}
     >
       <Image src={src} alt={label} fill sizes="(max-width: 767px) 100vw, 50vw" />
+      {overlayText && <span className="visual-product-label">{overlayText}</span>}
     </div>
   );
 }
@@ -91,7 +94,7 @@ function ProductCard({
     <article className="product-card">
       <div className="product-media">
         <VisualImage label={`${product.brand} ${product.name}`} src={product.image} tone="tone-product" />
-        <VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary />
+        <VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary overlayText={`${product.brand} · ${product.name}`} />
         {product.badge && <span className="product-badge">{product.badge}</span>}
         <button
           className={`icon-button wishlist-button ${wished ? "is-active" : ""}`}
