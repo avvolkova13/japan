@@ -25,9 +25,10 @@
 - Modify: `src/app/globals.css`
 
 **Interfaces:**
-- Consumes: existing `VisualImage`, `hero.png`, `hero-copy`, and `hero-visual` markup.
+- Consumes: existing `VisualImage`, the transparent serum render, and the home route hero markup.
 - Produces: hero layers with staggered copy reveal, masked product reveal, and subtle product floating motion.
 
+- [ ] Add project asset `public/images/kanso/kanso-serum-3d.png` as a transparent 3D-style serum bottle render for the hero.
 - [ ] Add semantic hero layer classes around the existing overline, heading, description, CTA, and visual image.
 - [ ] Keep the hero product image as the KANSO asset and place the motion layer behind the caption without changing its alt text.
 - [ ] Add CSS animations for background reveal, text stagger, image mask reveal, blur-to-sharp, and a low-amplitude floating loop.

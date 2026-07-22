@@ -243,7 +243,7 @@ export function HomePage() {
             </div>
           </div>
           <div className="hero-product-stage">
-            <VisualImage className="hero-product-image" label="Кушон AMARANTH Dr.Soie" src="/images/kanso/products/amaranth-dr-soie.png" tone="tone-hero" />
+            <VisualImage className="hero-product-image" label="Премиальная сыворотка KANSO" src="/images/kanso/kanso-serum-3d.png" tone="tone-hero" />
           </div>
           <div className="hero-caption"><span>01 / 01</span><span>Оригинальный визуал KANSO</span></div>
         </section>

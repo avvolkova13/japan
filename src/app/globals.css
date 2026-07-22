@@ -249,7 +249,7 @@ input:focus-visible {
   margin: 0;
   overflow: hidden;
   color: var(--white);
-  background: linear-gradient(145deg, #7193d7 0%, #9eb8e4 48%, #e9e7e1 100%);
+  background: linear-gradient(180deg, #668bd2 0%, #91aee0 46%, #e6e9ef 76%, #f1e8e0 100%);
   isolation: isolate;
 }
 
@@ -343,14 +343,16 @@ input:focus-visible {
 .hero-product-image {
   height: 100%;
   min-height: 0;
-  border-radius: 50% 50% 8% 8%;
-  box-shadow: 0 28px 70px color-mix(in srgb, #233c72 22%, transparent);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   animation: hero-product-float 8s ease-in-out 1.4s infinite;
 }
 
 .hero-product-image > img {
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  padding: 2% 9%;
 }
 
 .hero-motion > .hero-caption {
@@ -482,17 +484,18 @@ input:focus-visible {
 }
 
 .button-dark {
-  color: var(--canvas);
-  background: var(--graphite);
+  color: var(--white);
+  border-color: #6d91d5;
+  background: #6d91d5;
 }
 
 .button-dark .button-label::before {
-  background: var(--white);
+  background: #5279c3;
 }
 
 .button-dark:hover,
 .button-dark:focus-visible {
-  color: var(--graphite);
+  color: var(--white);
 }
 
 .button-ghost {
@@ -500,8 +503,8 @@ input:focus-visible {
 }
 
 .button-ghost:hover {
-  color: var(--canvas);
-  background: var(--graphite);
+  color: var(--graphite);
+  background: var(--white);
 }
 
 .button-ghost .button-label::before {
@@ -607,6 +610,15 @@ input:focus-visible {
 .tone-hero { background: linear-gradient(145deg, #dfe5e1 0%, #c4dce1 42%, #a9c7d0 100%); }
 .tone-product { background: linear-gradient(145deg, #e9e4dc, #d4e1e1); }
 .tone-product-alt { background: linear-gradient(145deg, #dce8e8, #becfd2); }
+
+.hero-motion .hero-product-image {
+  background: transparent;
+}
+
+.hero-motion .hero-product-image > img {
+  object-fit: contain;
+  padding: 2% 9%;
+}
 
 .product-media .tone-product > img {
   object-fit: contain;
