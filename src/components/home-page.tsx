@@ -237,7 +237,6 @@ export function HomePage() {
             <p className="hero-description">Японская косметика, средства для здоровья и бьюти-ритуалы для современного ритма жизни.</p>
             <div className="hero-actions">
               <a className="button button-dark" href="#category">Смотреть подборку <span aria-hidden="true">↗</span></a>
-              <a className="button button-ghost" href="#new-arrivals">Смотреть новинки <span aria-hidden="true">↗</span></a>
             </div>
           </div>
           <div className="hero-visual reveal-item">
