@@ -375,7 +375,7 @@ input:focus-visible {
 
 .visual-image::before,
 .visual-image::after,
-.visual-image span {
+.visual-image > span:not(.visual-product-label) {
   display: none;
 }
 
@@ -417,7 +417,7 @@ input:focus-visible {
 
 .visual-image::before,
 .visual-image::after,
-.visual-image span {
+.visual-image > span:not(.visual-product-label) {
   display: none !important;
 }
 
