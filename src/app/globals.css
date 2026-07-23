@@ -245,9 +245,12 @@ input:focus-visible {
   display: block;
   width: 100%;
   max-width: none;
-  min-height: min(860px, calc(100svh - 76px));
+  height: calc(100dvh - 77px);
+  min-height: 0;
   margin: 0;
   overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
   color: var(--white);
   background: linear-gradient(180deg, #668bd2 0%, #91aee0 46%, #e6e9ef 76%, #f1e8e0 100%);
   isolation: isolate;
@@ -1378,7 +1381,7 @@ input:focus-visible {
   .section-pad { padding-top: 72px; padding-bottom: 72px; }
   .section-pad-small { padding-top: 24px; padding-bottom: 24px; }
   .hero { display: flex; min-height: 0; flex-direction: column-reverse; align-items: stretch; gap: 30px; padding-top: 54px; }
-  .hero-motion { display: block; min-height: min(760px, calc(100svh - 64px)); padding-top: 0; padding-bottom: 0; }
+  .hero-motion { height: calc(100svh - 65px); min-height: 0; padding-top: 0; padding-bottom: 0; }
   .hero-motion-copy { min-height: min(700px, calc(100svh - 80px)); padding: 24px 1rem 76px; }
   .hero-motion h1 { width: 8.5ch; margin: auto 0 30px; font-size: clamp(4rem, 18vw, 6.5rem); line-height: 0.82; }
   .hero-motion-footer { align-items: stretch; flex-direction: column; gap: 20px; }

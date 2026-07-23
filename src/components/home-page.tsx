@@ -255,7 +255,6 @@ export function HomePage() {
           <div className="hero-product-stage">
             <VisualImage className="hero-product-image" label="Премиальный очищающий флюид KANSO" src="/images/kanso/kanso-pump-open-premium.png" tone="tone-hero" />
           </div>
-          <div className="hero-caption"><span>01 / 01</span><span>Оригинальный визуал KANSO</span></div>
         </section>
 
         <section className="brand-rail section-pad-small" id="brands" aria-label="Избранные бренды">
