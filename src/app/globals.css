@@ -248,7 +248,7 @@ input:focus-visible {
   min-height: min(860px, calc(100svh - 76px));
   margin: 0;
   overflow: hidden;
-  color: var(--white);
+  color: #4f74b2;
   background: linear-gradient(180deg, #668bd2 0%, #91aee0 46%, #e6e9ef 76%, #f1e8e0 100%);
   isolation: isolate;
 }
@@ -295,14 +295,14 @@ input:focus-visible {
 }
 
 .hero-motion .overline {
-  color: color-mix(in srgb, var(--white) 78%, transparent);
+  color: color-mix(in srgb, #4f74b2 78%, transparent);
 }
 
 .hero-motion h1 {
   display: grid;
   width: min(100%, 11ch);
   margin: auto 0;
-  color: var(--white);
+  color: #4f74b2;
   font-size: clamp(4.8rem, 12vw, 13rem);
   font-weight: 400;
   letter-spacing: -0.09em;
@@ -326,7 +326,7 @@ input:focus-visible {
 }
 
 .hero-motion .hero-description {
-  color: color-mix(in srgb, var(--white) 80%, transparent);
+  color: color-mix(in srgb, #4f74b2 82%, transparent);
 }
 
 .hero-product-stage {
@@ -361,7 +361,7 @@ input:focus-visible {
   right: clamp(1.5rem, 7vw, 7rem);
   bottom: 26px;
   left: clamp(1.5rem, 7vw, 7rem);
-  color: color-mix(in srgb, var(--white) 72%, transparent);
+  color: color-mix(in srgb, #4f74b2 72%, transparent);
 }
 
 .hero-copy {
@@ -428,12 +428,13 @@ input:focus-visible {
   min-height: 46px;
   align-items: center;
   justify-content: stretch;
-  border: 1px solid var(--graphite);
+  gap: 6px;
+  border: 0;
   padding: 0;
   overflow: hidden;
   font-size: 0.74rem;
   letter-spacing: 0.05em;
-  transition: transform 220ms var(--ease-soft), border-color 220ms ease;
+  transition: gap 240ms var(--ease-soft), transform 220ms var(--ease-soft);
 }
 
 .button:hover {
@@ -451,17 +452,24 @@ input:focus-visible {
 .button-arrow {
   width: 46px;
   flex: 0 0 46px;
-  color: var(--graphite);
-  background: var(--sky-blue);
+  border: 1px solid #cbd3dc;
+  border-radius: 5px;
+  color: #4f74b2;
+  background: #d7e7fb;
   font-size: 1.15rem;
-  transition: transform 260ms var(--ease-soft), background 220ms ease;
+  transition: transform 260ms var(--ease-soft), color 220ms ease, background 220ms ease, border-color 220ms ease;
 }
 
 .button-label {
   position: relative;
   z-index: 0;
+  border: 1px solid #cbd3dc;
+  border-radius: 5px;
   padding: 0 18px;
+  color: #1e252d;
+  background: var(--white);
   white-space: nowrap;
+  transition: color 220ms ease, background 220ms ease, border-color 220ms ease;
 }
 
 .button-label::before {
@@ -483,19 +491,23 @@ input:focus-visible {
   transform: translateX(0);
 }
 
-.button-dark {
-  color: var(--white);
+.button:hover,
+.button:focus-visible {
+  gap: 0;
+}
+
+.button:hover .button-arrow,
+.button:focus-visible .button-arrow,
+.button:hover .button-label,
+.button:focus-visible .button-label {
   border-color: #6d91d5;
+  color: var(--white);
   background: #6d91d5;
 }
 
-.button-dark .button-label::before {
-  background: #5279c3;
-}
-
-.button-dark:hover,
-.button-dark:focus-visible {
-  color: var(--white);
+.button:hover .button-label::before,
+.button:focus-visible .button-label::before {
+  display: none;
 }
 
 .button-ghost {
