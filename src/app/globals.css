@@ -927,6 +927,35 @@ input:focus-visible {
   line-height: 1.2;
 }
 
+.product-image-print {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  z-index: 4;
+  display: grid;
+  width: min(58%, 180px);
+  gap: 2px;
+  padding: 7px 9px;
+  color: color-mix(in srgb, var(--graphite) 84%, transparent);
+  background: color-mix(in srgb, var(--white) 76%, transparent);
+  text-align: center;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.product-image-print span {
+  font-size: 0.48rem;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.product-image-print strong {
+  font-size: 0.63rem;
+  font-weight: 500;
+  line-height: 1.15;
+}
+
 .product-card:hover .product-hover-info,
 .product-card:focus-within .product-hover-info {
   opacity: 1;
