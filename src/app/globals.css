@@ -332,10 +332,10 @@ input:focus-visible {
 .hero-product-stage {
   position: absolute;
   z-index: 2;
-  top: 1%;
+  top: 4%;
   left: 50%;
-  width: min(64vw, 920px);
-  aspect-ratio: 0.82;
+  width: min(52vw, 700px);
+  height: min(78svh, 720px);
   transform: translateX(-50%);
   animation: hero-product-reveal 1100ms var(--ease-soft) 170ms both;
 }
@@ -1330,7 +1330,7 @@ input:focus-visible {
   .hero { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 42px; }
   .hero h1 { font-size: clamp(3.2rem, 7vw, 5.5rem); }
   .hero-motion h1 { font-size: clamp(4.2rem, 12vw, 8rem); }
-  .hero-product-stage { width: min(68vw, 720px); }
+  .hero-product-stage { width: min(58vw, 620px); height: min(72svh, 620px); }
   .new-arrivals-layout { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); }
   .collection-inner { grid-template-columns: 0.7fr 1fr; }
   .collection-copy { grid-row: span 2; }
@@ -1375,7 +1375,7 @@ input:focus-visible {
   .hero-motion h1 { width: 8.5ch; margin: auto 0 30px; font-size: clamp(4rem, 18vw, 6.5rem); line-height: 0.82; }
   .hero-motion-footer { align-items: stretch; flex-direction: column; gap: 20px; }
   .hero-motion-footer .button { width: max-content; }
-  .hero-product-stage { top: 12%; width: 104vw; }
+  .hero-product-stage { top: 13%; width: 92vw; height: min(60svh, 520px); }
   .hero-product-image { border-radius: 48% 48% 7% 7%; }
   .hero-motion > .hero-caption { right: 1rem; bottom: 18px; left: 1rem; }
   .hero-visual .visual-placeholder { min-height: min(520px, 126vw); }
