@@ -872,9 +872,24 @@ input:focus-visible {
   line-height: 1;
 }
 
+.wishlist-icon {
+  display: block;
+  width: 17px;
+  height: 17px;
+  fill: transparent;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .wishlist-button.is-active {
   color: var(--canvas);
   background: var(--graphite);
+}
+
+.wishlist-button.is-active .wishlist-icon {
+  fill: currentColor;
 }
 
 .quick-add {

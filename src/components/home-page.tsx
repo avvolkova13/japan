@@ -107,7 +107,9 @@ function ProductCard({
           aria-pressed={wished}
           onClick={onWishlist}
         >
-          {wished ? "♥" : "♡"}
+          <svg className="wishlist-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20.8 8.7c0 5.1-8.8 10.3-8.8 10.3S3.2 13.8 3.2 8.7C3.2 6 5.2 4 7.8 4c1.7 0 3.1.9 4.2 2.2C13.1 4.9 14.5 4 16.2 4c2.6 0 4.6 2 4.6 4.7Z" />
+          </svg>
         </button>
         <div className="product-hover-info" aria-hidden="true">
           <span>{product.brand}</span>
