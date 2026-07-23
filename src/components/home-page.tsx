@@ -94,7 +94,7 @@ function ProductCard({
     <article className="product-card">
       <div className="product-media">
         <VisualImage label={`${product.brand} ${product.name}`} src={product.image} tone="tone-product" />
-        <VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary overlayText={`${product.brand} · ${product.name}`} />
+        <VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary />
         {product.badge && <span className="product-badge">{product.badge}</span>}
         <button
           className={`icon-button wishlist-button ${wished ? "is-active" : ""}`}
@@ -105,6 +105,10 @@ function ProductCard({
         >
           {wished ? "♥" : "♡"}
         </button>
+        <div className="product-hover-info" aria-hidden="true">
+          <span>{product.brand}</span>
+          <strong>{product.name}</strong>
+        </div>
         <button className="quick-add" type="button" onClick={onQuickAdd}>
           {added ? "Добавлено" : "Добавить"}
         </button>

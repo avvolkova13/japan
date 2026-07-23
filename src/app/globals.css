@@ -898,6 +898,41 @@ input:focus-visible {
   transition: opacity 220ms ease, transform 220ms var(--ease-soft), background 220ms ease;
 }
 
+.product-hover-info {
+  position: absolute;
+  right: 12px;
+  bottom: 60px;
+  left: 12px;
+  z-index: 4;
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  color: var(--graphite);
+  background: color-mix(in srgb, var(--white) 88%, transparent);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 220ms ease, transform 220ms var(--ease-soft);
+}
+
+.product-hover-info span {
+  color: color-mix(in srgb, var(--graphite) 62%, transparent);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product-hover-info strong {
+  font-size: 0.74rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.product-card:hover .product-hover-info,
+.product-card:focus-within .product-hover-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .product-card:hover .quick-add,
 .product-card:focus-within .quick-add {
   opacity: 1;
