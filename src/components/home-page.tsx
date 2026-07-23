@@ -200,7 +200,7 @@ export function HomePage() {
         {Array.from({ length: 4 }, (_, rowIndex) => (
           <div className="page-load-row" key={`load-row-${rowIndex}`}>
             {Array.from({ length: 16 }, (_, blockIndex) => (
-              <span className="page-load-block" key={`load-block-${rowIndex}-${blockIndex}`} style={{ animationDelay: `${rowIndex * 90 + (rowIndex % 2 === 0 ? 15 - blockIndex : blockIndex) * 35}ms` }} />
+              <span className="page-load-block" key={`load-block-${rowIndex}-${blockIndex}`} style={{ animationDelay: `${(rowIndex % 2 === 0 ? 15 - blockIndex : blockIndex) * 33.333}ms` }} />
             ))}
           </div>
         ))}

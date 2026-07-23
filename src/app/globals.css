@@ -279,7 +279,7 @@ input:focus-visible {
   min-width: 0;
   background: #668bd2;
   transform-origin: left center;
-  animation: page-load-wipe 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: page-load-wipe 800ms cubic-bezier(0.45, 0, 0.55, 1) forwards;
 }
 
 .hero-motion-background {
