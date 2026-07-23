@@ -295,7 +295,7 @@ input:focus-visible {
 }
 
 .hero-motion .overline {
-  color: color-mix(in srgb, var(--white) 82%, transparent);
+  color: var(--white);
 }
 
 .hero-motion h1 {
@@ -326,7 +326,7 @@ input:focus-visible {
 }
 
 .hero-motion .hero-description {
-  color: color-mix(in srgb, var(--white) 84%, transparent);
+  color: var(--white);
 }
 
 .hero-product-stage {
@@ -361,7 +361,7 @@ input:focus-visible {
   right: clamp(1.5rem, 7vw, 7rem);
   bottom: 26px;
   left: clamp(1.5rem, 7vw, 7rem);
-  color: color-mix(in srgb, var(--white) 76%, transparent);
+  color: var(--white);
 }
 
 .hero-copy {
