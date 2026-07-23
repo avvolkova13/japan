@@ -332,10 +332,10 @@ input:focus-visible {
 .hero-product-stage {
   position: absolute;
   z-index: 2;
-  top: 4%;
+  top: 2%;
   left: 50%;
-  width: min(52vw, 700px);
-  height: min(78svh, 720px);
+  width: min(58vw, 780px);
+  height: min(90svh, 820px);
   transform: translateX(-50%);
   animation: hero-product-reveal 1100ms var(--ease-soft) 170ms both;
 }
@@ -1342,7 +1342,7 @@ input:focus-visible {
   .hero { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 42px; }
   .hero h1 { font-size: clamp(3.2rem, 7vw, 5.5rem); }
   .hero-motion h1 { font-size: clamp(4.2rem, 12vw, 8rem); }
-  .hero-product-stage { width: min(58vw, 620px); height: min(72svh, 620px); }
+  .hero-product-stage { width: min(64vw, 680px); height: min(82svh, 700px); }
   .new-arrivals-layout { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); }
   .collection-inner { grid-template-columns: 0.7fr 1fr; }
   .collection-copy { grid-row: span 2; }
