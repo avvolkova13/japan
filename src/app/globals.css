@@ -425,7 +425,7 @@ input:focus-visible {
 
 .button {
   display: inline-flex;
-  min-height: 46px;
+  min-height: 64px;
   align-items: center;
   justify-content: stretch;
   gap: 6px;
@@ -444,19 +444,19 @@ input:focus-visible {
 .button-arrow,
 .button-label {
   display: inline-flex;
-  min-height: 46px;
+  min-height: 64px;
   align-items: center;
   justify-content: center;
 }
 
 .button-arrow {
-  width: 46px;
-  flex: 0 0 46px;
+  width: 64px;
+  flex: 0 0 64px;
   border: 1px solid #cbd3dc;
-  border-radius: 5px;
+  border-radius: 6px;
   color: #4f74b2;
   background: #d7e7fb;
-  font-size: 1.15rem;
+  font-size: 1.45rem;
   transition: transform 260ms var(--ease-soft), color 220ms ease, background 220ms ease, border-color 220ms ease;
 }
 
@@ -464,8 +464,9 @@ input:focus-visible {
   position: relative;
   z-index: 0;
   border: 1px solid #cbd3dc;
-  border-radius: 5px;
-  padding: 0 18px;
+  border-radius: 6px;
+  padding: 0 22px;
+  font-size: 0.82rem;
   color: #1e252d;
   background: var(--white);
   white-space: nowrap;
@@ -473,27 +474,12 @@ input:focus-visible {
 }
 
 .button-label::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  content: "";
-  transform: translateX(-102%);
-  transition: transform 300ms var(--ease-soft);
+  display: none;
 }
 
 .button:hover .button-arrow,
 .button:focus-visible .button-arrow {
   transform: translate(3px, -3px);
-}
-
-.button:hover .button-label::before,
-.button:focus-visible .button-label::before {
-  transform: translateX(0);
-}
-
-.button:hover,
-.button:focus-visible {
-  gap: 0;
 }
 
 .button:hover .button-arrow,
@@ -503,11 +489,6 @@ input:focus-visible {
   border-color: #6d91d5;
   color: var(--white);
   background: #6d91d5;
-}
-
-.button:hover .button-label::before,
-.button:focus-visible .button-label::before {
-  display: none;
 }
 
 .button-ghost {
