@@ -196,6 +196,15 @@ export function HomePage() {
 
   return (
     <div className="site-shell">
+      <div className="page-load-grid" aria-hidden="true">
+        {Array.from({ length: 4 }, (_, rowIndex) => (
+          <div className="page-load-row" key={`load-row-${rowIndex}`}>
+            {Array.from({ length: 16 }, (_, blockIndex) => (
+              <span className="page-load-block" key={`load-block-${rowIndex}-${blockIndex}`} style={{ animationDelay: `${rowIndex * 90 + (rowIndex % 2 === 0 ? 15 - blockIndex : blockIndex) * 35}ms` }} />
+            ))}
+          </div>
+        ))}
+      </div>
       <header className="site-header">
         <div className="header-inner">
           <button className="brand-mark" type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="В начало страницы">
@@ -244,6 +253,7 @@ export function HomePage() {
 
       <main>
         <section className="hero hero-motion section-pad" aria-labelledby="hero-title">
+          <div className="hero-motion-background" aria-hidden="true" />
           <div className="hero-motion-copy">
             <p className="overline">Японский уход, собранный осознанно</p>
             <h1 id="hero-title"><span>Тихий</span><span>ритуал</span><span>для кожи.</span></h1>
