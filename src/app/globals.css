@@ -444,10 +444,11 @@ input:focus-visible {
   display: inline-flex;
   height: 43px;
   min-height: 43px;
+  box-sizing: border-box;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  transition: color 550ms var(--ease-soft), background-color 550ms var(--ease-soft), border-color 550ms var(--ease-soft), transform 550ms var(--ease-soft);
+  transition: color 550ms var(--ease-soft), background-color 550ms var(--ease-soft), border-color 550ms var(--ease-soft);
 }
 
 .button-arrow {
@@ -455,8 +456,14 @@ input:focus-visible {
   flex: 0 0 43px;
   color: #111820;
   background: #d3e7ff;
-  font-size: 1.2rem;
   line-height: 1;
+}
+
+.button-arrow-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  transition: transform 550ms var(--ease-soft);
 }
 
 .button-label {
@@ -475,17 +482,17 @@ input:focus-visible {
 }
 
 .button:hover .button-arrow,
-.button:focus-visible .button-arrow {
-  transform: translate(2px, -2px);
-}
-
-.button:hover .button-arrow,
 .button:focus-visible .button-arrow,
 .button:hover .button-label,
 .button:focus-visible .button-label {
   border-color: #628ad1;
   color: var(--white);
   background: #628ad1;
+}
+
+.button:hover .button-arrow-icon,
+.button:focus-visible .button-arrow-icon {
+  transform: translate(2px, -2px);
 }
 
 .button-ghost {
