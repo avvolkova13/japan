@@ -248,7 +248,7 @@ input:focus-visible {
   min-height: min(860px, calc(100svh - 76px));
   margin: 0;
   overflow: hidden;
-  color: #4f74b2;
+  color: var(--white);
   background: linear-gradient(180deg, #668bd2 0%, #91aee0 46%, #e6e9ef 76%, #f1e8e0 100%);
   isolation: isolate;
 }
@@ -295,14 +295,14 @@ input:focus-visible {
 }
 
 .hero-motion .overline {
-  color: color-mix(in srgb, #4f74b2 78%, transparent);
+  color: color-mix(in srgb, var(--white) 82%, transparent);
 }
 
 .hero-motion h1 {
   display: grid;
   width: min(100%, 11ch);
   margin: auto 0;
-  color: #4f74b2;
+  color: var(--white);
   font-size: clamp(4.8rem, 12vw, 13rem);
   font-weight: 400;
   letter-spacing: -0.09em;
@@ -326,7 +326,7 @@ input:focus-visible {
 }
 
 .hero-motion .hero-description {
-  color: color-mix(in srgb, #4f74b2 82%, transparent);
+  color: color-mix(in srgb, var(--white) 84%, transparent);
 }
 
 .hero-product-stage {
@@ -361,7 +361,7 @@ input:focus-visible {
   right: clamp(1.5rem, 7vw, 7rem);
   bottom: 26px;
   left: clamp(1.5rem, 7vw, 7rem);
-  color: color-mix(in srgb, #4f74b2 72%, transparent);
+  color: color-mix(in srgb, var(--white) 76%, transparent);
 }
 
 .hero-copy {
