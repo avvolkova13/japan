@@ -19,12 +19,12 @@ const brands = [
 ];
 
 const categories = [
-  ["Face", "Продуманный уход для кожи каждый день.", "tone-pearl"],
-  ["Hair", "Уход за блеском, мягкостью и ритуалом.", "tone-blue"],
-  ["Body", "Небольшие жесты заботы, выбранные осознанно.", "tone-stone"],
-  ["Sun Care", "Лёгкие текстуры для ежедневной защиты.", "tone-sky"],
-  ["Wellness", "Простые средства для более мягкого ритма.", "tone-pearl-deep"],
-  ["Sets", "Собранные ритуалы, готовые стать подарком.", "tone-blue-soft"],
+  ["Face", "Продуманный уход для кожи каждый день.", "tone-pearl", "/images/kanso/face.png"],
+  ["Hair", "Уход за блеском, мягкостью и ритуалом.", "tone-blue", "/images/kanso/hair.png"],
+  ["Body", "Небольшие жесты заботы, выбранные осознанно.", "tone-stone", "/images/kanso/body.png"],
+  ["Sun Care", "Лёгкие текстуры для ежедневной защиты.", "tone-sky", "/images/kanso/sun-care.png"],
+  ["Wellness", "Простые средства для более мягкого ритма.", "tone-pearl-deep", "/images/kanso/wellness.png"],
+  ["Sets", "Собранные ритуалы, готовые стать подарком.", "tone-blue-soft", "/images/kanso/sets.png"],
 ] as const;
 
 const categoryLabels: Record<string, string> = {
@@ -39,9 +39,9 @@ const categoryLabels: Record<string, string> = {
 };
 
 const journalStories = [
-  ["РИТУАЛЫ", "Как выстроить простой японский уход", "Спокойная отправная точка для продуманной ежедневной рутины.", "tone-pearl"],
-  ["ТЕКСТУРЫ", "Солнцезащита каждый день: как выбрать текстуру", "О том, как найти комфортное покрытие для ежедневного ухода.", "tone-sky"],
-  ["УТРО", "Пять тихих ритуалов красоты для насыщенного утра", "Небольшие жесты, которые делают привычное утро более осознанным.", "tone-stone"],
+  ["РИТУАЛЫ", "Как выстроить простой японский уход", "Спокойная отправная точка для продуманной ежедневной рутины.", "tone-pearl", "/images/kanso/editorial.png"],
+  ["ТЕКСТУРЫ", "Солнцезащита каждый день: как выбрать текстуру", "О том, как найти комфортное покрытие для ежедневного ухода.", "tone-sky", "/images/kanso/sun-care.png"],
+  ["УТРО", "Пять тихих ритуалов красоты для насыщенного утра", "Небольшие жесты, которые делают привычное утро более осознанным.", "tone-stone", "/images/kanso/wellness.png"],
 ] as const;
 
 const newArrivals = demoProducts.filter((product) => product.id.startsWith("new-"));
@@ -259,9 +259,9 @@ export function HomePage() {
             <h2 id="category-title">Выбрать категорию</h2>
           </div>
           <div className="category-grid">
-            {categories.map(([category, copy, tone]) => (
+            {categories.map(([category, copy, tone, image]) => (
               <a className="category-card" href="#new-arrivals" key={category}>
-                <VisualImage label={`Категория: ${categoryLabels[category]}`} src={category === "Face" ? "/images/kanso/face.png" : category === "Wellness" ? "/images/kanso/collection.png" : "/images/kanso/editorial.png"} tone={tone} />
+                <VisualImage label={`Категория: ${categoryLabels[category]}`} src={image} tone={tone} />
                 <div className="category-card-copy"><div><h3>{categoryLabels[category]}</h3><p>{copy}</p></div><span className="round-arrow" aria-hidden="true">↗</span></div>
               </a>
             ))}
@@ -295,7 +295,7 @@ export function HomePage() {
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
-          <div className="collection-inner"><div className="collection-copy"><p className="micro-label">Собранная коллекция</p><h2 id="collection-title">Увлажняющий уход</h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true">↘</span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/face.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
+          <div className="collection-inner"><div className="collection-copy"><p className="micro-label">Собранная коллекция</p><h2 id="collection-title">Увлажняющий уход</h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true">↘</span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
         </section>
 
         <section className="section-pad quiz-section" aria-labelledby="quiz-title">
@@ -304,7 +304,7 @@ export function HomePage() {
 
         <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">
           <div className="section-heading rail-heading"><div><p className="micro-label">Из журнала</p><h2 id="journal-title">Заметки для тихого ритуала</h2></div><a className="text-link" href="#journal">Весь журнал <span aria-hidden="true">↗</span></a></div>
-          <div className="journal-grid">{journalStories.map(([category, title, copy, tone], index) => <a className="journal-card" href="#journal" key={title}><VisualImage label={title} src={index === 0 ? "/images/kanso/editorial.png" : index === 1 ? "/images/kanso/face.png" : "/images/kanso/collection.png"} tone={tone} /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
+          <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image]) => <a className="journal-card" href="#journal" key={title}><VisualImage label={title} src={image} tone={tone} /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
         </section>
       </main>
 
