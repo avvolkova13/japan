@@ -1418,7 +1418,12 @@ input:focus-visible {
   .hero-motion h1 { width: 8.5ch; margin: auto 0 30px; font-size: clamp(4rem, 18vw, 6.5rem); line-height: 0.82; }
   .hero-motion-footer { align-items: stretch; flex-direction: column; gap: 20px; }
   .hero-motion-footer .button { width: max-content; }
-  .hero-product-stage { top: 13%; width: 92vw; height: min(60svh, 520px); }
+  .hero-product-stage {
+    top: 4%;
+    left: 50%;
+    width: min(76vw, 330px);
+    height: min(43svh, 360px);
+  }
   .hero-product-image { border-radius: 48% 48% 7% 7%; }
   .hero-motion > .hero-caption { right: 1rem; bottom: 18px; left: 1rem; }
   .hero-visual .visual-placeholder { min-height: min(520px, 126vw); }
