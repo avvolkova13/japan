@@ -355,39 +355,6 @@ input:focus-visible {
   padding: 2% 9%;
 }
 
-.hero-product-print {
-  position: absolute;
-  top: 54%;
-  left: 50%;
-  z-index: 3;
-  display: grid;
-  width: min(29%, 210px);
-  gap: 4px;
-  color: color-mix(in srgb, var(--graphite) 82%, transparent);
-  text-align: center;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.hero-product-print span {
-  font-size: clamp(0.58rem, 0.8vw, 0.76rem);
-  letter-spacing: 0.28em;
-  line-height: 1;
-}
-
-.hero-product-print strong {
-  font-size: clamp(0.52rem, 0.7vw, 0.68rem);
-  font-weight: 500;
-  line-height: 1.15;
-}
-
-.hero-product-print small {
-  font-size: clamp(0.38rem, 0.48vw, 0.48rem);
-  letter-spacing: 0.1em;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
 .hero-motion > .hero-caption {
   position: absolute;
   z-index: 4;
@@ -1410,7 +1377,6 @@ input:focus-visible {
   .hero-motion-footer .button { width: max-content; }
   .hero-product-stage { top: 18%; width: 92vw; }
   .hero-product-image { border-radius: 48% 48% 7% 7%; }
-  .hero-product-print { top: 54%; width: 29%; }
   .hero-motion > .hero-caption { right: 1rem; bottom: 18px; left: 1rem; }
   .hero-visual .visual-placeholder { min-height: min(520px, 126vw); }
   .hero h1 { max-width: 8.5ch; margin: 16px 0 20px; font-size: clamp(3rem, 14vw, 4.25rem); }
