@@ -244,10 +244,9 @@ export function HomePage() {
         <section className="hero hero-motion section-pad" aria-labelledby="hero-title">
           <div className="hero-motion-background" aria-hidden="true" />
           <div className="hero-motion-copy">
-            <p className="overline">Японский уход, собранный осознанно</p>
-            <h1 id="hero-title"><span>Тихий</span><span>ритуал</span><span>для кожи.</span></h1>
+            <h1 id="hero-title"><span>Тихий</span><span>ритуал</span><span>для кожи</span></h1>
             <div className="hero-motion-footer">
-              <p className="hero-description">Японская косметика, средства для здоровья и бьюти-ритуалы для современного ритма жизни.</p>
+              <p className="hero-description">Японская косметика, средства<br />для здоровья и бьюти-ритуалы<br />для современного ритма жизни.</p>
               <a className="button button-dark" href="#category"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть подборку</span></a>
             </div>
           </div>
