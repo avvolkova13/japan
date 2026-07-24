@@ -58,21 +58,18 @@ function VisualImage({
   tone = "tone-pearl",
   className = "",
   secondary = false,
-  overlayText,
 }: {
   label: string;
   src: string;
   tone?: string;
   className?: string;
   secondary?: boolean;
-  overlayText?: string;
 }) {
   return (
     <div
       className={`visual-placeholder visual-image ${tone} ${secondary ? "visual-placeholder-secondary" : ""} ${className}`}
     >
       <Image src={src} alt={label} fill sizes="(max-width: 767px) 100vw, 50vw" />
-      {overlayText && <span className="visual-product-label">{overlayText}</span>}
     </div>
   );
 }
@@ -95,10 +92,6 @@ function ProductCard({
       <div className="product-media">
         <VisualImage label={`${product.brand} ${product.name}`} src={product.image} tone="tone-product" />
         <VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary />
-        <div className="product-image-print" aria-hidden="true">
-          <span>{product.brand}</span>
-          <strong>{product.name}</strong>
-        </div>
         {product.badge && <span className="product-badge">{product.badge}</span>}
         <button
           className={`icon-button wishlist-button ${wished ? "is-active" : ""}`}
@@ -111,10 +104,6 @@ function ProductCard({
             <path d="M20.8 8.7c0 5.1-8.8 10.3-8.8 10.3S3.2 13.8 3.2 8.7C3.2 6 5.2 4 7.8 4c1.7 0 3.1.9 4.2 2.2C13.1 4.9 14.5 4 16.2 4c2.6 0 4.6 2 4.6 4.7Z" />
           </svg>
         </button>
-        <div className="product-hover-info" aria-hidden="true">
-          <span>{product.brand}</span>
-          <strong>{product.name}</strong>
-        </div>
         <button className="quick-add" type="button" onClick={onQuickAdd}>
           {added ? "Добавлено" : "Добавить"}
         </button>
@@ -274,7 +263,6 @@ export function HomePage() {
 
         <section className="section-pad category-section" id="category" aria-labelledby="category-title">
           <div className="section-heading">
-            <p className="micro-label">Начните с ритуала</p>
             <h2 id="category-title">Выбрать категорию</h2>
           </div>
           <div className="category-grid">
@@ -297,7 +285,7 @@ export function HomePage() {
             <div className="product-grid new-arrivals-grid">
               {newArrivals.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}
             </div>
-            <div className="section-cta"><a className="text-link" href="#new-arrivals">Все новинки <span aria-hidden="true">↗</span></a></div>
+            <div className="section-cta"><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Все новинки</span></a></div>
           </div>
         </section>
 
@@ -310,11 +298,11 @@ export function HomePage() {
 
         <section className="section-pad editorial-section" aria-labelledby="editorial-title">
           <div className="editorial-large-visual"><VisualImage label="Редакционная композиция о красоте" src="/images/kanso/editorial.png" tone="tone-stone" /></div>
-          <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><a className="text-link" href="#journal">Читать историю <span aria-hidden="true">↗</span></a></div>
+          <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><a className="button button-dark" href="#journal"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Читать историю</span></a></div>
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
-          <div className="collection-inner"><div className="collection-copy"><p className="micro-label">Собранная коллекция</p><h2 id="collection-title">Увлажняющий уход</h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
+          <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title">Увлажняющий уход</h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
         </section>
 
         <section className="section-pad quiz-section" aria-labelledby="quiz-title">
