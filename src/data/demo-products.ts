@@ -1,14 +1,25 @@
 import type { DemoProduct } from "@/types/product";
 
 const imageByCategory = {
-  Face: "/images/kanso/face.png",
-  Hair: "/images/kanso/collection.png",
-  Body: "/images/kanso/collection.png",
-  "Sun Care": "/images/kanso/face.png",
-  Wellness: "/images/kanso/collection.png",
-  "Oral Care": "/images/kanso/face.png",
-  Sets: "/images/kanso/collection.png",
-  Devices: "/images/kanso/collection.png",
+  Face: "/images/kanso/products/amaranth-dr-soie-cutout.png",
+  Hair: "/images/kanso/products/tokio-home-cutout.png",
+  Body: "/images/kanso/products/direia-uv-cutout.png",
+  "Sun Care": "/images/kanso/products/direia-uv-cutout.png",
+  Wellness: "/images/kanso/products/quality-1st-cutout.png",
+  "Oral Care": "/images/kanso/products/enzym-cutout.png",
+  Sets: "/images/kanso/products/exo-cutout.png",
+  Devices: "/images/kanso/products/tokio-oil-cutout.png",
+} as const;
+
+const hoverImageByCategory = {
+  Face: "/images/kanso/products/exo-cutout.png",
+  Hair: "/images/kanso/products/tokio-oil-cutout.png",
+  Body: "/images/kanso/products/spa-treatment-cutout.png",
+  "Sun Care": "/images/kanso/products/amaranth-dr-soie-cutout.png",
+  Wellness: "/images/kanso/products/spa-treatment-cutout.png",
+  "Oral Care": "/images/kanso/products/quality-1st-cutout.png",
+  Sets: "/images/kanso/products/tokio-home-cutout.png",
+  Devices: "/images/kanso/products/tokio-treatment-cutout.png",
 } as const;
 
 const imageByProduct: Record<string, string> = {
@@ -67,7 +78,7 @@ export const demoProducts = productSeeds.map(
     price,
     volume,
     image: cutoutByProduct[id] ?? imageByProduct[id] ?? imageByCategory[category],
-    hoverImage: imageByProduct[id] ?? imageByCategory[category],
+    hoverImage: imageByProduct[id] ?? hoverImageByCategory[category],
     badge,
     description,
     available: false,

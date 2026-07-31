@@ -2,6 +2,7 @@
 
 import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { demoProducts } from "@/data/demo-products";
 import { siteConfig } from "@/config/site";
 
@@ -90,8 +91,7 @@ function ProductCard({
   return (
     <article className="product-card">
       <div className="product-media">
-        <VisualImage label={`${product.brand} ${product.name}`} src={product.image} tone="tone-product" />
-        <VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary />
+        <Link className="product-card-image-link" href={`/product/${product.id}`} aria-label={`Открыть ${product.name}`}><VisualImage label={`${product.brand} ${product.name}`} src={product.image} tone="tone-product" /><VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary /></Link>
         {product.badge && <span className="product-badge">{product.badge}</span>}
         <button
           className={`icon-button wishlist-button ${wished ? "is-active" : ""}`}
@@ -105,12 +105,12 @@ function ProductCard({
           </svg>
         </button>
         <button className="quick-add" type="button" onClick={onQuickAdd}>
-          {added ? "Добавлено" : "Добавить"}
+          {added ? "В корзине" : "В корзину"}
         </button>
       </div>
       <div className="product-meta">
         <p className="product-brand">{product.brand}</p>
-        <h3>{product.name}</h3>
+        <h3><Link href={`/product/${product.id}`}>{product.name}</Link></h3>
         <div className="product-subline">
           <span>{product.volume}</span>
           <span>{formatPrice(product.price)}</span>
@@ -149,10 +149,10 @@ export function HomePage() {
       const next = new Set(current);
       if (next.has(id)) {
         next.delete(id);
-        setNotice(`${name} удалён из подборки.`);
+        setNotice(`${name} удалён из корзины.`);
       } else {
         next.add(id);
-        setNotice(`${name} добавлен в подборку.`);
+        setNotice(`${name} добавлен в корзину.`);
       }
       return next;
     });
@@ -210,9 +210,9 @@ export function HomePage() {
           </nav>
           <div className="header-actions">
             <button className="utility-link search-trigger" type="button" onClick={() => setSearchOpen((open) => !open)} aria-expanded={searchOpen}>Поиск</button>
-            <button className="utility-link desktop-only" type="button" onClick={() => setNotice("Личный кабинет пока находится в демонстрационном состоянии.")}>Кабинет</button>
+            <a className="utility-link desktop-only" href="/account">Кабинет</a>
             <button className="utility-link responsive-utility wishlist-nav" type="button" onClick={() => setNotice(`В избранном: ${wishlist.size} ${wishlist.size === 1 ? "товар" : "товаров"}.`)}>Избранное</button>
-            <button className="utility-link responsive-utility cart-nav" type="button" onClick={() => setNotice(`В подборке: ${added.size} ${added.size === 1 ? "товар" : "товаров"}.`)}>Корзина</button>
+            <a className="utility-link responsive-utility cart-nav" href="/cart">Корзина</a>
             <button className="menu-trigger" type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label="Открыть меню">
               <span>{mobileMenuOpen ? "Закрыть" : "Меню"}</span>
             </button>
@@ -247,7 +247,7 @@ export function HomePage() {
             <h1 id="hero-title"><span>Тихий</span><span>ритуал</span><span>для кожи</span></h1>
             <div className="hero-motion-footer">
               <p className="hero-description">Японская косметика, средства<br />для здоровья и бьюти-ритуалы<br />для современного ритма жизни.</p>
-              <a className="button button-dark" href="#category"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть подборку</span></a>
+            <a className="button button-dark" href="/catalog"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">В каталог</span></a>
             </div>
           </div>
           <div className="hero-product-stage">
@@ -257,7 +257,7 @@ export function HomePage() {
 
         <section className="brand-rail section-pad-small" id="brands" aria-label="Избранные бренды">
           <p className="micro-label">Продуманная подборка</p>
-          <div className="brand-list">{brands.map((brand) => <span key={brand}>{brand}</span>)}</div>
+          <div className="brand-list">{brands.map((brand) => <a className="brand-list-link" key={brand} href={`/catalog?brand=${encodeURIComponent(brand)}`}>{brand}</a>)}</div>
         </section>
 
         <section className="section-pad category-section" id="category" aria-labelledby="category-title">
@@ -297,11 +297,11 @@ export function HomePage() {
 
         <section className="section-pad editorial-section" aria-labelledby="editorial-title">
           <div className="editorial-large-visual"><VisualImage label="Редакционная композиция о красоте" src="/images/kanso/editorial.png" tone="tone-stone" /></div>
-          <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><a className="button button-dark" href="#journal"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Читать историю</span></a></div>
+          <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><a className="button button-dark" href="/journal/japanese-approach"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Читать историю</span></a></div>
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
-          <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title">Увлажняющий уход</h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
+          <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title"><span>Увлажняющий</span><span>уход</span></h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
         </section>
 
         <section className="section-pad quiz-section" aria-labelledby="quiz-title">
