@@ -17,6 +17,7 @@ export type DemoProduct = {
   volume: string;
   image: string;
   hoverImage: string;
+  galleryImages?: readonly string[];
   badge: string | null;
   description: string;
   available: boolean;

@@ -9,7 +9,6 @@ export default function JapaneseApproachPage() {
         <Link className="catalog-back-link" href="/">Вернуться на главную</Link>
       </header>
       <article className="journal-article">
-        <p className="micro-label">Редакция</p>
         <h1>Японский подход к ежедневному уходу</h1>
         <p className="journal-article-lead">История о небольших повторяемых жестах, из которых складывается личный ритуал.</p>
         <div className="journal-article-hero">

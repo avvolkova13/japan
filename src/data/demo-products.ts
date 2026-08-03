@@ -46,6 +46,14 @@ const cutoutByProduct: Record<string, string> = {
   "best-05": "/images/kanso/products/tokio-treatment-cutout.png",
 };
 
+const galleryImagesByProduct: Record<string, readonly string[]> = {
+  "new-01": [
+    "/images/kanso/products/amaranth-dr-soie-cutout.png",
+    "/images/kanso/products/amaranth-dr-soie.png",
+    "/images/kanso/products/amaranth-dr-soie-lifestyle.png",
+  ],
+};
+
 const productSeeds = [
   ["new-01", "AMARANTH Dr.Soie", "Антивозрастной кушон для лица", "Face", 8290, "12 г", "Новинка", "Кушон для лица из каталога JapRise."],
   ["new-02", "Direia", "Солнцезащитный крем SPF50+", "Sun Care", 7290, "40 г", "Новинка", "Средство с солнцезащитой из каталога JapRise."],
@@ -79,6 +87,7 @@ export const demoProducts = productSeeds.map(
     volume,
     image: cutoutByProduct[id] ?? imageByProduct[id] ?? imageByCategory[category],
     hoverImage: imageByProduct[id] ?? hoverImageByCategory[category],
+    galleryImages: galleryImagesByProduct[id],
     badge,
     description,
     available: false,

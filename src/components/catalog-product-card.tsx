@@ -7,6 +7,8 @@ import type { DemoProduct } from "@/types/product";
 
 const CART_KEY = "kanso-cart";
 
+type CatalogCardVariant = "standard" | "feature-left" | "feature-right" | "small";
+
 function readCart() {
   try {
     const stored = window.localStorage.getItem(CART_KEY);
@@ -16,7 +18,7 @@ function readCart() {
   }
 }
 
-export function CatalogProductCard({ product }: { product: DemoProduct }) {
+export function CatalogProductCard({ product, variant = "standard" }: { product: DemoProduct; variant?: CatalogCardVariant }) {
   const [inCart, setInCart] = useState(false);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export function CatalogProductCard({ product }: { product: DemoProduct }) {
   };
 
   return (
-    <article className="catalog-product-card">
+    <article className={`catalog-product-card catalog-product-card--${variant}`}>
       <div className="catalog-product-media">
         <Link className="catalog-product-image-link" href={`/product/${product.id}`} aria-label={`Открыть ${product.name}`}>
           <Image className="catalog-product-image catalog-product-image-primary" src={product.image} alt={`${product.brand} — ${product.name}`} fill sizes="(max-width: 767px) 50vw, 25vw" />

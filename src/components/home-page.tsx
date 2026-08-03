@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type WheelEvent as ReactWheelEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { demoProducts } from "@/data/demo-products";
@@ -40,14 +40,15 @@ const categoryLabels: Record<string, string> = {
 };
 
 const journalStories = [
-  ["РИТУАЛЫ", "Как выстроить простой японский уход", "Спокойная отправная точка для продуманной ежедневной рутины.", "tone-pearl", "/images/kanso/editorial.png"],
-  ["ТЕКСТУРЫ", "Солнцезащита каждый день: как выбрать текстуру", "О том, как найти комфортное покрытие для ежедневного ухода.", "tone-sky", "/images/kanso/sun-care.png"],
-  ["УТРО", "Пять тихих ритуалов красоты для насыщенного утра", "Небольшие жесты, которые делают привычное утро более осознанным.", "tone-stone", "/images/kanso/wellness.png"],
+  ["РИТУАЛЫ", "Как выстроить простой японский уход", "Спокойная отправная точка для продуманной ежедневной рутины.", "tone-pearl", "/images/kanso/editorial.png", "japanese-approach"],
+  ["ТЕКСТУРЫ", "Солнцезащита каждый день: как выбрать текстуру", "О том, как найти комфортное покрытие для ежедневного ухода.", "tone-sky", "/images/kanso/sun-care.png", "sun-care-textures"],
+  ["УТРО", "Пять тихих ритуалов красоты для насыщенного утра", "Небольшие жесты, которые делают привычное утро более осознанным.", "tone-stone", "/images/kanso/wellness.png", "quiet-morning-rituals"],
 ] as const;
 
 const newArrivals = demoProducts.filter((product) => product.id.startsWith("new-"));
 const bestSellers = demoProducts.filter((product) => product.id.startsWith("best-"));
 const featuredProducts = demoProducts.filter((product) => ["new-01", "best-02", "best-04"].includes(product.id));
+const WISHLIST_KEY = "kanso-wishlist";
 
 function formatPrice(price: number) {
   return `${new Intl.NumberFormat("ru-RU").format(price)} ₽`;
@@ -59,18 +60,20 @@ function VisualImage({
   tone = "tone-pearl",
   className = "",
   secondary = false,
+  priority = false,
 }: {
   label: string;
   src: string;
   tone?: string;
   className?: string;
   secondary?: boolean;
+  priority?: boolean;
 }) {
   return (
     <div
       className={`visual-placeholder visual-image ${tone} ${secondary ? "visual-placeholder-secondary" : ""} ${className}`}
     >
-      <Image src={src} alt={label} fill sizes="(max-width: 767px) 100vw, 50vw" />
+      <Image src={src} alt={label} fill priority={priority} sizes="(max-width: 767px) 100vw, 50vw" />
     </div>
   );
 }
@@ -124,11 +127,49 @@ export function HomePage() {
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [accountSignedIn, setAccountSignedIn] = useState(false);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const [added, setAdded] = useState<Set<string>>(new Set());
   const [notice, setNotice] = useState("");
   const bestRailRef = useRef<HTMLDivElement>(null);
   const dragState = useRef({ active: false, startX: 0, scrollLeft: 0 });
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setAccountSignedIn(Boolean(window.localStorage.getItem("kanso-auth"))), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      try {
+        setWishlist(new Set<string>(JSON.parse(window.localStorage.getItem(WISHLIST_KEY) ?? "[]")));
+      } catch {
+        setWishlist(new Set());
+      }
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const link = document.querySelector<HTMLAnchorElement>("#new-arrivals .section-cta a");
+    link?.setAttribute("href", "/catalog?new=true");
+  }, []);
+
+  useEffect(() => {
+    const link = document.querySelector<HTMLAnchorElement>("[aria-labelledby=\"collection-title\"] .collection-copy .button");
+    link?.setAttribute("href", "/catalog?focus=hydration");
+  }, []);
+
+  useEffect(() => {
+    const button = document.querySelector<HTMLButtonElement>(".quiz-section button");
+    if (!button) return;
+    const label = button.querySelector<HTMLElement>(".button-label");
+    if (label) label.textContent = "Подобрать уход";
+    const openRitual = () => window.location.assign("/ritual");
+    button.addEventListener("click", openRitual);
+    return () => button.removeEventListener("click", openRitual);
+  }, []);
 
   const toggleWishlist = (id: string, name: string) => {
     setWishlist((current) => {
@@ -140,6 +181,8 @@ export function HomePage() {
         next.add(id);
         setNotice(`${name} добавлен в избранное.`);
       }
+      window.localStorage.setItem(WISHLIST_KEY, JSON.stringify([...next]));
+      window.dispatchEvent(new CustomEvent("kanso-wishlist-change"));
       return next;
     });
   };
@@ -156,10 +199,30 @@ export function HomePage() {
       }
       return next;
     });
+    let cart: string[] = [];
+    try { cart = JSON.parse(window.localStorage.getItem("kanso-cart") ?? "[]") as string[]; } catch { cart = []; }
+    const nextCart = cart.includes(id) ? cart.filter((item) => item !== id) : [...cart, id];
+    window.localStorage.setItem("kanso-cart", JSON.stringify(nextCart));
+    window.dispatchEvent(new CustomEvent("kanso-cart-change"));
+  };
+
+  const getBestSellerStep = () => {
+    const rail = bestRailRef.current;
+    const card = rail?.querySelector<HTMLElement>(".product-card");
+    if (!rail || !card) return 360;
+    const gap = Number.parseFloat(window.getComputedStyle(rail).gap || "0");
+    return card.offsetWidth + gap;
+  };
+
+  const snapBestSellers = () => {
+    const rail = bestRailRef.current;
+    if (!rail) return;
+    const step = getBestSellerStep();
+    rail.scrollTo({ left: Math.round(rail.scrollLeft / Math.max(step, 1)) * step, behavior: "smooth" });
   };
 
   const scrollBestSellers = (direction: number) => {
-    bestRailRef.current?.scrollBy({ left: direction * 360, behavior: "smooth" });
+    bestRailRef.current?.scrollBy({ left: direction * getBestSellerStep(), behavior: "smooth" });
   };
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -179,6 +242,13 @@ export function HomePage() {
 
   const handlePointerUp = () => {
     dragState.current.active = false;
+    snapBestSellers();
+  };
+
+  const handleBestRailWheel = (event: ReactWheelEvent<HTMLDivElement>) => {
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+    event.preventDefault();
+    event.currentTarget.scrollBy({ left: event.deltaY, behavior: "smooth" });
   };
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
@@ -210,10 +280,10 @@ export function HomePage() {
           </nav>
           <div className="header-actions">
             <button className="utility-link search-trigger" type="button" onClick={() => setSearchOpen((open) => !open)} aria-expanded={searchOpen}>Поиск</button>
-            <a className="utility-link desktop-only" href="/account">Кабинет</a>
-            <button className="utility-link responsive-utility wishlist-nav" type="button" onClick={() => setNotice(`В избранном: ${wishlist.size} ${wishlist.size === 1 ? "товар" : "товаров"}.`)}>Избранное</button>
+            <a className="utility-link desktop-only header-login-link" href="/account">{accountSignedIn ? "Кабинет" : "Войти"}</a>
+            <a className="utility-link responsive-utility wishlist-nav" href="/favorites">Избранное</a>
             <a className="utility-link responsive-utility cart-nav" href="/cart">Корзина</a>
-            <button className="menu-trigger" type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label="Открыть меню">
+            <button className="menu-trigger" type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label={mobileMenuOpen ? "Закрыть меню" : "Открыть меню"}>
               <span>{mobileMenuOpen ? "Закрыть" : "Меню"}</span>
             </button>
           </div>
@@ -224,7 +294,7 @@ export function HomePage() {
               <p className="micro-label">Каталог</p>
               <div className="mega-grid">
                 {["Face", "Hair", "Body", "Sun Care", "Wellness", "Oral Care", "Sets", "Devices"].map((category) => (
-                  <a key={category} href="#category" onClick={() => setCatalogOpen(false)}>{categoryLabels[category]}<span aria-hidden="true">↗</span></a>
+                  <a key={category} href={`/catalog?category=${encodeURIComponent(category)}`} onClick={() => setCatalogOpen(false)}>{categoryLabels[category]}<span aria-hidden="true">↗</span></a>
                 ))}
               </div>
             </div>
@@ -234,7 +304,11 @@ export function HomePage() {
           <div className="search-panel" role="search">
             <div className="search-panel-inner">
               <label htmlFor="demo-search">Поиск по KANSO</label>
-              <input id="demo-search" type="search" placeholder="Поиск пока в демонстрационном состоянии" onChange={(event) => setNotice(event.target.value ? `Поиск: ${event.target.value}` : "")} />
+              <input id="demo-search" type="search" value={searchQuery} placeholder="Название или бренд" onChange={(event) => setSearchQuery(event.target.value)} />
+              {searchQuery.trim() && <div className="search-results" aria-live="polite">
+                {demoProducts.filter((product) => `${product.brand} ${product.name}`.toLowerCase().includes(searchQuery.trim().toLowerCase())).slice(0, 5).map((product) => <Link key={product.id} href={`/product/${product.id}`} onClick={() => setSearchOpen(false)}><span>{product.name}</span><small>{product.brand}</small></Link>)}
+                {!demoProducts.some((product) => `${product.brand} ${product.name}`.toLowerCase().includes(searchQuery.trim().toLowerCase())) && <p>Ничего не найдено</p>}
+              </div>}
             </div>
           </div>
         )}
@@ -251,7 +325,7 @@ export function HomePage() {
             </div>
           </div>
           <div className="hero-product-stage">
-            <VisualImage className="hero-product-image" label="Премиальный очищающий флюид KANSO" src="/images/kanso/kanso-pump-open-premium.png" tone="tone-hero" />
+            <VisualImage className="hero-product-image" label="Премиальный очищающий флюид KANSO" src="/images/kanso/kanso-pump-open-premium.png" tone="tone-hero" priority />
           </div>
         </section>
 
@@ -266,7 +340,7 @@ export function HomePage() {
           </div>
           <div className="category-grid">
             {categories.map(([category, copy, tone, image]) => (
-              <a className="category-card" href="#new-arrivals" key={category}>
+              <a className="category-card" href={`/catalog?category=${encodeURIComponent(category)}`} key={category}>
                 <VisualImage label={`Категория: ${categoryLabels[category]}`} src={image} tone={tone} />
                 <div className="category-card-copy"><div><h3>{categoryLabels[category]}</h3><p>{copy}</p></div><span className="round-arrow" aria-hidden="true">↗</span></div>
               </a>
@@ -277,7 +351,7 @@ export function HomePage() {
         <section className="section-pad new-arrivals-section" id="new-arrivals" aria-labelledby="new-arrivals-title">
           <div className="section-heading split-heading">
             <div><p className="micro-label">Только что появились</p><h2 id="new-arrivals-title">Новинки для неё</h2></div>
-            <p>Новые позиции в подборке KANSO.</p>
+            <p className="new-arrivals-subtitle">Новые позиции в подборке KANSO.</p>
           </div>
           <div className="new-arrivals-layout">
             <div className="editorial-visual"><VisualImage label="Редакционная композиция новинок" src="/images/kanso/collection.png" tone="tone-blue" /><p className="image-note">Более мягкое начало сезона.</p></div>
@@ -290,14 +364,14 @@ export function HomePage() {
 
         <section className="section-pad best-sellers-section" id="best-sellers" aria-labelledby="best-sellers-title">
           <div className="section-heading rail-heading"><div><p className="micro-label">Знакомые фавориты</p><h2 id="best-sellers-title">Хиты продаж</h2></div><div className="rail-controls"><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(-1)} aria-label="Предыдущие хиты продаж">←</button><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(1)} aria-label="Следующие хиты продаж">→</button></div></div>
-          <div className="product-rail" ref={bestRailRef} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp}>
+          <div className="product-rail" ref={bestRailRef} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp} onWheel={handleBestRailWheel}>
             {bestSellers.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}
           </div>
         </section>
 
         <section className="section-pad editorial-section" aria-labelledby="editorial-title">
           <div className="editorial-large-visual"><VisualImage label="Редакционная композиция о красоте" src="/images/kanso/editorial.png" tone="tone-stone" /></div>
-          <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><a className="button button-dark" href="/journal/japanese-approach"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Читать историю</span></a></div>
+          <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><Link className="button button-dark" href="/journal/japanese-approach"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Читать историю</span></Link></div>
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
@@ -309,14 +383,14 @@ export function HomePage() {
         </section>
 
         <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">
-          <div className="section-heading rail-heading"><div><p className="micro-label">Из журнала</p><h2 id="journal-title">Заметки для тихого ритуала</h2></div><a className="text-link" href="#journal">Весь журнал <span aria-hidden="true">↗</span></a></div>
-          <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image]) => <a className="journal-card" href="#journal" key={title}><VisualImage label={title} src={image} tone={tone} /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
+          <div className="section-heading rail-heading"><div><p className="micro-label">Из журнала</p><h2 id="journal-title">Заметки для тихого ритуала</h2></div><Link className="text-link" href="/journal">Весь журнал <span aria-hidden="true">↗</span></Link></div>
+          <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image, slug]) => <a className="journal-card" href={`/journal/${slug}`} key={title}><VisualImage label={title} src={image} tone={tone} /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
         </section>
       </main>
 
       <footer className="site-footer" id="footer">
         <div className="footer-top"><div className="footer-brand"><span className="brand-mark">{siteConfig.publicBrandName}</span><p>Продуманная подборка японского ухода, красоты и средств для благополучия.</p></div><div className="footer-column"><p className="micro-label">Покупки</p><a href="#category">Каталог</a><a href="#new-arrivals">Новинки</a><a href="#best-sellers">Хиты продаж</a><a href="#brands">Бренды</a></div><div className="footer-column"><p className="micro-label">Помощь</p><a href="#footer">Доставка</a><a href="#footer">Оплата</a><a href="#footer">Вопросы и ответы</a><a href="#footer">Контакты</a></div><div className="footer-column"><p className="micro-label">О KANSO</p><a href="#footer">О бренде</a><a href="#journal">Журнал</a><a href="#footer">Конфиденциальность</a><a href="#footer">Условия</a></div><div className="footer-column"><p className="micro-label">Мы в сети</p><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Instagram</button><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Pinterest</button></div></div>
-        <div className="footer-bottom"><span>© {new Date().getFullYear()} {siteConfig.publicBrandName}</span><span>Предпросмотр каталога · Наличие уточняется</span></div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} {siteConfig.publicBrandName}</span></div>
       </footer>
 
       <div className="sr-only" aria-live="polite">{notice}</div>
