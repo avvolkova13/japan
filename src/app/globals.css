@@ -1713,9 +1713,17 @@ html[data-motion-reduced="true"] .motion-reveal {
   .checkout-content h1,
   .favorites-content h1 { font-size: clamp(3rem, 14vw, 5rem); }
   .favorites-grid { grid-template-columns: 1fr; gap: 42px; }
+  .cart-page-nav a:first-child { display: none; }
+  .cart-intro,
+  .checkout-intro { display: block; }
+  .cart-intro > p,
+  .checkout-intro > p { margin-top: 24px; }
+  .cart-list-heading { grid-template-columns: 1fr; }
+  .cart-list-heading span:nth-child(3) { display: none; }
   .cart-item { grid-template-columns: 5.5rem minmax(0, 1fr); }
-  .cart-item strong { grid-column: 2; grid-row: 1; justify-self: end; }
-  .cart-summary { padding: 20px; }
+  .cart-item-price { grid-column: 2; grid-row: 2; justify-self: start; text-align: left; }
+  .cart-item-quantity { grid-column: 2; grid-row: 3; justify-content: flex-start; }
+  .cart-summary { position: static; padding: 20px 0 0; }
 }
 
 .section-heading {
@@ -2700,12 +2708,43 @@ html[data-motion-reduced="true"] .motion-reveal {
   .product-related-track { gap: 12px; }
   .account-nav-heading { font-size: 1.125rem; }
 
+  .account-dashboard {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 38px;
+  }
+
+  .account-nav {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 16px;
+    border-right: 0;
+    border-bottom: 1px solid var(--stone);
+    padding: 0 0 16px;
+  }
+
+  .account-nav-heading {
+    grid-column: 1 / -1;
+    white-space: normal;
+  }
+
+  .account-nav button { margin-top: 0; }
+  .account-dashboard-main { min-width: 0; max-width: 100%; }
+
+  .checkout-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .checkout-fields label:last-child {
+    grid-column: auto;
+  }
+
   .favorites-empty h2 {
     white-space: normal;
   }
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .account-nav {
     display: flex;
     flex-wrap: wrap;
@@ -2719,6 +2758,17 @@ html[data-motion-reduced="true"] .motion-reveal {
 
   .account-nav button {
     margin-top: 0;
+  }
+
+  .cart-layout,
+  .checkout-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .cart-summary,
+  .checkout-summary {
+    position: static;
   }
 }
 
