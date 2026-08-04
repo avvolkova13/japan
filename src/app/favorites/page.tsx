@@ -40,7 +40,7 @@ export default function FavoritesPage() {
     <main className="favorites-page">
       <header className="favorites-header"><Link className="brand-mark" href="/">KANSO</Link><Link className="catalog-back-link" href="/catalog">Продолжить покупки</Link></header>
       <section className="favorites-content" aria-labelledby="favorites-title">
-        <p className="micro-label">Сохранённое</p><h1 id="favorites-title">Избранное</h1>
+        <h1 id="favorites-title">Избранное</h1>
         {products.length ? <div className="favorites-grid">{products.map((product) => product && <article className="favorite-card" key={product.id}><div className="favorite-card-image"><Link href={`/product/${product.id}`} aria-label={`Открыть ${product.name}`}><Image src={product.image} alt={`${product.brand} — ${product.name}`} fill sizes="(max-width: 767px) 100vw, 30vw" /></Link><button type="button" onClick={() => remove(product.id)} aria-label={`Удалить ${product.name} из избранного`}>♡</button></div><p className="product-brand">{product.brand}</p><h2><Link href={`/product/${product.id}`}>{product.name}</Link></h2><div className="favorite-card-meta"><span>{product.volume}</span><span>{new Intl.NumberFormat("ru-RU").format(product.price)} ₽</span></div></article>)}</div> : <div className="favorites-empty"><h2>В избранном пока ничего нет</h2><p>Сохраняйте понравившиеся средства, чтобы вернуться к ним позже.</p><Link className="button button-dark" href="/catalog">Открыть каталог</Link></div>}
       </section>
     </main>

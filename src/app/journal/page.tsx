@@ -7,7 +7,6 @@ export default function JournalPage() {
     <main className="journal-index-page">
       <header className="journal-index-header"><Link className="brand-mark" href="/" aria-label="KANSO — на главную">KANSO</Link><Link className="catalog-back-link" href="/">Вернуться в магазин</Link></header>
       <section className="journal-index-content" aria-labelledby="journal-index-title">
-        <p className="micro-label">Из журнала</p>
         <h1 id="journal-index-title">Заметки для тихого ритуала</h1>
         <p className="journal-index-lead">Истории о небольших повторяемых жестах, текстурах и внимательном отношении к ежедневному уходу.</p>
         <div className="journal-index-grid">

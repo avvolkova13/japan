@@ -56,7 +56,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       </header>
       <section className="catalog-page-content" aria-labelledby="catalog-title">
         <div className="catalog-editorial-hero">
-          <div className="catalog-editorial-side catalog-editorial-side--left"><span>Уход как ежедневный ритуал</span><p>Японская точность<br />в каждой формуле</p></div>
+          <div className="catalog-editorial-side catalog-editorial-side--left"><span>Уход как ежедневный ритуал</span><p>ЯПОНСКАЯ ТОЧНОСТЬ<br />В КАЖДОЙ ФОРМУЛЕ</p></div>
           <h1 id="catalog-title">КАТАЛОГ</h1>
           <div className="catalog-editorial-side catalog-editorial-side--right"><p>Японская косметика<br />для тихих ритуалов</p><span>KANSO / 2026</span></div>
         </div>

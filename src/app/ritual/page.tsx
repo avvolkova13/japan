@@ -89,7 +89,6 @@ export default function RitualPage() {
         ) : (
           <div className="ritual-result">
             <div className="ritual-result-heading">
-              <p className="micro-label">Ваша подборка</p>
               <h2>Начните с этих средств</h2>
               <p>Собрали спокойную основу, которую можно адаптировать под ваш ежедневный ритм.</p>
             </div>

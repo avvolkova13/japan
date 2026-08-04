@@ -8,10 +8,18 @@
   --muted: #6d7370;
   --white: #fffdf8;
   --cinnabar: #2f5fa7;
-  --muted-red: #7d514e;
   --ink-soft: #464d4a;
   --max-width: 1280px;
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --control-min: 44px;
+  --accent-blue: #2f5fa7;
+  --accent-blue-soft: #d3e7ff;
 }
 
 * {
@@ -366,7 +374,6 @@ input:focus-visible {
 }
 
 .hero-motion h1 span:nth-child(2) { animation-delay: 680ms; }
-.hero-motion h1 span:nth-child(3) { animation-delay: 740ms; }
 
 .hero-motion-footer {
   display: flex;
@@ -1445,14 +1452,14 @@ html[data-motion-reduced="true"] .motion-reveal {
 .journal-index-content { width: calc(100% - 3rem); max-width: var(--max-width); margin: 0 auto; }
 .journal-index-header { display: flex; align-items: center; justify-content: space-between; min-height: 78px; border-bottom: 1px solid var(--stone); }
 .journal-index-content { padding: clamp(72px, 10vw, 140px) 0 120px; }
-.journal-index-content h1 { max-width: 11ch; margin: 18px 0 24px; font-size: clamp(3.5rem, 8vw, 8rem); font-weight: 500; letter-spacing: -0.075em; line-height: 0.88; }
+.journal-index-content h1 { max-width: min(100%, 34rem); margin: 18px 0 24px; font-size: clamp(3rem, 6vw, 6rem); font-weight: 500; letter-spacing: -0.075em; line-height: 0.94; text-wrap: balance; }
 .journal-index-lead { max-width: 38rem; margin: 0 0 64px; color: var(--muted); font-size: clamp(1.05rem, 1.5vw, 1.35rem); line-height: 1.45; }
 .journal-index-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .journal-index-card { color: var(--graphite); text-decoration: none; }
 .journal-index-image { position: relative; aspect-ratio: 0.92; overflow: hidden; margin-bottom: 20px; background: var(--pearl); }
 .journal-index-image img { object-fit: cover; transition: transform 600ms var(--ease-soft); }
 .journal-index-card:hover .journal-index-image img { transform: scale(1.035); }
-.journal-index-card h2 { max-width: 14ch; margin: 10px 0 16px; font-size: clamp(1.15rem, 2vw, 1.7rem); font-weight: 500; letter-spacing: -0.035em; line-height: 1; }
+.journal-index-card h2 { max-width: 100%; min-height: 2.1em; margin: 10px 0 16px; font-size: clamp(1.15rem, 1.65vw, 1.45rem); font-weight: 500; letter-spacing: -0.035em; line-height: 1.08; text-wrap: balance; }
 .journal-index-card > p:not(.micro-label) { max-width: 24rem; margin: 0 0 20px; color: var(--muted); line-height: 1.45; }
 .journal-index-card .text-link { font-size: 0.78rem; }
 
@@ -1539,8 +1546,8 @@ html[data-motion-reduced="true"] .motion-reveal {
 .account-nav { display: flex; min-height: 240px; flex-direction: column; gap: 18px; border-right: 1px solid var(--stone); padding: 8px 30px 8px 0; color: var(--muted); font-size: 1rem; }
 .account-nav a, .account-nav span { color: inherit; text-decoration: none; }
 .account-nav .account-nav-active { color: var(--graphite); }
-.account-nav button { margin-top: auto; align-self: flex-start; color: var(--muted-red); font-size: inherit; }
-.account-nav button:hover, .account-nav button:focus-visible { color: #633c3b; }
+.account-nav button { margin-top: auto; align-self: flex-start; color: var(--accent-blue); font-size: inherit; }
+.account-nav button:hover, .account-nav button:focus-visible { color: var(--graphite); }
 .account-dashboard-main { max-width: 48rem; }
 .account-eyebrow { margin: 0 0 16px; color: var(--cinnabar); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .account-dashboard-main h1 { max-width: 10ch; margin: 0 0 24px; }
@@ -1813,6 +1820,12 @@ html[data-motion-reduced="true"] .motion-reveal {
 
 .new-arrivals-subtitle {
   white-space: nowrap;
+}
+
+@media (min-width: 1025px) {
+  .new-arrivals-title {
+    white-space: nowrap;
+  }
 }
 
 .new-arrivals-section {
@@ -2181,7 +2194,8 @@ html[data-motion-reduced="true"] .motion-reveal {
 }
 
 .quiz-section h2 {
-  max-width: 10ch;
+  max-width: none;
+  white-space: nowrap;
 }
 
 .quiz-section p {
@@ -2227,6 +2241,10 @@ html[data-motion-reduced="true"] .motion-reveal {
   padding-bottom: 150px;
 }
 
+.journal-section .section-heading h2 {
+  max-width: none;
+}
+
 .journal-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2248,10 +2266,12 @@ html[data-motion-reduced="true"] .motion-reveal {
 }
 
 .journal-card h3 {
-  max-width: 18ch;
+  max-width: 100%;
+  min-height: 2.24em;
   margin-top: 12px;
   font-size: 1.28rem;
   line-height: 1.12;
+  text-wrap: balance;
 }
 
 .journal-card-copy > p:not(.micro-label) {
@@ -2452,6 +2472,108 @@ html[data-motion-reduced="true"] .motion-reveal {
   }
 }
 
+/* Final shared overrides keep the system consistent after page-specific rules. */
+.nav-link,
+.utility-link,
+.menu-trigger,
+.catalog-trigger,
+.catalog-page-actions a,
+.product-page-actions a { min-height: var(--control-min); display: inline-flex; align-items: center; }
+.button { min-height: var(--control-min); font-size: 1rem; }
+.button-arrow,
+.button-label { height: var(--control-min); min-height: var(--control-min); }
+.button-arrow { width: var(--control-min); flex-basis: var(--control-min); }
+.catalog-page-actions,
+.product-page-actions { gap: var(--space-4); font-size: 1rem; }
+.catalog-toolbar { gap: var(--space-4); margin-bottom: var(--space-5); }
+.catalog-toolbar label,
+.catalog-toolbar summary,
+.catalog-toolbar button,
+.catalog-filter-menu a { min-height: var(--control-min); }
+.catalog-toolbar label,
+.catalog-toolbar summary { display: inline-flex; align-items: center; font-size: 1rem; }
+.catalog-filter-menu a { display: flex; align-items: center; }
+.catalog-product-grid,
+.favorites-grid { gap: var(--space-6) var(--space-3); }
+.journal-index-grid { gap: var(--space-3); }
+.product-gallery-track,
+.product-related-track { gap: var(--space-3); }
+.catalog-quick-add,
+.quick-add { min-height: var(--control-min); font-size: 1rem; }
+.catalog-quick-tags a { min-height: var(--control-min); display: inline-flex; align-items: center; font-size: 1rem; }
+.product-detail-info summary,
+.product-detail-pills summary { min-height: var(--control-min); display: flex; align-items: center; font-size: 1rem; }
+.product-detail-info summary::after { float: none; margin-left: auto; }
+.quantity-control button { width: var(--control-min); min-width: var(--control-min); }
+.password-field button,
+.account-auth-links button,
+.account-nav button,
+.cart-remove { min-height: var(--control-min); display: inline-flex; align-items: center; font-size: 1rem; }
+.cart-summary-note { min-height: var(--control-min); display: flex; align-items: center; font-size: 1rem; }
+.account-dashboard { grid-template-columns: 220px minmax(0, 1fr); }
+.account-nav { gap: var(--space-3); }
+.account-nav-heading {
+  margin: 0;
+  color: var(--graphite);
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.account-nav a,
+.account-nav span,
+.account-nav button {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.account-nav .account-nav-active { font-weight: 500; }
+
+/* Empty saved-state: keep the message compact and editorial rather than display-sized. */
+.favorites-empty h2 {
+  max-width: none;
+  margin-bottom: var(--space-3);
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.checkout-fields { gap: var(--space-3); }
+.footer-top { gap: var(--space-6) var(--space-3); }
+
+@media (max-width: 767px) {
+  .catalog-product-grid,
+  .favorites-grid { gap: var(--space-5) var(--space-3); }
+  .product-gallery-track { gap: 10px; }
+  .product-related-track { gap: 12px; }
+  .account-nav-heading { font-size: 1.125rem; }
+
+  .favorites-empty h2 {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 1024px) {
+  .account-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .account-nav-heading {
+    flex-basis: 100%;
+  }
+
+  .account-nav button {
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 1024px) {
   .header-inner,
   .mega-menu-inner,
@@ -2514,12 +2636,12 @@ html[data-motion-reduced="true"] .motion-reveal {
   .hero-motion h1 {
     position: absolute;
     top: 50%;
-    left: max(1.5rem, calc((100vw - var(--max-width)) / 2 + 1.5rem));
+    left: max(1.5rem, calc((100vw - var(--max-width)) / 2 - 0.5rem));
     grid-column: auto;
-    width: min(38vw, 34rem);
-    margin: 0;
-    font-size: clamp(5rem, 7.4vw, 10rem);
-    line-height: 0.84;
+  width: min(38vw, 34rem);
+  margin: 0;
+  font-size: clamp(4.2rem, 4.8vw, 8rem);
+  line-height: 0.84;
     transform: translateY(-50%);
   }
 
@@ -2574,6 +2696,12 @@ html[data-motion-reduced="true"] .motion-reveal {
 
   .hero-motion-footer {
     right: 2rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  .hero-motion h1 span {
+    white-space: nowrap;
   }
 }
 
@@ -2733,6 +2861,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .collection-products .wishlist-button { display: none; }
   .collection-products .quick-add { display: block; }
   .quiz-section { display: block; }
+  .quiz-section h2 { max-width: 100%; white-space: normal; }
   .quiz-section .button { margin-top: 28px; }
   .ritual-header { min-height: 68px; }
   .ritual-content { padding-top: 58px; }
@@ -2761,12 +2890,14 @@ html[data-motion-reduced="true"] .motion-reveal {
   .journal-card .text-link { gap: 9px; font-size: 0.66rem; }
   .journal-index-header { min-height: 68px; }
   .journal-index-content { padding-top: 58px; }
-  .journal-index-content h1 { max-width: 9ch; font-size: clamp(3rem, 15vw, 4.6rem); }
+  .journal-index-content h1 { max-width: 100%; font-size: clamp(2.5rem, 12vw, 4rem); line-height: 0.94; }
   .journal-index-lead { margin-bottom: 42px; }
   .journal-index-grid { display: block; }
   .journal-index-card { display: block; margin-top: 46px; }
   .journal-index-card:first-child { margin-top: 0; }
   .journal-index-image { aspect-ratio: 1.05; }
+  .journal-index-card h2,
+  .journal-card h3 { max-width: 100%; min-height: 0; }
   .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 42px 18px; padding-top: 58px; padding-bottom: 58px; }
   .footer-brand { grid-column: 1 / -1; }
   .footer-bottom { display: block; padding-bottom: 18px; }

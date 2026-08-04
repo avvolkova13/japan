@@ -319,7 +319,7 @@ export function HomePage() {
         <section className="hero hero-motion section-pad" aria-labelledby="hero-title">
           <div className="hero-motion-background" aria-hidden="true" />
           <div className="hero-motion-copy">
-            <h1 id="hero-title"><span>Тихий</span><span>ритуал</span><span>для кожи</span></h1>
+            <h1 id="hero-title"><span>Тихий ритуал</span><span>для кожи</span></h1>
             <div className="hero-motion-footer">
               <p className="hero-description">Японская косметика, средства<br />для здоровья и бьюти-ритуалы<br />для современного ритма жизни.</p>
             <a className="button button-dark" href="/catalog"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">В каталог</span></a>
@@ -351,7 +351,9 @@ export function HomePage() {
 
         <section className="section-pad new-arrivals-section" id="new-arrivals" aria-labelledby="new-arrivals-title">
           <div className="section-heading split-heading">
-            <div><p className="micro-label">Только что появились</p><h2 id="new-arrivals-title">Новинки для неё</h2></div>
+            <div>
+              <h2 className="new-arrivals-title" id="new-arrivals-title">Новинки для неё</h2>
+            </div>
             <p className="new-arrivals-subtitle">Новые позиции в подборке KANSO.</p>
           </div>
           <div className="new-arrivals-layout">
@@ -364,7 +366,7 @@ export function HomePage() {
         </section>
 
         <section className="section-pad best-sellers-section" id="best-sellers" aria-labelledby="best-sellers-title">
-          <div className="section-heading rail-heading"><div><p className="micro-label">Знакомые фавориты</p><h2 id="best-sellers-title">Хиты продаж</h2></div><div className="rail-controls"><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(-1)} aria-label="Предыдущие хиты продаж">←</button><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(1)} aria-label="Следующие хиты продаж">→</button></div></div>
+          <div className="section-heading rail-heading"><div><h2 id="best-sellers-title">Хиты продаж</h2></div><div className="rail-controls"><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(-1)} aria-label="Предыдущие хиты продаж">←</button><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(1)} aria-label="Следующие хиты продаж">→</button></div></div>
           <div className="product-rail" ref={bestRailRef} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp} onWheel={handleBestRailWheel}>
             {bestSellers.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}
           </div>
@@ -380,11 +382,11 @@ export function HomePage() {
         </section>
 
         <section className="section-pad quiz-section" aria-labelledby="quiz-title">
-          <div><p className="micro-label">Личная отправная точка</p><h2 id="quiz-title">Найти свой ритуал</h2><p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p></div><button className="button button-dark" type="button" onClick={() => setNotice("Квиз пока находится в демонстрационном состоянии.")}><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Пройти квиз</span></button>
+          <div><h2 id="quiz-title">Найти свой ритуал</h2><p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p></div><button className="button button-dark" type="button" onClick={() => setNotice("Квиз пока находится в демонстрационном состоянии.")}><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Пройти квиз</span></button>
         </section>
 
         <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">
-          <div className="section-heading rail-heading"><div><p className="micro-label">Из журнала</p><h2 id="journal-title">Заметки для тихого ритуала</h2></div><Link className="text-link" href="/journal">Весь журнал <span aria-hidden="true">↗</span></Link></div>
+          <div className="section-heading rail-heading"><div><h2 id="journal-title">Заметки для тихого ритуала</h2></div><Link className="text-link" href="/journal">Весь журнал <span aria-hidden="true">↗</span></Link></div>
           <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image, slug]) => <a className="journal-card" href={`/journal/${slug}`} key={title}><VisualImage label={title} src={image} tone={tone} /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
         </section>
       </main>

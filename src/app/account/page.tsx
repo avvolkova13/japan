@@ -122,10 +122,10 @@ export default function AccountPage() {
         <Link className="catalog-back-link" href="/">Вернуться в магазин</Link>
       </header>
       <section className="account-content" aria-labelledby="account-title">
-        {account && <p className="micro-label">Личный кабинет</p>}
         {account ? (
           <div className="account-dashboard">
             <aside className="account-nav" aria-label="Разделы кабинета">
+              <h2 className="account-nav-heading">Личный кабинет</h2>
               <span className="account-nav-active">Обзор</span><Link href="/account#purchase-history">История покупок</Link><Link href="/favorites">Избранное</Link><button type="button" onClick={logout}>Выйти</button>
             </aside>
             <div className="account-dashboard-main">
