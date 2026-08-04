@@ -79,6 +79,44 @@ function VisualImage({
   );
 }
 
+function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
+  return (
+    <div className="quiz-pinned-scene">
+      <div className="quiz-side-track quiz-side-track-left" aria-hidden="true">
+        <div className="quiz-side-pin-range">
+          <div className="quiz-side-image-sticky">
+            <VisualImage className="quiz-side-image" label="" src="/images/kanso/editorial.png" tone="tone-pearl" />
+          </div>
+        </div>
+      </div>
+
+      <div className="quiz-center-track">
+        <div className="quiz-center-pin-range">
+          <div className="quiz-center-composition">
+            <VisualImage className="quiz-image-center" label="Портрет для подбора личного ритуала" src="/images/kanso/ritual-portrait.png" tone="tone-pearl" />
+            <div className="quiz-copy">
+              <h2 id="quiz-title">Найти свой ритуал</h2>
+              <p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p>
+              <button className="button button-dark" type="button" onClick={onStartQuiz}>
+                <span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span>
+                <span className="button-label">Пройти квиз</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="quiz-side-track quiz-side-track-right" aria-hidden="true">
+        <div className="quiz-side-pin-range">
+          <div className="quiz-side-image-sticky">
+            <VisualImage className="quiz-side-image" label="" src="/images/kanso/wellness.png" tone="tone-stone" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProductCard({
   product,
   wished,
@@ -381,8 +419,8 @@ export function HomePage() {
           <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title"><span>Увлажняющий</span><span>уход</span></h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
         </section>
 
-        <section className="section-pad quiz-section" aria-labelledby="quiz-title">
-          <div><h2 id="quiz-title">Найти свой ритуал</h2><p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p></div><button className="button button-dark" type="button" onClick={() => setNotice("Квиз пока находится в демонстрационном состоянии.")}><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Пройти квиз</span></button>
+        <section className="quiz-section" aria-labelledby="quiz-title">
+          <QuizPinnedScene onStartQuiz={() => setNotice("Квиз пока находится в демонстрационном состоянии.")} />
         </section>
 
         <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">

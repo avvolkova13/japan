@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const revealSelectors = [
   "main > header",
   "main > nav",
-  "main > section:not(.hero-motion):not(.checkout-content)",
+  "main > section:not(.hero-motion):not(.checkout-content):not(.quiz-section)",
   "main > article",
   "main > form",
   "main > aside",
@@ -42,10 +42,10 @@ function decorate(root: ParentNode) {
     : Array.from(root.querySelectorAll<HTMLElement>(selector));
 
   elements.forEach((element) => {
-    if (element.classList.contains("motion-reveal") || element.closest(".hero-motion")) return;
+    if (element.classList.contains("motion-reveal") || element.closest(".hero-motion, .quiz-section")) return;
 
     const isImage = element.matches("figure, .catalog-product-card, .related-card, .journal-card");
-    const isSection = element.matches("main > header, main > section:not(.hero-motion):not(.checkout-content), .section-heading");
+    const isSection = element.matches("main > header, main > section:not(.hero-motion):not(.checkout-content):not(.quiz-section), .section-heading");
     const variant = isImage ? "image" : isSection ? "mask" : "text";
     const siblings = element.parentElement ? Array.from(element.parentElement.children) : [];
     const siblingIndex = Math.min(Math.max(siblings.indexOf(element), 0), 6);
@@ -69,6 +69,20 @@ export function MotionObserver() {
       { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
     );
 
+    let scrollFrame: number | null = null;
+
+    const revealVisible = () => {
+      const viewportBottom = window.innerHeight * 0.92;
+
+      document.querySelectorAll<HTMLElement>(".motion-reveal:not(.is-visible)").forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < viewportBottom && rect.bottom > 0) {
+          element.classList.add("is-visible");
+          observer.unobserve(element);
+        }
+      });
+    };
+
     const observe = (root: ParentNode = document) => {
       decorate(root);
       root.querySelectorAll<HTMLElement>(".motion-reveal:not(.is-visible)").forEach((element) => observer.observe(element));
@@ -76,6 +90,16 @@ export function MotionObserver() {
 
     observe();
     document.documentElement.dataset.motionReady = "true";
+    revealVisible();
+
+    const onScroll = () => {
+      if (scrollFrame !== null) return;
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = null;
+        revealVisible();
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
 
     const mutations = new MutationObserver((records) => {
       records.forEach((record) => record.addedNodes.forEach((node) => {
@@ -93,6 +117,8 @@ export function MotionObserver() {
     return () => {
       mutations.disconnect();
       observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      if (scrollFrame !== null) window.cancelAnimationFrame(scrollFrame);
       reduceMotion.removeEventListener("change", onMotionPreferenceChange);
       delete document.documentElement.dataset.motionReady;
       delete document.documentElement.dataset.motionReduced;

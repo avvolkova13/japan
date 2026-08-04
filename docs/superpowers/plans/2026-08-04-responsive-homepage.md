@@ -170,26 +170,24 @@ Expected: оба значения `true` на каждой ширине.
 
 - [ ] **Step 4: Editorial и коллекция**
 
-Для планшета заменить текущую растянутую двухстрочную сетку коллекции на последовательную композицию: копия во всю ширину сверху, изображение и три товара ниже. Использовать:
+Для планшета заменить текущую растянутую двухстрочную сетку коллекции на утверждённую последовательную композицию: копия во всю ширину сверху, широкое изображение и три товара ниже. Использовать:
 
 ```css
 @media (min-width: 768px) and (max-width: 1024px) {
   .collection-inner {
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
   }
 
   .collection-copy {
-    grid-column: 1 / -1;
+    grid-column: 1;
     grid-row: auto;
     max-width: 38rem;
     padding-bottom: 2rem;
   }
 
   .collection-visual,
-  .collection-products {
-    grid-column: auto;
-  }
+  .collection-products { grid-column: 1; }
 }
 ```
 
