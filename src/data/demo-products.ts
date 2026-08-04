@@ -11,17 +11,6 @@ const imageByCategory = {
   Devices: "/images/kanso/products/tokio-oil-cutout.png",
 } as const;
 
-const hoverImageByCategory = {
-  Face: "/images/kanso/products/exo-cutout.png",
-  Hair: "/images/kanso/products/tokio-oil-cutout.png",
-  Body: "/images/kanso/products/spa-treatment-cutout.png",
-  "Sun Care": "/images/kanso/products/amaranth-dr-soie-cutout.png",
-  Wellness: "/images/kanso/products/spa-treatment-cutout.png",
-  "Oral Care": "/images/kanso/products/quality-1st-cutout.png",
-  Sets: "/images/kanso/products/tokio-home-cutout.png",
-  Devices: "/images/kanso/products/tokio-treatment-cutout.png",
-} as const;
-
 const imageByProduct: Record<string, string> = {
   "new-01": "/images/kanso/products/amaranth-dr-soie.png",
   "new-02": "/images/kanso/products/direia-uv.png",
@@ -32,6 +21,7 @@ const imageByProduct: Record<string, string> = {
   "best-03": "/images/kanso/products/exo.png",
   "best-04": "/images/kanso/products/tokio-oil.png",
   "best-05": "/images/kanso/products/tokio-treatment.png",
+  "face-02": "/images/kanso/products/amaranth-dr-soie.png",
 } as const;
 
 const cutoutByProduct: Record<string, string> = {
@@ -44,6 +34,7 @@ const cutoutByProduct: Record<string, string> = {
   "best-03": "/images/kanso/products/exo-cutout.png",
   "best-04": "/images/kanso/products/tokio-oil-cutout.png",
   "best-05": "/images/kanso/products/tokio-treatment-cutout.png",
+  "face-02": "/images/kanso/products/amaranth-dr-soie-cutout.png",
 };
 
 const galleryImagesByProduct: Record<string, readonly string[]> = {
@@ -78,19 +69,23 @@ const productSeeds = [
 ] as const;
 
 export const demoProducts = productSeeds.map(
-  ([id, brand, name, category, price, volume, badge, description]) => ({
-    id,
-    brand,
-    name,
-    category,
-    price,
-    volume,
-    image: cutoutByProduct[id] ?? imageByProduct[id] ?? imageByCategory[category],
-    hoverImage: imageByProduct[id] ?? hoverImageByCategory[category],
-    galleryImages: galleryImagesByProduct[id],
-    badge,
-    description,
-    available: false,
-    availability: "catalog-preview",
-  }),
+  ([id, brand, name, category, price, volume, badge, description]) => {
+    const image = cutoutByProduct[id] ?? imageByProduct[id] ?? imageByCategory[category];
+
+    return {
+      id,
+      brand,
+      name,
+      category,
+      price,
+      volume,
+      image,
+      hoverImage: imageByProduct[id] ?? image,
+      galleryImages: galleryImagesByProduct[id],
+      badge,
+      description,
+      available: false,
+      availability: "catalog-preview",
+    };
+  },
 ) satisfies readonly DemoProduct[];

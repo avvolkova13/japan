@@ -2,6 +2,7 @@ import Link from "next/link";
 import { demoProducts } from "@/data/demo-products";
 import { CatalogProductCard } from "@/components/catalog-product-card";
 import { CatalogToolbar } from "@/components/catalog-toolbar";
+import { CartNavLink } from "@/components/cart-nav-link";
 
 type CatalogPageProps = {
   searchParams: Promise<{ brand?: string | string[]; category?: string | string[]; new?: string | string[]; focus?: string | string[]; sort?: string | string[] }>;
@@ -28,48 +29,45 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
   const products = [...filteredProducts].sort((a, b) => sort === "price-asc" ? a.price - b.price : sort === "price-desc" ? b.price - a.price : 0);
   const categories = [...new Set(demoProducts.map((product) => product.category))];
   const brands = [...new Set(demoProducts.map((product) => product.brand))];
+  const quickTags = [
+    { label: "Все", href: "/catalog", active: !brand && !category && !isNew && !isHydration },
+    { label: "Новинки", href: "/catalog?new=true", active: isNew },
+    { label: "Лицо", href: "/catalog?category=Face", active: category.toLowerCase() === "face" },
+    { label: "Увлажнение", href: "/catalog?focus=hydration", active: isHydration },
+    { label: "Волосы", href: "/catalog?category=Hair", active: category.toLowerCase() === "hair" },
+    { label: "Wellness", href: "/catalog?category=Wellness", active: category.toLowerCase() === "wellness" },
+  ];
 
-  const featureRows = [];
-  const compactRows = [];
-  const fallbackProducts = [];
+  const editorialGroups: Array<{ small: typeof products; feature: typeof products }> = [];
   let cursor = 0;
   while (cursor < products.length) {
-    const featureProducts = products.slice(cursor, cursor + 6);
-    if (featureProducts.length < 6) {
-      fallbackProducts.push(...featureProducts);
-      break;
-    }
-    featureRows.push(featureProducts);
-    const compactProducts = products.slice(cursor + 6, cursor + 10);
-    if (compactProducts.length > 0) compactRows.push(compactProducts);
-    cursor += 10;
+    const small = products.slice(cursor, cursor + 4);
+    cursor += 4;
+    const feature = products.slice(cursor, cursor + 2);
+    cursor += 2;
+    editorialGroups.push({ small, feature });
   }
 
   return (
     <main className="catalog-page">
       <header className="catalog-page-header">
         <Link className="brand-mark" href="/" aria-label="KANSO — на главную">KANSO</Link>
-        <nav className="catalog-page-actions" aria-label="Покупательская навигация"><Link href="/account">Войти</Link><Link href="/favorites">Избранное</Link><Link href="/cart">Корзина</Link></nav>
+        <nav className="catalog-page-actions" aria-label="Покупательская навигация"><Link href="/account">Войти</Link><Link href="/favorites">Избранное</Link><CartNavLink /></nav>
       </header>
       <section className="catalog-page-content" aria-labelledby="catalog-title">
-        <div className="catalog-breadcrumbs"><Link href="/">Главная</Link><span aria-hidden="true">/</span><span>Каталог</span>{isHydration && <><span aria-hidden="true">/</span><span>Увлажняющий уход</span></>}{isNew && <><span aria-hidden="true">/</span><span>Новинки</span></>}{brand && <><span aria-hidden="true">/</span><span>{brand}</span></>}{category && <><span aria-hidden="true">/</span><span>{category}</span></>}</div>
-        <div className="catalog-intro-row"><div><p className="micro-label">Каталог KANSO</p><h1 id="catalog-title">{isHydration ? "Увлажняющий уход" : isNew ? "Новинки" : brand ? `Товары бренда ${brand}` : category ? `Уход: ${category}` : "Все товары"}</h1></div><p className="catalog-page-intro">Японская косметика, уход и wellness-продукция в продуманной подборке KANSO.</p></div>
-        <CatalogToolbar category={category} brand={brand} sort={sort} categories={categories} brands={brands} /><span className="catalog-count catalog-count-after-toolbar">{products.length} позиций</span>
+        <div className="catalog-editorial-hero">
+          <div className="catalog-editorial-side catalog-editorial-side--left"><span>Уход как ежедневный ритуал</span><p>Японская точность<br />в каждой формуле</p></div>
+          <h1 id="catalog-title">КАТАЛОГ</h1>
+          <div className="catalog-editorial-side catalog-editorial-side--right"><p>Японская косметика<br />для тихих ритуалов</p><span>KANSO / 2026</span></div>
+        </div>
+        <nav className="catalog-quick-tags" aria-label="Быстрые подборки">{quickTags.map((tag) => <Link className={tag.active ? "is-active" : ""} href={tag.href} key={tag.label} aria-current={tag.active ? "page" : undefined}>{tag.label}</Link>)}</nav>
+        <CatalogToolbar category={category} brand={brand} sort={sort} categories={categories} brands={brands} />
         {products.length > 0 ? (
-          <div className="catalog-product-layout">
-            {featureRows.map((row, rowIndex) => (
-              <section className="catalog-feature-row" aria-label={`Подборка товаров ${rowIndex + 1}`} key={`feature-${rowIndex}`}>
-                <CatalogProductCard product={row[0]} variant="feature-left" />
-                {row.slice(1, 5).map((product) => <CatalogProductCard key={product.id} product={product} variant="small" />)}
-                <CatalogProductCard product={row[5]} variant="feature-right" />
-              </section>
-            ))}
-            {compactRows.map((row, rowIndex) => (
-              <section className="catalog-small-row" aria-label={`Компактная подборка товаров ${rowIndex + 1}`} key={`compact-${rowIndex}`}>
-                {row.map((product) => <CatalogProductCard key={product.id} product={product} variant="standard" />)}
-              </section>
-            ))}
-            {fallbackProducts.length > 0 && <section className="catalog-small-row catalog-small-row-fallback" aria-label="Остальные товары">{fallbackProducts.map((product) => <CatalogProductCard key={product.id} product={product} variant="standard" />)}</section>}
+          <div className="catalog-editorial-layout">
+            {editorialGroups.map((group, groupIndex) => <section className="catalog-editorial-group" aria-label={`Подборка товаров ${groupIndex + 1}`} key={`editorial-${groupIndex}`}>
+              {group.small.length > 0 && <div className="catalog-editorial-small-row">{group.small.map((product) => <CatalogProductCard key={product.id} product={product} variant="small" />)}</div>}
+              {group.feature.length > 0 && <div className="catalog-editorial-feature-row">{group.feature.map((product) => <CatalogProductCard key={product.id} product={product} variant="standard" />)}</div>}
+            </section>)}
           </div>
         ) : (
           <div className="catalog-empty-state">

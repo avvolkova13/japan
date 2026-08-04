@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { demoProducts } from "@/data/demo-products";
 import { siteConfig } from "@/config/site";
+import { CartNavLink } from "@/components/cart-nav-link";
 
 const brands = [
   "Hada Labo",
@@ -282,7 +283,7 @@ export function HomePage() {
             <button className="utility-link search-trigger" type="button" onClick={() => setSearchOpen((open) => !open)} aria-expanded={searchOpen}>Поиск</button>
             <a className="utility-link desktop-only header-login-link" href="/account">{accountSignedIn ? "Кабинет" : "Войти"}</a>
             <a className="utility-link responsive-utility wishlist-nav" href="/favorites">Избранное</a>
-            <a className="utility-link responsive-utility cart-nav" href="/cart">Корзина</a>
+            <CartNavLink className="utility-link responsive-utility cart-nav" />
             <button className="menu-trigger" type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label={mobileMenuOpen ? "Закрыть меню" : "Открыть меню"}>
               <span>{mobileMenuOpen ? "Закрыть" : "Меню"}</span>
             </button>

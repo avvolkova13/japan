@@ -6,9 +6,12 @@ import { FormEvent, useEffect, useState } from "react";
 
 const AUTH_KEY = "kanso-auth";
 const USERS_KEY = "kanso-users";
+const ORDERS_KEY = "kanso-orders";
+const ORDER_KEY = "kanso-last-order";
 
 type Account = { name: string; email: string };
 type StoredUser = Account & { password: string };
+type StoredOrder = { id: string; total: number; payment: string; name: string; createdAt?: string };
 type AccountMode = "login" | "register" | "forgot";
 
 function readAccount(): Account | null {
@@ -24,6 +27,23 @@ function readUsers(): StoredUser[] {
   try { return JSON.parse(window.localStorage.getItem(USERS_KEY) ?? "[]") as StoredUser[]; } catch { return []; }
 }
 
+function readOrders(): StoredOrder[] {
+  try {
+    const storedOrders: unknown = JSON.parse(window.localStorage.getItem(ORDERS_KEY) ?? "[]");
+    if (Array.isArray(storedOrders)) {
+      return storedOrders.filter((order): order is StoredOrder => Boolean(order) && typeof order === "object" && typeof (order as StoredOrder).id === "string" && typeof (order as StoredOrder).total === "number");
+    }
+    const lastOrder: unknown = JSON.parse(window.localStorage.getItem(ORDER_KEY) ?? "null");
+    return lastOrder && typeof lastOrder === "object" && typeof (lastOrder as StoredOrder).id === "string" && typeof (lastOrder as StoredOrder).total === "number" ? [lastOrder as StoredOrder] : [];
+  } catch {
+    return [];
+  }
+}
+
+function formatPrice(price: number) {
+  return `${new Intl.NumberFormat("ru-RU").format(price)} ₽`;
+}
+
 export default function AccountPage() {
   const [account, setAccount] = useState<Account | null>(null);
   const [mode, setMode] = useState<AccountMode>("login");
@@ -31,9 +51,13 @@ export default function AccountPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [orders, setOrders] = useState<StoredOrder[]>([]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setAccount(readAccount()), 0);
+    const timer = window.setTimeout(() => {
+      setAccount(readAccount());
+      setOrders(readOrders());
+    }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -89,7 +113,7 @@ export default function AccountPage() {
   };
 
   const title = mode === "register" ? "Создать аккаунт" : mode === "forgot" ? "Восстановить доступ" : "Войти в KANSO";
-  const description = mode === "register" ? "Сохраняйте адреса, заказы и избранные средства." : mode === "forgot" ? "Введите email — мы отправим ссылку для восстановления доступа." : "Сохраняйте корзину и возвращайтесь к своим ритуалам ухода.";
+  const description = mode === "register" ? "Сохраняйте заказы и избранные средства." : mode === "forgot" ? "Введите email — мы отправим ссылку для восстановления доступа." : "Сохраняйте корзину и возвращайтесь к своим ритуалам ухода.";
 
   return (
     <main className="account-page">
@@ -98,17 +122,22 @@ export default function AccountPage() {
         <Link className="catalog-back-link" href="/">Вернуться в магазин</Link>
       </header>
       <section className="account-content" aria-labelledby="account-title">
-        <p className="micro-label">Личный кабинет</p>
+        {account && <p className="micro-label">Личный кабинет</p>}
         {account ? (
           <div className="account-dashboard">
             <aside className="account-nav" aria-label="Разделы кабинета">
-              <span className="account-nav-active">Обзор</span><Link href="/cart">Заказы</Link><span>Избранное</span><span>Адреса</span><button type="button" onClick={logout}>Выйти</button>
+              <span className="account-nav-active">Обзор</span><Link href="/account#purchase-history">История покупок</Link><Link href="/favorites">Избранное</Link><button type="button" onClick={logout}>Выйти</button>
             </aside>
             <div className="account-dashboard-main">
               <p className="account-eyebrow">Ваш KANSO</p>
               <h1 id="account-title">Здравствуйте, {account.name}</h1>
               <p>Ваши покупки и предпочтения собраны в одном спокойном пространстве.</p>
               <div className="account-overview-grid"><div><span>Профиль</span><strong>{account.email}</strong></div><div><span>Корзина</span><strong><Link href="/cart">Открыть корзину ↗</Link></strong></div></div>
+              <section className="account-history" id="purchase-history" aria-labelledby="purchase-history-title">
+                <p className="account-eyebrow">Покупки</p>
+                <h2 id="purchase-history-title">История покупок</h2>
+                {orders.length ? <div className="account-history-list">{orders.map((order) => <article className="account-history-order" key={`${order.id}-${order.createdAt ?? order.total}`}><div><span>Заказ</span><strong>{order.id}</strong></div><div><span>Сумма</span><strong>{formatPrice(order.total)}</strong></div><div><span>Состояние</span><strong>Оформлен</strong></div></article>)}</div> : <p className="account-history-empty">Здесь появятся ваши оформленные заказы.</p>}
+              </section>
               {message && <p className="form-message" role="status">{message}</p>}
             </div>
           </div>
@@ -116,7 +145,6 @@ export default function AccountPage() {
           <div className="account-auth-layout">
             <div className="account-auth-editorial">
               <div className="account-auth-visual"><Image src="/images/kanso/editorial.png" alt="Тихая композиция KANSO" fill sizes="(max-width: 767px) 100vw, 42vw" priority /></div>
-              <div className="account-auth-caption"><span>KANSO / 01</span><span>Точный уход</span></div>
             </div>
             <div className="account-auth-panel">
               <h1 id="account-title">{title}</h1>
