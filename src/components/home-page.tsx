@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type WheelEvent as ReactWheelEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type WheelEvent as ReactWheelEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { demoProducts } from "@/data/demo-products";
@@ -98,7 +98,7 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
             <VisualImage className="quiz-image-center" label="Портрет для подбора личного ритуала" src="/images/kanso/ritual-portrait.png" tone="tone-pearl" sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1024px) 42vw, 34vw" />
             <div className="quiz-copy">
               <h2 id="quiz-title">Найти свой ритуал</h2>
-              <p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p>
+              <p>Ответьте на вопросы и подберите уход для кожи.</p>
               <button className="button button-dark" type="button" onClick={onStartQuiz}>
                 <span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span>
                 <span className="button-label">Пройти квиз</span>
@@ -116,6 +116,103 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function PhilosophyCarousel() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [slideStep, setSlideStep] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const storyCount = journalStories.length;
+  const activeStory = journalStories[activeIndex];
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const measure = () => {
+      const slides = track.querySelectorAll<HTMLElement>(".philosophy-slide");
+      if (slides.length < 2) return;
+      setSlideStep(slides[1].getBoundingClientRect().left - slides[0].getBoundingClientRect().left);
+    };
+
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(track.parentElement ?? track);
+    return () => observer.disconnect();
+  }, []);
+
+  const move = (nextDirection: 1 | -1) => {
+    setActiveIndex((current) => Math.min(storyCount - 1, Math.max(0, current + nextDirection)));
+  };
+
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      move(-1);
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      move(1);
+    }
+  };
+
+  return (
+    <section className="philosophy-section" id="journal" aria-labelledby="journal-title">
+      <div className="philosophy-heading">
+        <h2 id="journal-title">Философия KANSO</h2>
+        <span aria-hidden="true">{String(activeIndex + 1).padStart(2, "0")} / {String(storyCount).padStart(2, "0")}</span>
+      </div>
+
+      <div
+        className="philosophy-carousel"
+        role="region"
+        aria-roledescription="карусель"
+        aria-label="Материалы журнала KANSO"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      >
+        <div className="philosophy-viewport">
+          <div
+            className="philosophy-track"
+            ref={trackRef}
+            style={{ transform: `translate3d(${-activeIndex * slideStep}px, 0, 0)` }}
+          >
+            {journalStories.map(([category, title, copy, tone, image, slug], index) => (
+              <article className="philosophy-slide" aria-hidden={index !== activeIndex} key={slug}>
+                <div className="philosophy-image-card">
+                  <VisualImage label={title} src={image} tone={tone} sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1024px) 46vw, 31vw" />
+                </div>
+                <div className="philosophy-copy-card">
+                  <p className="philosophy-eyebrow"><span aria-hidden="true" />{category}</p>
+                  <div className="philosophy-copy-main">
+                    <h3>{title}</h3>
+                    <p>{copy}</p>
+                  </div>
+                  <Link className="philosophy-link" href={`/journal/${slug}`} tabIndex={index === activeIndex ? 0 : -1}>
+                    <span aria-hidden="true">↳</span>
+                    Читать статью
+                  </Link>
+                </div>
+              </article>
+            ))}
+            <div className="philosophy-trailing-image" aria-hidden="true">
+              <VisualImage label="" src={journalStories[0][4]} tone={journalStories[0][3]} sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1024px) 45vw, 31vw" />
+            </div>
+          </div>
+
+          <div className="philosophy-controls">
+            <button className="philosophy-arrow philosophy-arrow--left" type="button" onClick={() => move(-1)} aria-label="Предыдущий материал" disabled={activeIndex === 0}>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button className="philosophy-arrow philosophy-arrow--right" type="button" onClick={() => move(1)} aria-label="Следующий материал" disabled={activeIndex === storyCount - 1}>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+        <span className="sr-only" aria-live="polite">{activeStory[1]}</span>
+      </div>
+    </section>
   );
 }
 
@@ -427,10 +524,7 @@ export function HomePage() {
           <QuizPinnedScene onStartQuiz={() => setNotice("Квиз пока находится в демонстрационном состоянии.")} />
         </section>
 
-        <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">
-          <div className="section-heading rail-heading"><div><h2 id="journal-title">Философия KANSO</h2></div><Link className="text-link" href="/journal">Весь журнал <span aria-hidden="true">↗</span></Link></div>
-          <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image, slug]) => <a className="journal-card" href={`/journal/${slug}`} key={title}><VisualImage label={title} src={image} tone={tone} sizes="(max-width: 767px) 100vw, 33vw" /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
-        </section>
+        <PhilosophyCarousel />
       </main>
 
       <footer className="site-footer" id="footer">
