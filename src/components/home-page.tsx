@@ -428,7 +428,7 @@ export function HomePage() {
         </section>
 
         <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">
-          <div className="section-heading rail-heading"><div><h2 id="journal-title">Заметки для тихого ритуала</h2></div><Link className="text-link" href="/journal">Весь журнал <span aria-hidden="true">↗</span></Link></div>
+          <div className="section-heading rail-heading"><div><h2 id="journal-title">Философия KANSO</h2></div><Link className="text-link" href="/journal">Весь журнал <span aria-hidden="true">↗</span></Link></div>
           <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image, slug]) => <a className="journal-card" href={`/journal/${slug}`} key={title}><VisualImage label={title} src={image} tone={tone} sizes="(max-width: 767px) 100vw, 33vw" /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
         </section>
       </main>
