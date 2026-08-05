@@ -66,7 +66,10 @@ a {
 
 button:focus-visible,
 a:focus-visible,
-input:focus-visible {
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
   outline: 2px solid var(--graphite);
   outline-offset: 4px;
 }
@@ -2985,6 +2988,14 @@ html[data-motion-reduced="true"] .motion-reveal {
   }
 
   .header-inner { display: grid; min-height: 64px; grid-template-columns: minmax(0, 1fr) 184px; gap: 8px; overflow: hidden; }
+  .site-header button.brand-mark,
+  .wishlist-button,
+  .control-button,
+  .favorite-card-image button { width: 44px; min-width: 44px; height: 44px; min-height: 44px; }
+  .site-header button.brand-mark { width: auto; }
+  .catalog-toolbar select { min-height: 44px; }
+  .footer-column a,
+  .footer-column button { display: flex; min-height: 44px; align-items: center; }
   .catalog-page-header,
   .catalog-page-content { width: calc(100% - 2rem); }
   .catalog-page-header { min-height: 64px; }

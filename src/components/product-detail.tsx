@@ -192,7 +192,7 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
         </div>
       </section>
       <section className="product-related section-pad-small" aria-labelledby="related-title">
-        <div className="product-related-header"><p className="micro-label" id="related-title">Другие предложения</p><span>Прокрутите в сторону</span></div>
+        <div className="product-related-header"><h2 className="micro-label" id="related-title">Другие предложения</h2><span>Прокрутите в сторону</span></div>
         <div className="product-related-track" ref={relatedTrackRef} onPointerDown={startRelatedDrag} onPointerMove={moveRelatedDrag} onPointerUp={finishRelatedDrag} onPointerCancel={finishRelatedDrag} onWheel={(event) => { if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) { event.preventDefault(); event.currentTarget.scrollBy({ left: event.deltaY, behavior: "smooth" }); } }} onKeyDown={handleRelatedKeyDown} onClick={(event) => { if (relatedDragRef.current.moved) { event.preventDefault(); relatedDragRef.current.moved = false; } }} role="region" aria-label="Похожие товары" tabIndex={0}>
           {[...demoProducts.filter((item) => item.brand === product.brand && item.id !== product.id), ...demoProducts.filter((item) => item.id !== product.id)].slice(0, 6).map((item) => <Link className="related-card" href={`/product/${item.id}`} key={item.id}><div><Image src={item.image} alt={`${item.brand} — ${item.name}`} fill sizes="(max-width: 767px) 78vw, 34vw" /></div><p className="product-brand">{item.brand}</p><h3>{item.name}</h3><p className="related-card-meta">{item.volume}<span>{formatPrice(item.price)}</span></p></Link>)}
         </div>
