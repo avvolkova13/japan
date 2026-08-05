@@ -319,8 +319,8 @@ export function HomePage() {
           </nav>
           <div className="header-actions">
             <button className="utility-link search-trigger" type="button" onClick={() => setSearchOpen((open) => !open)} aria-expanded={searchOpen}>Поиск</button>
-            <a className="utility-link desktop-only header-login-link" href="/account">{accountSignedIn ? "Кабинет" : "Войти"}</a>
-            <a className="utility-link responsive-utility wishlist-nav" href="/favorites">Избранное</a>
+            <Link className="utility-link desktop-only header-login-link" href="/account">{accountSignedIn ? "Кабинет" : "Войти"}</Link>
+            <Link className="utility-link responsive-utility wishlist-nav" href="/favorites">Избранное</Link>
             <CartNavLink className="utility-link responsive-utility cart-nav" />
             <button className="menu-trigger" type="button" onClick={() => setMobileMenuOpen((open) => !open)} aria-expanded={mobileMenuOpen} aria-label={mobileMenuOpen ? "Закрыть меню" : "Открыть меню"}>
               <span>{mobileMenuOpen ? "Закрыть" : "Меню"}</span>
@@ -333,7 +333,7 @@ export function HomePage() {
               <p className="micro-label">Каталог</p>
               <div className="mega-grid">
                 {["Face", "Hair", "Body", "Sun Care", "Wellness", "Oral Care", "Sets", "Devices"].map((category) => (
-                  <a key={category} href={`/catalog?category=${encodeURIComponent(category)}`} onClick={() => setCatalogOpen(false)}>{categoryLabels[category]}<span aria-hidden="true">↗</span></a>
+                  <Link key={category} href={`/catalog?category=${encodeURIComponent(category)}`} onClick={() => setCatalogOpen(false)}>{categoryLabels[category]}<span aria-hidden="true">↗</span></Link>
                 ))}
               </div>
             </div>
@@ -360,7 +360,7 @@ export function HomePage() {
             <h1 id="hero-title"><span>Тихий ритуал</span><span>для кожи</span></h1>
             <div className="hero-motion-footer">
               <p className="hero-description">Японская косметика, средства<br />для здоровья и бьюти-ритуалы<br />для современного ритма жизни.</p>
-            <a className="button button-dark" href="/catalog"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">В каталог</span></a>
+            <Link className="button button-dark" href="/catalog"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">В каталог</span></Link>
             </div>
           </div>
           <div className="hero-product-stage">
@@ -430,7 +430,7 @@ export function HomePage() {
       </main>
 
       <footer className="site-footer" id="footer">
-        <div className="footer-top"><div className="footer-brand"><span className="brand-mark">{siteConfig.publicBrandName}</span><p>Продуманная подборка японского ухода, красоты и средств для благополучия.</p></div><div className="footer-column"><p className="micro-label">Покупки</p><a href="#category">Каталог</a><a href="#new-arrivals">Новинки</a><a href="#best-sellers">Хиты продаж</a><a href="#brands">Бренды</a></div><div className="footer-column"><p className="micro-label">Помощь</p><a href="#footer">Доставка</a><a href="#footer">Оплата</a><a href="#footer">Вопросы и ответы</a><a href="#footer">Контакты</a></div><div className="footer-column"><p className="micro-label">О KANSO</p><a href="#footer">О бренде</a><a href="#journal">Журнал</a><a href="#footer">Конфиденциальность</a><a href="#footer">Условия</a></div><div className="footer-column"><p className="micro-label">Мы в сети</p><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Instagram</button><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Pinterest</button></div></div>
+        <div className="footer-top"><div className="footer-brand"><span className="brand-mark">{siteConfig.publicBrandName}</span><p>Продуманная подборка японского ухода, красоты и средств для благополучия.</p></div><div className="footer-column"><p className="micro-label">Покупки</p><Link href="/catalog">Каталог</Link><a href="#new-arrivals">Новинки</a><a href="#best-sellers">Хиты продаж</a><a href="#brands">Бренды</a></div><div className="footer-column"><p className="micro-label">Помощь</p><Link href="/delivery">Доставка</Link><Link href="/payment">Оплата</Link><Link href="/faq">Вопросы и ответы</Link><Link href="/contacts">Контакты</Link></div><div className="footer-column"><p className="micro-label">О KANSO</p><Link href="/about">О бренде</Link><Link href="/journal">Журнал</Link><Link href="/privacy">Конфиденциальность</Link><Link href="/terms">Условия</Link></div><div className="footer-column"><p className="micro-label">Мы в сети</p><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Instagram</button><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Pinterest</button></div></div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} {siteConfig.publicBrandName}</span></div>
       </footer>
 

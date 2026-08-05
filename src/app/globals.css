@@ -2506,6 +2506,53 @@ html[data-motion-reduced="true"] .motion-reveal {
   white-space: nowrap;
 }
 
+.information-page { min-height: 100vh; color: var(--graphite); background: var(--canvas); }
+.information-header { display: flex; width: calc(100% - 3rem); max-width: var(--max-width); min-height: 78px; margin: 0 auto; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--stone); }
+.information-header nav { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 0.78rem; }
+.information-header a { transition: color 220ms ease; }
+.information-header nav a:hover { color: var(--cinnabar); }
+.information-content { width: calc(100% - 3rem); max-width: var(--max-width); margin: 0 auto; padding-bottom: 96px; }
+.information-hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 18px; align-items: end; padding: clamp(88px, 11vw, 158px) 0 clamp(56px, 7vw, 92px); }
+.information-hero > .micro-label { grid-column: 1 / -1; margin-bottom: 6px; }
+.information-hero h1 { grid-column: 1 / -1; max-width: 100%; margin: 0; padding-bottom: 0.06em; overflow-wrap: anywhere; font-size: clamp(4rem, 8vw, 8.5rem); font-weight: 500; letter-spacing: -0.075em; line-height: 0.9; }
+.information-lead { grid-column: 8 / -1; max-width: 31rem; margin: 24px 0 0; color: var(--ink-soft); font-size: clamp(1.05rem, 1.55vw, 1.45rem); line-height: 1.45; }
+.information-note { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 18px; max-width: 50rem; margin: 0 0 clamp(64px, 8vw, 112px) auto; border-top: 1px solid var(--graphite); border-bottom: 1px solid var(--stone); padding: 22px 0; }
+.information-note > span { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid var(--graphite); border-radius: 50%; font-family: Georgia, serif; font-style: italic; }
+.information-note p { margin: 4px 0 0; color: var(--ink-soft); line-height: 1.55; }
+.information-sections { border-top: 1px solid var(--stone); }
+.information-sections > section { display: grid; grid-template-columns: minmax(72px, 0.7fr) minmax(0, 3fr); gap: 24px; border-bottom: 1px solid var(--stone); padding: clamp(30px, 4vw, 54px) 0; }
+.information-index { color: var(--cinnabar); font-size: 0.72rem; letter-spacing: 0.1em; }
+.information-sections section > div { width: min(100%, 50rem); margin-left: auto; }
+.information-sections h2 { margin: 0 0 16px; font-size: clamp(1.8rem, 3.3vw, 3.8rem); font-weight: 500; letter-spacing: -0.05em; line-height: 1.02; }
+.information-sections p { max-width: 43rem; margin: 0; color: var(--ink-soft); font-size: 1rem; line-height: 1.65; }
+.information-sections p + p { margin-top: 12px; }
+.information-footer-nav { display: flex; justify-content: space-between; gap: 24px; padding-top: 36px; }
+
+@media (max-width: 767px) {
+  .information-header,
+  .information-content { width: calc(100% - 2rem); }
+  .information-header { min-height: 64px; }
+  .information-header nav { gap: 16px; font-size: 0.75rem; }
+  .information-header a,
+  .information-footer-nav a { display: flex; min-height: 44px; align-items: center; }
+  .information-hero { display: block; padding: 64px 0 48px; }
+  .information-hero > .micro-label { margin-bottom: 22px; }
+  .information-hero h1 { max-width: 9ch; font-size: clamp(3.15rem, 16vw, 4.8rem); line-height: 0.92; }
+  .information-lead { margin-top: 28px; font-size: 1rem; }
+  .information-note { grid-template-columns: 38px minmax(0, 1fr); gap: 14px; margin-bottom: 64px; padding: 18px 0; }
+  .information-note > span { width: 32px; height: 32px; }
+  .information-note p { margin-top: 2px; font-size: 0.92rem; }
+  .information-sections > section { grid-template-columns: 38px minmax(0, 1fr); gap: 12px; padding: 30px 0 34px; }
+  .information-sections h2 { margin-bottom: 12px; font-size: clamp(1.7rem, 8vw, 2.35rem); line-height: 1.05; }
+  .information-sections p { font-size: 0.94rem; line-height: 1.55; }
+  .information-footer-nav { align-items: flex-start; flex-direction: column; padding: 32px 0 0 50px; }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .information-hero h1 { font-size: clamp(4rem, 9vw, 5.8rem); }
+  .information-lead { grid-column: 7 / -1; }
+}
+
 @keyframes text-in {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
