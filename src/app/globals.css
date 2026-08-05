@@ -2739,6 +2739,23 @@ html[data-motion-reduced="true"] .motion-reveal {
     grid-column: auto;
   }
 
+  .journal-article-header,
+  .journal-article {
+    width: calc(100% - 2rem);
+  }
+
+  .journal-article h1 {
+    font-size: clamp(2.6rem, 12.5vw, 3.4rem);
+    line-height: 0.94;
+    letter-spacing: -0.065em;
+    overflow-wrap: anywhere;
+  }
+
+  .journal-index-content h1 { line-height: 1; }
+  .ritual-intro h1 { line-height: 0.94; }
+  .ritual-question h2,
+  .ritual-result-heading h2 { line-height: 0.98; }
+
   .favorites-empty h2 {
     white-space: normal;
   }
@@ -2770,6 +2787,12 @@ html[data-motion-reduced="true"] .motion-reveal {
   .checkout-summary {
     position: static;
   }
+
+  .journal-article h1 { line-height: 0.94; }
+  .journal-index-content h1 { line-height: 1; }
+  .ritual-intro h1 { line-height: 0.94; }
+  .ritual-question h2,
+  .ritual-result-heading h2 { line-height: 0.98; }
 }
 
 @media (max-width: 1024px) {
