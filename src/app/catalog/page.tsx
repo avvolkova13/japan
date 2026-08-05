@@ -3,6 +3,13 @@ import { demoProducts } from "@/data/demo-products";
 import { CatalogProductCard } from "@/components/catalog-product-card";
 import { CatalogToolbar } from "@/components/catalog-toolbar";
 import { CartNavLink } from "@/components/cart-nav-link";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata = createPageMetadata({
+  title: "Каталог японской косметики",
+  description: "Демонстрационный каталог японского ухода, косметики и wellness-продукции KANSO.",
+  path: "/catalog",
+});
 
 type CatalogPageProps = {
   searchParams: Promise<{ brand?: string | string[]; category?: string | string[]; new?: string | string[]; focus?: string | string[]; sort?: string | string[] }>;

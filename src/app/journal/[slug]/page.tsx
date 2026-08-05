@@ -1,10 +1,19 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { journalStories } from "@/data/journal-stories";
+import { createPageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return journalStories.filter((story) => story.slug !== "japanese-approach").map((story) => ({ slug: story.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const story = journalStories.find((item) => item.slug === slug);
+  if (!story) return {};
+  return createPageMetadata({ title: story.title, description: story.description, path: `/journal/${story.slug}` });
 }
 
 export default async function JournalStoryPage({ params }: { params: Promise<{ slug: string }> }) {

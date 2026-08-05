@@ -1,6 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { journalStories } from "@/data/journal-stories";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata = createPageMetadata({
+  title: "Журнал",
+  description: "Заметки KANSO о японском уходе, текстурах и спокойных ежедневных ритуалах.",
+  path: "/journal",
+});
 
 export default function JournalPage() {
   return (

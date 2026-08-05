@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { informationPages, informationSlugs, isInformationSlug, type InformationPage } from "@/data/information-pages";
+import { createPageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return informationSlugs.map((info) => ({ info }));
@@ -11,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ info: str
   const { info } = await params;
   if (!isInformationSlug(info)) return {};
   const page: InformationPage = informationPages[info];
-  return { title: `${page.title} — KANSO`, description: page.lead };
+  return createPageMetadata({ title: page.title, description: page.lead, path: `/${info}` });
 }
 
 export default async function InformationPageRoute({ params }: { params: Promise<{ info: string }> }) {

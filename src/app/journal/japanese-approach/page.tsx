@@ -1,5 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata = createPageMetadata({
+  title: "Японский подход к ежедневному уходу",
+  description: "История KANSO о небольших повторяемых жестах, из которых складывается личный ритуал ухода.",
+  path: "/journal/japanese-approach",
+});
 
 export default function JapaneseApproachPage() {
   return (
