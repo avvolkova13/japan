@@ -62,6 +62,7 @@ function VisualImage({
   className = "",
   secondary = false,
   priority = false,
+  sizes = "(max-width: 767px) 100vw, 50vw",
 }: {
   label: string;
   src: string;
@@ -69,12 +70,13 @@ function VisualImage({
   className?: string;
   secondary?: boolean;
   priority?: boolean;
+  sizes?: string;
 }) {
   return (
     <div
       className={`visual-placeholder visual-image ${tone} ${secondary ? "visual-placeholder-secondary" : ""} ${className}`}
     >
-      <Image src={src} alt={label} fill priority={priority} sizes="(max-width: 767px) 100vw, 50vw" />
+      <Image src={src} alt={label} fill priority={priority} sizes={sizes} />
     </div>
   );
 }
@@ -85,7 +87,7 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
       <div className="quiz-side-track quiz-side-track-left" aria-hidden="true">
         <div className="quiz-side-pin-range">
           <div className="quiz-side-image-sticky">
-            <VisualImage className="quiz-side-image" label="" src="/images/kanso/editorial.png" tone="tone-pearl" />
+            <VisualImage className="quiz-side-image" label="" src="/images/kanso/editorial.png" tone="tone-pearl" sizes="(max-width: 767px) 1px, (max-width: 1024px) 24vw, 17vw" />
           </div>
         </div>
       </div>
@@ -93,7 +95,7 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
       <div className="quiz-center-track">
         <div className="quiz-center-pin-range">
           <div className="quiz-center-composition">
-            <VisualImage className="quiz-image-center" label="Портрет для подбора личного ритуала" src="/images/kanso/ritual-portrait.png" tone="tone-pearl" />
+            <VisualImage className="quiz-image-center" label="Портрет для подбора личного ритуала" src="/images/kanso/ritual-portrait.png" tone="tone-pearl" sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1024px) 42vw, 34vw" />
             <div className="quiz-copy">
               <h2 id="quiz-title">Найти свой ритуал</h2>
               <p>Ответьте на несколько вопросов и подберите уход для своей кожи.</p>
@@ -109,7 +111,7 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
       <div className="quiz-side-track quiz-side-track-right" aria-hidden="true">
         <div className="quiz-side-pin-range">
           <div className="quiz-side-image-sticky">
-            <VisualImage className="quiz-side-image" label="" src="/images/kanso/wellness.png" tone="tone-stone" />
+            <VisualImage className="quiz-side-image" label="" src="/images/kanso/wellness.png" tone="tone-stone" sizes="(max-width: 767px) 1px, (max-width: 1024px) 24vw, 17vw" />
           </div>
         </div>
       </div>
@@ -123,17 +125,19 @@ function ProductCard({
   added,
   onWishlist,
   onQuickAdd,
+  imageSizes,
 }: {
   product: (typeof demoProducts)[number];
   wished: boolean;
   added: boolean;
   onWishlist: () => void;
   onQuickAdd: () => void;
+  imageSizes: string;
 }) {
   return (
     <article className="product-card">
       <div className="product-media">
-        <Link className="product-card-image-link" href={`/product/${product.id}`} aria-label={`Открыть ${product.name}`}><VisualImage label={`${product.brand} ${product.name}`} src={product.image} tone="tone-product" /><VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary /></Link>
+        <Link className="product-card-image-link" href={`/product/${product.id}`} aria-label={`Открыть ${product.name}`}><VisualImage label={`${product.brand} ${product.name}`} src={product.image} tone="tone-product" sizes={imageSizes} /><VisualImage label={`${product.brand} ${product.name}, альтернативный вид`} src={product.hoverImage} tone="tone-product-alt" secondary sizes={imageSizes} /></Link>
         {product.badge && <span className="product-badge">{product.badge}</span>}
         <button
           className={`icon-button wishlist-button ${wished ? "is-active" : ""}`}
@@ -364,7 +368,7 @@ export function HomePage() {
             </div>
           </div>
           <div className="hero-product-stage">
-            <VisualImage className="hero-product-image" label="Премиальный очищающий флюид KANSO" src="/images/kanso/kanso-pump-open-premium.png" tone="tone-hero" priority />
+            <VisualImage className="hero-product-image" label="Премиальный очищающий флюид KANSO" src="/images/kanso/kanso-pump-open-premium.png" tone="tone-hero" priority sizes="(max-width: 767px) 64vw, (max-width: 1024px) 64vw, 70vw" />
           </div>
         </section>
 
@@ -380,7 +384,7 @@ export function HomePage() {
           <div className="category-grid">
             {categories.map(([category, copy, tone, image]) => (
               <a className="category-card" href={`/catalog?category=${encodeURIComponent(category)}`} key={category}>
-                <VisualImage label={`Категория: ${categoryLabels[category]}`} src={image} tone={tone} />
+                <VisualImage label={`Категория: ${categoryLabels[category]}`} src={image} tone={tone} sizes="(max-width: 767px) 50vw, 33vw" />
                 <div className="category-card-copy"><div><h3>{categoryLabels[category]}</h3><p>{copy}</p></div><span className="round-arrow" aria-hidden="true">↗</span></div>
               </a>
             ))}
@@ -395,9 +399,9 @@ export function HomePage() {
             <p className="new-arrivals-subtitle">Новые позиции в подборке KANSO.</p>
           </div>
           <div className="new-arrivals-layout">
-            <div className="editorial-visual"><VisualImage label="Редакционная композиция новинок" src="/images/kanso/collection.png" tone="tone-blue" /><p className="image-note">Более мягкое начало сезона.</p></div>
+            <div className="editorial-visual"><VisualImage label="Редакционная композиция новинок" src="/images/kanso/collection.png" tone="tone-blue" sizes="(max-width: 767px) 100vw, (max-width: 1024px) 35vw, 36vw" /><p className="image-note">Более мягкое начало сезона.</p></div>
             <div className="product-grid new-arrivals-grid">
-              {newArrivals.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}
+              {newArrivals.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} imageSizes="(max-width: 767px) 50vw, (max-width: 1024px) 32vw, 20vw" />)}
             </div>
             <div className="section-cta"><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Все новинки</span></a></div>
           </div>
@@ -406,17 +410,17 @@ export function HomePage() {
         <section className="section-pad best-sellers-section" id="best-sellers" aria-labelledby="best-sellers-title">
           <div className="section-heading rail-heading"><div><h2 id="best-sellers-title">Хиты продаж</h2></div><div className="rail-controls"><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(-1)} aria-label="Предыдущие хиты продаж">←</button><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(1)} aria-label="Следующие хиты продаж">→</button></div></div>
           <div className="product-rail" ref={bestRailRef} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp} onWheel={handleBestRailWheel}>
-            {bestSellers.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}
+            {bestSellers.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} imageSizes="(max-width: 767px) 72vw, (max-width: 1024px) 34vw, 260px" />)}
           </div>
         </section>
 
         <section className="section-pad editorial-section" aria-labelledby="editorial-title">
-          <div className="editorial-large-visual"><VisualImage label="Редакционная композиция о красоте" src="/images/kanso/editorial.png" tone="tone-stone" /></div>
+          <div className="editorial-large-visual"><VisualImage label="Редакционная композиция о красоте" src="/images/kanso/editorial.png" tone="tone-stone" sizes="(max-width: 767px) 100vw, 48vw" /></div>
           <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><Link className="button button-dark" href="/journal/japanese-approach"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Читать историю</span></Link></div>
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
-          <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title"><span>Увлажняющий</span><span>уход</span></h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} />)}</div></div>
+          <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title"><span>Увлажняющий</span><span>уход</span></h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" sizes="(max-width: 767px) 100vw, (max-width: 1024px) 100vw, 30vw" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} imageSizes="(max-width: 767px) 33vw, (max-width: 1024px) 100vw, 14vw" />)}</div></div>
         </section>
 
         <section className="quiz-section" aria-labelledby="quiz-title">
@@ -425,7 +429,7 @@ export function HomePage() {
 
         <section className="section-pad journal-section" id="journal" aria-labelledby="journal-title">
           <div className="section-heading rail-heading"><div><h2 id="journal-title">Заметки для тихого ритуала</h2></div><Link className="text-link" href="/journal">Весь журнал <span aria-hidden="true">↗</span></Link></div>
-          <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image, slug]) => <a className="journal-card" href={`/journal/${slug}`} key={title}><VisualImage label={title} src={image} tone={tone} /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
+          <div className="journal-grid">{journalStories.map(([category, title, copy, tone, image, slug]) => <a className="journal-card" href={`/journal/${slug}`} key={title}><VisualImage label={title} src={image} tone={tone} sizes="(max-width: 767px) 100vw, 33vw" /><div className="journal-card-copy"><p className="micro-label">{category}</p><h3>{title}</h3><p>{copy}</p><span className="text-link">Читать статью <span aria-hidden="true">↗</span></span></div></a>)}</div>
         </section>
       </main>
 
