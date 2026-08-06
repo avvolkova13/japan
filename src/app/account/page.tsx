@@ -13,6 +13,7 @@ type Account = { name: string; email: string };
 type StoredUser = Account & { password: string };
 type StoredOrder = { id: string; total: number; payment: string; name: string; createdAt?: string };
 type AccountMode = "login" | "register" | "forgot";
+type AccountDashboardView = "overview" | "history";
 
 function readAccount(): Account | null {
   try {
@@ -52,6 +53,7 @@ export default function AccountPage() {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orders, setOrders] = useState<StoredOrder[]>([]);
+  const [dashboardView, setDashboardView] = useState<AccountDashboardView>("overview");
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -126,18 +128,20 @@ export default function AccountPage() {
           <div className="account-dashboard">
             <aside className="account-nav" aria-label="Разделы кабинета">
               <h2 className="account-nav-heading">Личный кабинет</h2>
-              <span className="account-nav-active">Обзор</span><Link href="/account#purchase-history">История покупок</Link><Link href="/favorites">Избранное</Link><button type="button" onClick={logout}>Выйти</button>
+              <button className={`account-nav-link ${dashboardView === "overview" ? "account-nav-active" : ""}`} type="button" onClick={() => setDashboardView("overview")} aria-pressed={dashboardView === "overview"}>Обзор</button>
+              <button className={`account-nav-link ${dashboardView === "history" ? "account-nav-active" : ""}`} type="button" onClick={() => setDashboardView("history")} aria-pressed={dashboardView === "history"}>История покупок</button>
+              <Link className="account-nav-link" href="/favorites">Избранное</Link>
+              <button className="account-nav-link account-nav-logout" type="button" onClick={logout}>Выйти</button>
             </aside>
             <div className="account-dashboard-main">
               <p className="account-eyebrow">Ваш KANSO</p>
               <h1 id="account-title">Здравствуйте, {account.name}</h1>
               <p>Ваши покупки и предпочтения собраны в одном спокойном пространстве.</p>
-              <div className="account-overview-grid"><div><span>Профиль</span><strong>{account.email}</strong></div><div><span>Корзина</span><strong><Link href="/cart">Открыть корзину ↗</Link></strong></div></div>
-              <section className="account-history" id="purchase-history" aria-labelledby="purchase-history-title">
+              {dashboardView === "overview" ? <div className="account-overview-grid"><div><span>Профиль</span><strong>{account.email}</strong></div><div><span>Корзина</span><strong><Link href="/cart">Открыть корзину ↗</Link></strong></div></div> : <section className="account-history" id="purchase-history" aria-labelledby="purchase-history-title">
                 <p className="account-eyebrow">Покупки</p>
                 <h2 id="purchase-history-title">История покупок</h2>
                 {orders.length ? <div className="account-history-list">{orders.map((order) => <article className="account-history-order" key={`${order.id}-${order.createdAt ?? order.total}`}><div><span>Заказ</span><strong>{order.id}</strong></div><div><span>Сумма</span><strong>{formatPrice(order.total)}</strong></div><div><span>Состояние</span><strong>Оформлен</strong></div></article>)}</div> : <p className="account-history-empty">Здесь появятся ваши оформленные заказы.</p>}
-              </section>
+              </section>}
               {message && <p className="form-message" role="status">{message}</p>}
             </div>
           </div>
@@ -147,7 +151,7 @@ export default function AccountPage() {
               <div className="account-auth-visual"><Image src="/images/kanso/editorial.png" alt="Тихая композиция KANSO" fill sizes="(max-width: 767px) 100vw, 42vw" priority /></div>
             </div>
             <div className="account-auth-panel">
-              <h1 id="account-title">{title}</h1>
+              <h1 id="account-title" className={mode === "login" ? "account-auth-title--login" : undefined}>{title}</h1>
               <p className="account-auth-description">{description}</p>
               <form className="account-form" onSubmit={submit}>
                 {mode === "register" && <label>Имя<input name="name" type="text" autoComplete="name" required /></label>}
