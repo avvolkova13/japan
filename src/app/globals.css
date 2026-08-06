@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+
 :root {
   --canvas: #f3f0e9;
   --pearl: #e8e5dc;
@@ -20,6 +22,8 @@
   --control-min: 44px;
   --accent-blue: #2f5fa7;
   --accent-blue-soft: #d3e7ff;
+  --font-display: Literature;
+  --font-body: Onest;
 }
 
 * {
@@ -41,8 +45,17 @@ body {
   margin: 0;
   color: var(--graphite);
   background: var(--canvas);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
 }
 
 button,
@@ -363,7 +376,7 @@ summary:focus-visible {
   width: min(100%, 11ch);
   margin: auto 0;
   color: var(--white);
-  font-size: clamp(4.8rem, 12vw, 13rem);
+  font-size: clamp(7rem, 18vw, 18rem);
   font-weight: 400;
   letter-spacing: -0.09em;
   line-height: 0.8;
@@ -893,6 +906,9 @@ summary:focus-visible {
 .catalog-product-image-link { position: absolute; inset: 0; display: block; }
 .catalog-product-image-link img { object-fit: contain; padding: 18%; transition: opacity 420ms cubic-bezier(0.165, 0.84, 0.44, 1), transform 500ms cubic-bezier(0.165, 0.84, 0.44, 1); }
 .catalog-product-image-link .catalog-product-image-secondary { object-fit: cover; padding: 0; }
+.catalog-product-card--feature-left .catalog-product-image-primary,
+.catalog-product-card--feature-center .catalog-product-image-primary,
+.catalog-product-card--feature-right .catalog-product-image-primary { padding: 12%; }
 .catalog-product-image-secondary { opacity: 0; }
 .catalog-product-card:hover .catalog-product-image-primary,
 .catalog-product-card:focus-within .catalog-product-image-primary { opacity: 0; }
@@ -1018,7 +1034,7 @@ summary:focus-visible {
 .product-info-purchase { margin-top: 42px; }
 .product-info-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.8fr); column-gap: clamp(40px, 10vw, 160px); width: calc(100% - 3rem); max-width: var(--max-width); margin: 0 auto; padding: clamp(56px, 7vw, 96px) 0 110px; }
 .product-info-intro { grid-column: 1; }
-.product-info-intro h1 { max-width: 8ch; margin: 16px 0 20px; color: var(--graphite); font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.8rem, 7vw, 8.6rem); font-weight: 400; letter-spacing: -0.075em; line-height: 0.83; }
+.product-info-intro h1 { max-width: 8ch; margin: 16px 0 20px; color: var(--graphite); font-size: clamp(3.8rem, 7vw, 8.6rem); font-weight: 400; letter-spacing: -0.075em; line-height: 0.83; }
 .product-detail-category { margin: 0; color: var(--cinnabar); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .product-info-purchase { grid-column: 2; align-self: end; }
 .product-detail-description { max-width: 28rem; margin: 0 0 30px; color: var(--ink-soft); font-size: 1.02rem; line-height: 1.6; }
@@ -1045,7 +1061,7 @@ summary:focus-visible {
 .product-summary-row { display: block; }
 .product-info-intro,
 .product-info-purchase { grid-column: auto; }
-.product-info-intro h1 { max-width: 18ch; margin: 12px 0 14px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: clamp(2rem, 3.8vw, 4rem); font-weight: 400; letter-spacing: -0.055em; line-height: 0.98; }
+.product-info-intro h1 { max-width: 18ch; margin: 12px 0 14px; font-size: clamp(2rem, 3.8vw, 4rem); font-weight: 400; letter-spacing: -0.055em; line-height: 0.98; }
 .product-info-purchase { align-self: end; margin-top: 42px; }
 .product-info-purchase .product-detail-price { margin-bottom: 20px; font-size: 1rem; }
 .product-detail-card { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.75fr); gap: clamp(36px, 10vw, 150px); margin-top: 56px; border: 1px dashed color-mix(in srgb, var(--muted) 52%, transparent); border-radius: 18px; padding: clamp(38px, 5vw, 72px) clamp(28px, 6vw, 92px); }
@@ -1097,7 +1113,7 @@ summary:focus-visible {
 .product-gallery-buttons button { width: 40px; height: 40px; }
 .product-info-panel { position: sticky; top: 22px; display: block; width: auto; max-width: none; margin: 0; padding: 22px 0 0; }
 .product-summary-row { display: block; }
-.product-info-intro h1 { max-width: 18ch; margin: 10px 0 14px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: clamp(1.9rem, 3vw, 3.2rem); font-weight: 400; letter-spacing: -0.055em; line-height: 0.98; }
+.product-info-intro h1 { max-width: 18ch; margin: 10px 0 14px; font-size: clamp(1.9rem, 3vw, 3.2rem); font-weight: 400; letter-spacing: -0.055em; line-height: 0.98; }
 .product-detail-category { font-size: 0.66rem; }
 .product-info-purchase { margin-top: 32px; }
 .product-info-purchase .product-detail-price { margin-bottom: 18px; font-size: 1rem; }
@@ -1204,19 +1220,26 @@ summary:focus-visible {
 }
 
 .cart-count {
-  display: inline-grid;
+  display: inline-flex;
+  width: 1.25em;
   min-width: 1.25em;
   height: 1.25em;
   margin-left: 0.35em;
-  padding: 0 0.2em;
-  place-items: center;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--cinnabar);
   border-radius: 999px;
   color: var(--cinnabar);
   font-size: 0.72em;
   font-weight: 600;
   line-height: 1;
-  vertical-align: 0.08em;
+  vertical-align: middle;
+}
+
+.cart-count-value {
+  display: block;
+  transform: translateY(0.06em);
 }
 
 @media (max-width: 1024px), (prefers-reduced-motion: reduce) {
@@ -2985,7 +3008,7 @@ html[data-motion-reduced="true"] .motion-reveal {
 .information-hero h1 { grid-column: 1 / -1; max-width: 100%; margin: 0; padding-bottom: 0.06em; overflow-wrap: anywhere; font-size: clamp(4rem, 8vw, 8.5rem); font-weight: 500; letter-spacing: -0.075em; line-height: 0.9; }
 .information-lead { grid-column: 8 / -1; max-width: 31rem; margin: 24px 0 0; color: var(--ink-soft); font-size: clamp(1.05rem, 1.55vw, 1.45rem); line-height: 1.45; }
 .information-note { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 18px; max-width: 50rem; margin: 0 0 clamp(64px, 8vw, 112px) auto; border-top: 1px solid var(--graphite); border-bottom: 1px solid var(--stone); padding: 22px 0; }
-.information-note > span { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid var(--graphite); border-radius: 50%; font-family: Georgia, serif; font-style: italic; }
+.information-note > span { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid var(--graphite); border-radius: 50%; font-family: var(--font-display); font-style: italic; }
 .information-note p { margin: 4px 0 0; color: var(--ink-soft); line-height: 1.55; }
 .information-sections { border-top: 1px solid var(--stone); }
 .information-sections > section { display: grid; grid-template-columns: minmax(72px, 0.7fr) minmax(0, 3fr); gap: 24px; border-bottom: 1px solid var(--stone); padding: clamp(30px, 4vw, 54px) 0; }
@@ -3337,7 +3360,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .mega-grid { grid-template-columns: repeat(2, 1fr); }
   .hero { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 42px; }
   .hero h1 { font-size: clamp(3.2rem, 7vw, 5.5rem); }
-  .hero-motion h1 { font-size: clamp(4.2rem, 12vw, 8rem); }
+  .hero-motion h1 { font-size: clamp(6rem, 16vw, 16rem); }
   .hero-product-stage { width: min(64vw, 680px); height: min(82svh, 700px); }
   .hero-motion.section-pad {
     width: 100%;
@@ -3424,9 +3447,9 @@ html[data-motion-reduced="true"] .motion-reveal {
     top: calc(50% - 38.5px);
     left: max(1.5rem, calc((100vw - var(--max-width)) / 2 - 0.5rem));
     grid-column: auto;
-  width: min(38vw, 34rem);
+    width: min(42vw, 35rem);
   margin: 0;
-  font-size: clamp(4.2rem, 4.8vw, 8rem);
+    font-size: clamp(5rem, 6.2vw, 8rem);
   line-height: 0.84;
     transform: translateY(-50%);
   }
@@ -3609,7 +3632,7 @@ html[data-motion-reduced="true"] .motion-reveal {
     align-self: end;
     width: min(100%, 8.5ch);
     margin: 0 0 1.25rem;
-    font-size: clamp(3.35rem, 16.5vw, 5rem);
+    font-size: clamp(4.5rem, 22vw, 6rem);
     line-height: 0.82;
   }
   .hero-motion-footer {
@@ -3741,7 +3764,7 @@ html[data-motion-reduced="true"] .motion-reveal {
 
 @media (max-width: 359px) {
   .hero-motion h1 {
-    font-size: clamp(3rem, 15.5vw, 3.7rem);
+    font-size: clamp(4rem, 22vw, 5.4rem);
   }
 
   .hero-motion .hero-description {

@@ -1,49 +1,5 @@
 import type { DemoProduct } from "@/types/product";
-
-const imageByCategory = {
-  Face: "/images/kanso/products/amaranth-dr-soie-cutout.png",
-  Hair: "/images/kanso/products/tokio-home-cutout.png",
-  Body: "/images/kanso/products/direia-uv-cutout.png",
-  "Sun Care": "/images/kanso/products/direia-uv-cutout.png",
-  Wellness: "/images/kanso/products/quality-1st-cutout.png",
-  "Oral Care": "/images/kanso/products/enzym-cutout.png",
-  Sets: "/images/kanso/products/exo-cutout.png",
-  Devices: "/images/kanso/products/tokio-oil-cutout.png",
-} as const;
-
-const imageByProduct: Record<string, string> = {
-  "new-01": "/images/kanso/products/amaranth-dr-soie.png",
-  "new-02": "/images/kanso/products/direia-uv.png",
-  "new-03": "/images/kanso/products/quality-1st.png",
-  "new-04": "/images/kanso/products/tokio-home.png",
-  "best-01": "/images/kanso/products/spa-treatment.png",
-  "best-02": "/images/kanso/products/enzym.png",
-  "best-03": "/images/kanso/products/exo.png",
-  "best-04": "/images/kanso/products/tokio-oil.png",
-  "best-05": "/images/kanso/products/tokio-treatment.png",
-  "face-02": "/images/kanso/products/amaranth-dr-soie.png",
-} as const;
-
-const cutoutByProduct: Record<string, string> = {
-  "new-01": "/images/kanso/products/amaranth-dr-soie-cutout.png",
-  "new-02": "/images/kanso/products/direia-uv-cutout.png",
-  "new-03": "/images/kanso/products/quality-1st-cutout.png",
-  "new-04": "/images/kanso/products/tokio-home-cutout.png",
-  "best-01": "/images/kanso/products/spa-treatment-cutout.png",
-  "best-02": "/images/kanso/products/enzym-cutout.png",
-  "best-03": "/images/kanso/products/exo-cutout.png",
-  "best-04": "/images/kanso/products/tokio-oil-cutout.png",
-  "best-05": "/images/kanso/products/tokio-treatment-cutout.png",
-  "face-02": "/images/kanso/products/amaranth-dr-soie-cutout.png",
-};
-
-const galleryImagesByProduct: Record<string, readonly string[]> = {
-  "new-01": [
-    "/images/kanso/products/amaranth-dr-soie-cutout.png",
-    "/images/kanso/products/amaranth-dr-soie.png",
-    "/images/kanso/products/amaranth-dr-soie-lifestyle.png",
-  ],
-};
+import { productImageManifest } from "@/data/product-image-manifest";
 
 const productSeeds = [
   ["new-01", "AMARANTH Dr.Soie", "Антивозрастной кушон для лица", "Face", 8290, "12 г", "Новинка", "Кушон для лица из каталога JapRise."],
@@ -70,7 +26,9 @@ const productSeeds = [
 
 export const demoProducts = productSeeds.map(
   ([id, brand, name, category, price, volume, badge, description]) => {
-    const image = cutoutByProduct[id] ?? imageByProduct[id] ?? imageByCategory[category];
+    const imageEntry = productImageManifest[id];
+    if (!imageEntry) throw new Error(`Missing product image manifest entry for ${id}`);
+    const image = imageEntry.primary;
 
     return {
       id,
@@ -80,8 +38,8 @@ export const demoProducts = productSeeds.map(
       price,
       volume,
       image,
-      hoverImage: imageByProduct[id] ?? image,
-      galleryImages: galleryImagesByProduct[id],
+      hoverImage: imageEntry.secondary ?? image,
+      galleryImages: imageEntry.gallery,
       badge,
       description,
       available: false,
