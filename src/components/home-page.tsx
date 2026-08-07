@@ -257,12 +257,8 @@ function ProductCard({
         </button>
       </div>
       <div className="product-meta">
-        <p className="product-brand">{product.brand}</p>
         <h3><Link href={`/product/${product.id}`}>{product.name}</Link></h3>
-        <div className="product-subline">
-          <span>{product.volume}</span>
-          <span>{formatPrice(product.price)}</span>
-        </div>
+        <span className="product-price">{formatPrice(product.price)}</span>
       </div>
     </article>
   );

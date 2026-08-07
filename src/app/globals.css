@@ -2101,22 +2101,31 @@ html[data-motion-reduced="true"] .motion-reveal {
 }
 
 .product-meta {
-  padding-top: 14px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  padding-top: 10px;
 }
 
 .product-meta h3 {
-  margin: 5px 0 11px;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
   font-size: 0.91rem;
-  font-weight: 500;
-  line-height: 1.3;
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.product-subline {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
+.product-price {
+  display: block;
   color: var(--muted);
   font-size: 0.75rem;
+  line-height: 1.12;
+  white-space: nowrap;
 }
 
 .section-cta {
@@ -3717,9 +3726,9 @@ html[data-motion-reduced="true"] .motion-reveal {
   .editorial-visual .visual-placeholder { aspect-ratio: 1.05; }
   .new-arrivals-grid { margin-top: 28px; gap: 26px 12px; }
   .product-media { aspect-ratio: 0.78; }
+  .product-meta { gap: 8px; }
   .product-meta h3 { font-size: 0.82rem; }
-  .product-subline { display: block; }
-  .product-subline span { display: block; margin-top: 5px; }
+  .product-price { font-size: 0.72rem; }
   .quick-add { position: static; display: block; width: calc(100% - 24px); margin: 10px 12px 12px; opacity: 1; transform: none; }
   .product-media .quick-add { bottom: 0; }
   .rail-heading { align-items: flex-start; }
@@ -3742,9 +3751,8 @@ html[data-motion-reduced="true"] .motion-reveal {
   .collection-products { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
   .collection-products .product-media { aspect-ratio: 0.68; }
   .collection-products .product-meta { padding-top: 9px; }
-  .collection-products .product-brand,
-  .collection-products .product-subline { font-size: 0.58rem; }
-  .collection-products .product-meta h3 { margin-top: 4px; font-size: 0.68rem; }
+  .collection-products .product-meta h3 { font-size: 0.68rem; }
+  .collection-products .product-price { font-size: 0.58rem; }
   .collection-products .product-badge,
   .collection-products .wishlist-button { display: none; }
   .collection-products .quick-add { display: block; }
