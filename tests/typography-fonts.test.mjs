@@ -6,8 +6,8 @@ const styles = await readFile(new URL("../src/app/globals.css", import.meta.url)
 
 test("uses Literature for headings and Onest for descriptive text", () => {
   assert.match(styles, /@import url\("https:\/\/fonts\.googleapis\.com\/css2\?family=Onest/);
-  assert.match(styles, /@font-face\s*\{[\s\S]*font-family:\s*["']Literature["'][\s\S]*url\(["']\/fonts\/Literature-Decor\.ttf["']\)/);
-  assert.match(styles, /--font-display:\s*Literature/);
+  assert.match(styles, /@import "@fontsource-variable\/literata\/wght\.css"/);
+  assert.match(styles, /--font-display:\s*Literata/);
   assert.match(styles, /--font-body:\s*Onest/);
   assert.match(styles, /body\s*\{[\s\S]*font-family:\s*var\(--font-body\)/);
   assert.match(styles, /h1,\s*h2,\s*h3,\s*h4,\s*h5,\s*h6\s*\{[\s\S]*font-family:\s*var\(--font-display\)/);
