@@ -2617,6 +2617,7 @@ html[data-motion-reduced="true"] .motion-reveal {
 .ritual-result-heading .micro-label { grid-column: 1 / -1; margin-bottom: 18px; }
 .ritual-result-heading h2 { margin: 0; font-size: clamp(2.8rem, 5vw, 5.5rem); font-weight: 500; letter-spacing: -0.07em; line-height: 0.88; white-space: nowrap; }
 .ritual-result-heading > p:not(.micro-label) { margin: 0; color: var(--muted); line-height: 1.5; }
+.ritual-result-heading > p:not(.micro-label) { white-space: nowrap; }
 .ritual-products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 64px; }
 .ritual-product { color: var(--graphite); text-decoration: none; }
 .ritual-product-image { position: relative; aspect-ratio: 0.9; overflow: hidden; margin-bottom: 18px; background: linear-gradient(145deg, #edf4f3, #d4e4e8); }
@@ -3761,6 +3762,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .ritual-options button { min-height: 62px; padding: 0 16px; font-size: 0.9rem; }
   .ritual-result-heading { display: block; }
   .ritual-result-heading h2 { margin-bottom: 22px; white-space: normal; }
+  .ritual-result-heading > p:not(.micro-label) { white-space: normal; }
   .ritual-products { grid-template-columns: 1fr; gap: 42px; margin-top: 42px; }
   .ritual-product-image { aspect-ratio: 1.05; }
   .ritual-actions { align-items: stretch; flex-direction: column; gap: 22px; }

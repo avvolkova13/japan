@@ -38,7 +38,7 @@ export const productImageManifest: Record<string, ProductImageEntry> = {
   },
   "best-04": { primary: "/images/kanso/products/tokio-oil-cutout.png", secondary: "/images/kanso/products/tokio-oil.png" },
   "best-05": { primary: "/images/kanso/products/tokio-treatment-cutout.png", secondary: "/images/kanso/products/tokio-treatment.png" },
-  "face-01": { primary: "/images/kanso/products/face-01-isolated-v2.png", secondary: "/images/kanso/products/face-01.png" },
+  "face-01": { primary: "/images/kanso/products/face-01-isolated-v3.png", secondary: "/images/kanso/products/face-01.png" },
   "face-02": { primary: "/images/kanso/products/face-02-isolated-v2.png", secondary: "/images/kanso/products/face-02.png" },
   "hair-01": { primary: "/images/kanso/products/hair-01-isolated.png", secondary: "/images/kanso/products/hair-01.png" },
   "hair-02": { primary: "/images/kanso/products/hair-02-isolated-v2.png", secondary: "/images/kanso/products/hair-02.png" },

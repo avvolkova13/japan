@@ -37,7 +37,22 @@ const journalStories = [
 ] as const;
 
 const newArrivals = demoProducts.filter((product) => product.id.startsWith("new-"));
-const bestSellers = demoProducts.filter((product) => product.id.startsWith("best-"));
+const bestSellerIds = [
+  "best-01",
+  "best-02",
+  "best-03",
+  "best-04",
+  "best-05",
+  "face-01",
+  "face-02",
+  "hair-01",
+  "hair-02",
+  "body-01",
+];
+const bestSellers = bestSellerIds.flatMap((id) => {
+  const product = demoProducts.find((item) => item.id === id);
+  return product ? [product] : [];
+});
 const featuredProducts = demoProducts.filter((product) => ["new-01", "best-02", "best-04"].includes(product.id));
 const WISHLIST_KEY = "kanso-wishlist";
 
@@ -494,6 +509,8 @@ export function HomePage() {
           </div>
         </section>
 
+        <EditorialVideoScroll />
+
         <section className="section-pad best-sellers-section" id="best-sellers" aria-labelledby="best-sellers-title">
           <div className="section-heading rail-heading"><div><h2 id="best-sellers-title">Хиты продаж</h2></div><div className="rail-controls"><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(-1)} aria-label="Предыдущие хиты продаж">←</button><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(1)} aria-label="Следующие хиты продаж">→</button></div></div>
           <div className="product-rail" ref={bestRailRef} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp} onWheel={handleBestRailWheel}>
@@ -501,14 +518,12 @@ export function HomePage() {
           </div>
         </section>
 
-        <EditorialVideoScroll />
+        <section className="quiz-section" aria-labelledby="quiz-title">
+          <QuizPinnedScene onStartQuiz={() => setNotice("Квиз пока находится в демонстрационном состоянии.")} />
+        </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
           <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title"><span>Увлажняющий</span><span>уход</span></h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" sizes="(max-width: 767px) 100vw, (max-width: 1024px) 100vw, 30vw" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} imageSizes="(max-width: 767px) 33vw, (max-width: 1024px) 100vw, 14vw" />)}</div></div>
-        </section>
-
-        <section className="quiz-section" aria-labelledby="quiz-title">
-          <QuizPinnedScene onStartQuiz={() => setNotice("Квиз пока находится в демонстрационном состоянии.")} />
         </section>
 
         <PhilosophyCarousel />
