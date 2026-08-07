@@ -7,35 +7,50 @@ const manifest = await readFile(new URL("../src/data/product-image-manifest.ts",
 
 const productImageFiles = [
   "face-01.png",
+  "face-01-isolated.png",
+  "face-01-isolated-v2.png",
+  "face-02-isolated-v2.png",
   "face-02.png",
+  "face-02-isolated.png",
+  "spa-treatment-exo-isolated.png",
+  "hair-01-isolated.png",
   "hair-01.png",
   "hair-02.png",
   "hair-02-cutout.png",
   "hair-02-isolated.png",
+  "hair-02-isolated-v2.png",
   "body-01.png",
   "body-01-cutout.png",
   "body-01-isolated.png",
+  "body-01-isolated-v2.png",
   "wellness-01.png",
   "wellness-01-cutout.png",
   "wellness-01-isolated.png",
+  "wellness-01-isolated-v2.png",
   "wellness-02.png",
   "wellness-02-cutout.png",
   "wellness-02-isolated.png",
+  "wellness-02-isolated-v2.png",
   "wellness-03.png",
   "wellness-03-cutout.png",
   "wellness-03-isolated.png",
+  "wellness-03-isolated-v2.png",
   "wellness-04.png",
   "wellness-04-cutout.png",
   "wellness-04-isolated.png",
+  "wellness-04-isolated-v2.png",
   "wellness-05.png",
   "wellness-05-cutout.png",
   "wellness-05-isolated.png",
+  "wellness-05-isolated-v2.png",
   "wellness-06.png",
   "wellness-06-cutout.png",
   "wellness-06-isolated.png",
+  "wellness-06-isolated-v2.png",
   "direia-uv-labeled.png",
   "amaranth-dr-soie-labeled.png",
-  "enzym-cerad-labeled.jpg",
+  "amaranth-dr-soie-isolated.png",
+  "enzym-cerad-atmosphere.png",
   "spa-treatment-exo-labeled.jpg",
   "face-01-cutout.png",
   "face-02-cutout.png",
@@ -58,12 +73,12 @@ test("the Amaranth cushion uses the verified Dr.Soie-labeled asset", () => {
   assert.doesNotMatch(manifest, /"new-01"[\s\S]*amaranth-dr-soie-cutout\.png/);
 });
 
-test("the Enzy Cerad lotion uses a cutout first and a labeled hover image", () => {
-  assert.match(manifest, /"best-02"[\s\S]*primary: ".*enzym-cutout\.png"[\s\S]*secondary: ".*enzym-cerad-labeled\.jpg"/);
+test("the Enzy Cerad lotion uses a cutout first and an atmospheric hover image", () => {
+  assert.match(manifest, /"best-02"[\s\S]*primary: ".*enzym-cutout\.png"[\s\S]*secondary: ".*enzym-cerad-atmosphere\.png"/);
 });
 
-test("the EXO Moist serum uses a cutout first and an official labeled hover image", () => {
-  assert.match(manifest, /"best-03"[\s\S]*primary: ".*spa-treatment-exo-cutout\.png"[\s\S]*secondary: ".*spa-treatment-exo-labeled\.jpg"/);
+test("the EXO Moist serum uses a cutout first and an atmospheric hover image", () => {
+  assert.match(manifest, /"best-03"[\s\S]*primary: ".*spa-treatment-exo-isolated\.png"[\s\S]*secondary: ".*spa-treatment-exo-atmosphere\.png"/);
 });
 
 test("every generated product asset exists in the public directory", async () => {

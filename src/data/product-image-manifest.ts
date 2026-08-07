@@ -6,7 +6,7 @@ export type ProductImageEntry = {
 
 export const productImageManifest: Record<string, ProductImageEntry> = {
   "new-01": {
-    primary: "/images/kanso/products/amaranth-dr-soie-labeled.png",
+    primary: "/images/kanso/products/amaranth-dr-soie-isolated-v2.png",
     secondary: "/images/kanso/products/amaranth-dr-soie-labeled.png",
     gallery: [
       "/images/kanso/products/amaranth-dr-soie-labeled.png",
@@ -22,31 +22,31 @@ export const productImageManifest: Record<string, ProductImageEntry> = {
   "best-01": { primary: "/images/kanso/products/spa-treatment-cutout.png", secondary: "/images/kanso/products/spa-treatment.png" },
   "best-02": {
     primary: "/images/kanso/products/enzym-cutout.png",
-    secondary: "/images/kanso/products/enzym-cerad-labeled.jpg",
+    secondary: "/images/kanso/products/enzym-cerad-atmosphere.png",
     gallery: [
       "/images/kanso/products/enzym-cutout.png",
-      "/images/kanso/products/enzym-cerad-labeled.jpg",
+      "/images/kanso/products/enzym-cerad-atmosphere.png",
     ],
   },
   "best-03": {
-    primary: "/images/kanso/products/spa-treatment-exo-cutout.png",
-    secondary: "/images/kanso/products/spa-treatment-exo-labeled.jpg",
+    primary: "/images/kanso/products/spa-treatment-exo-isolated.png",
+    secondary: "/images/kanso/products/spa-treatment-exo-atmosphere.png",
     gallery: [
-      "/images/kanso/products/spa-treatment-exo-cutout.png",
-      "/images/kanso/products/spa-treatment-exo-labeled.jpg",
+      "/images/kanso/products/spa-treatment-exo-isolated.png",
+      "/images/kanso/products/spa-treatment-exo-atmosphere.png",
     ],
   },
   "best-04": { primary: "/images/kanso/products/tokio-oil-cutout.png", secondary: "/images/kanso/products/tokio-oil.png" },
   "best-05": { primary: "/images/kanso/products/tokio-treatment-cutout.png", secondary: "/images/kanso/products/tokio-treatment.png" },
-  "face-01": { primary: "/images/kanso/products/face-01-cutout.png", secondary: "/images/kanso/products/face-01.png" },
-  "face-02": { primary: "/images/kanso/products/face-02-cutout.png", secondary: "/images/kanso/products/face-02.png" },
-  "hair-01": { primary: "/images/kanso/products/hair-01-cutout.png", secondary: "/images/kanso/products/hair-01.png" },
-  "hair-02": { primary: "/images/kanso/products/hair-02-isolated.png", secondary: "/images/kanso/products/hair-02.png" },
-  "body-01": { primary: "/images/kanso/products/body-01-isolated.png", secondary: "/images/kanso/products/body-01.png" },
-  "wellness-01": { primary: "/images/kanso/products/wellness-01-isolated.png", secondary: "/images/kanso/products/wellness-01.png" },
-  "wellness-02": { primary: "/images/kanso/products/wellness-02-isolated.png", secondary: "/images/kanso/products/wellness-02.png" },
-  "wellness-03": { primary: "/images/kanso/products/wellness-03-isolated.png", secondary: "/images/kanso/products/wellness-03.png" },
-  "wellness-04": { primary: "/images/kanso/products/wellness-04-isolated.png", secondary: "/images/kanso/products/wellness-04.png" },
-  "wellness-05": { primary: "/images/kanso/products/wellness-05-isolated.png", secondary: "/images/kanso/products/wellness-05.png" },
-  "wellness-06": { primary: "/images/kanso/products/wellness-06-isolated.png", secondary: "/images/kanso/products/wellness-06.png" },
+  "face-01": { primary: "/images/kanso/products/face-01-isolated-v2.png", secondary: "/images/kanso/products/face-01.png" },
+  "face-02": { primary: "/images/kanso/products/face-02-isolated-v2.png", secondary: "/images/kanso/products/face-02.png" },
+  "hair-01": { primary: "/images/kanso/products/hair-01-isolated.png", secondary: "/images/kanso/products/hair-01.png" },
+  "hair-02": { primary: "/images/kanso/products/hair-02-isolated-v2.png", secondary: "/images/kanso/products/hair-02.png" },
+  "body-01": { primary: "/images/kanso/products/body-01-isolated-v2.png", secondary: "/images/kanso/products/body-01.png" },
+  "wellness-01": { primary: "/images/kanso/products/wellness-01-isolated-v2.png", secondary: "/images/kanso/products/wellness-01.png" },
+  "wellness-02": { primary: "/images/kanso/products/wellness-02-isolated-v2.png", secondary: "/images/kanso/products/wellness-02.png" },
+  "wellness-03": { primary: "/images/kanso/products/wellness-03-isolated-v2.png", secondary: "/images/kanso/products/wellness-03.png" },
+  "wellness-04": { primary: "/images/kanso/products/wellness-04-isolated-v2.png", secondary: "/images/kanso/products/wellness-04.png" },
+  "wellness-05": { primary: "/images/kanso/products/wellness-05-isolated-v2.png", secondary: "/images/kanso/products/wellness-05.png" },
+  "wellness-06": { primary: "/images/kanso/products/wellness-06-isolated-v2.png", secondary: "/images/kanso/products/wellness-06.png" },
 };
