@@ -8,18 +8,7 @@ import { siteConfig } from "@/config/site";
 import { CartNavLink } from "@/components/cart-nav-link";
 import { EditorialVideoScroll } from "@/components/editorial-video-scroll";
 
-const brands = [
-  "Hada Labo",
-  "Rohto",
-  "FANCL",
-  "Shiseido",
-  "Senka",
-  "Biore",
-  "Curel",
-  "DHC",
-  "Kracie",
-  "KOSÉ",
-];
+const brands = [...new Set(demoProducts.map((product) => product.brand))];
 
 const categories = [
   ["Face", "Продуманный уход для кожи каждый день.", "tone-pearl", "/images/kanso/face.png"],

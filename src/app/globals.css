@@ -2598,14 +2598,14 @@ html[data-motion-reduced="true"] .motion-reveal {
 .ritual-content { width: calc(100% - 3rem); max-width: var(--max-width); margin: 0 auto; }
 .ritual-header { display: flex; align-items: center; justify-content: space-between; min-height: 78px; border-bottom: 1px solid var(--stone); }
 .ritual-content { padding: clamp(70px, 9vw, 130px) 0 120px; }
-.ritual-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.7fr); column-gap: clamp(40px, 10vw, 150px); align-items: end; padding-bottom: 64px; border-bottom: 1px solid var(--stone); }
-.ritual-intro h1 { max-width: 10ch; margin: 18px 0 0; font-size: clamp(3.5rem, 7vw, 7.2rem); font-weight: 500; letter-spacing: -0.075em; line-height: 0.86; }
-.ritual-intro > p:not(.micro-label) { max-width: 25rem; margin: 0; color: var(--muted); font-size: 1.08rem; line-height: 1.45; }
+.ritual-intro { display: grid; grid-template-columns: minmax(0, 1fr); column-gap: 0; align-items: start; padding-bottom: 64px; border-bottom: 1px solid var(--stone); }
+.ritual-intro h1 { max-width: none; margin: 0; white-space: nowrap; font-size: clamp(3.5rem, 7vw, 7.2rem); font-weight: 500; letter-spacing: -0.075em; line-height: 0.86; }
+.ritual-intro > p:not(.micro-label) { max-width: 36rem; margin: 24px 0 0; color: var(--muted); font-size: 1.08rem; line-height: 1.45; }
 .ritual-progress { display: flex; grid-column: 1 / -1; gap: 8px; margin-top: 48px; }
 .ritual-progress span { display: block; width: 70px; height: 3px; background: var(--stone); transition: background 260ms ease; }
 .ritual-progress span.is-active { background: var(--cinnabar); }
 .ritual-question { max-width: 760px; margin: clamp(64px, 9vw, 120px) auto 0; }
-.ritual-question h2 { max-width: 14ch; margin: 18px 0 42px; font-size: clamp(2.3rem, 5vw, 5rem); font-weight: 500; letter-spacing: -0.06em; line-height: 0.92; }
+.ritual-question h2 { width: 100%; max-width: none; margin: 18px 0 42px; font-size: clamp(2.3rem, 5vw, 5rem); font-weight: 500; letter-spacing: -0.06em; line-height: 0.92; text-wrap: pretty; }
 .ritual-options { display: grid; gap: 12px; }
 .ritual-options button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 68px; border: 1px solid var(--stone); padding: 0 22px; color: var(--graphite); background: transparent; font: inherit; text-align: left; cursor: pointer; transition: border-color 220ms ease, background 220ms ease, color 220ms ease, transform 220ms ease; }
 .ritual-options button:hover,
@@ -2613,9 +2613,9 @@ html[data-motion-reduced="true"] .motion-reveal {
 .ritual-options button.is-selected { border-color: var(--graphite); background: var(--graphite); color: var(--canvas); }
 .ritual-options button:hover { transform: translateX(6px); }
 .ritual-result { margin-top: clamp(64px, 8vw, 110px); }
-.ritual-result-heading { display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(40px, 10vw, 150px); align-items: end; }
+.ritual-result-heading { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.55fr); column-gap: clamp(40px, 10vw, 150px); align-items: end; }
 .ritual-result-heading .micro-label { grid-column: 1 / -1; margin-bottom: 18px; }
-.ritual-result-heading h2 { margin: 0; font-size: clamp(2.8rem, 5vw, 5.5rem); font-weight: 500; letter-spacing: -0.07em; line-height: 0.88; }
+.ritual-result-heading h2 { margin: 0; font-size: clamp(2.8rem, 5vw, 5.5rem); font-weight: 500; letter-spacing: -0.07em; line-height: 0.88; white-space: nowrap; }
 .ritual-result-heading > p:not(.micro-label) { margin: 0; color: var(--muted); line-height: 1.5; }
 .ritual-products { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 64px; }
 .ritual-product { color: var(--graphite); text-decoration: none; }
@@ -3752,7 +3752,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .ritual-header { min-height: 68px; }
   .ritual-content { padding-top: 58px; }
   .ritual-intro { display: block; padding-bottom: 42px; }
-  .ritual-intro h1 { max-width: 9ch; font-size: clamp(3rem, 15vw, 4.6rem); }
+  .ritual-intro h1 { max-width: 9ch; white-space: normal; font-size: clamp(3rem, 15vw, 4.6rem); }
   .ritual-intro > p:not(.micro-label) { margin-top: 24px; }
   .ritual-progress { margin-top: 34px; }
   .ritual-progress span { width: 48px; }
@@ -3760,7 +3760,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .ritual-question h2 { margin-bottom: 30px; }
   .ritual-options button { min-height: 62px; padding: 0 16px; font-size: 0.9rem; }
   .ritual-result-heading { display: block; }
-  .ritual-result-heading h2 { margin-bottom: 22px; }
+  .ritual-result-heading h2 { margin-bottom: 22px; white-space: normal; }
   .ritual-products { grid-template-columns: 1fr; gap: 42px; margin-top: 42px; }
   .ritual-product-image { aspect-ratio: 1.05; }
   .ritual-actions { align-items: stretch; flex-direction: column; gap: 22px; }

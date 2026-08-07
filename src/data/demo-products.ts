@@ -22,6 +22,11 @@ const productSeeds = [
   ["wellness-04", "Fancl", "Good Choice Men 60+", "Wellness", 7890, "30 дней", null, "Wellness-продукт из каталога JapRise."],
   ["wellness-05", "Fancl", "Good Choice Man 30+", "Wellness", 4590, "30 дней", null, "Wellness-продукт из каталога JapRise."],
   ["wellness-06", "Fancl", "Good Choice Man 40+", "Wellness", 7890, "30 дней", null, "Wellness-продукт из каталога JapRise."],
+  ["face-03", "Plamine", "Питательный и увлажняющий крем для лица Plamine Rich Cream", "Face", 7590, "50 г", null, "Питательный крем для спокойного ежедневного ухода."],
+  ["face-04", "Enzym", "Крем-сыворотка Ki-ha-da-bi Enzym", "Face", 11390, "100 г", null, "Крем-сыворотка для продуманного ухода за кожей."],
+  ["face-05", "Direia", "Бальзам-стик для зоны глаз Direia Stem Stick ImPresSion", "Face", 9490, "6 г", null, "Стик для точного ухода за зоной вокруг глаз."],
+  ["face-06", "Axxzia", "Омолаживающий крем для кожи вокруг глаз Axxzia Agtheory Ultra Eye Cream", "Face", 10890, "15 г", null, "Крем для деликатного ежедневного ухода за зоной вокруг глаз."],
+  ["hair-03", "Shiseido", "Восстанавливающая маска для волос Tsubaki Premium Repair Mask", "Hair", 2890, "180 г", null, "Восстанавливающая маска для мягкого ритуала ухода за волосами."],
 ] as const;
 
 export const demoProducts = productSeeds.map(

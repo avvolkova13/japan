@@ -49,4 +49,29 @@ export const productImageManifest: Record<string, ProductImageEntry> = {
   "wellness-04": { primary: "/images/kanso/products/wellness-04-isolated-v2.png", secondary: "/images/kanso/products/wellness-04.png" },
   "wellness-05": { primary: "/images/kanso/products/wellness-05-isolated-v2.png", secondary: "/images/kanso/products/wellness-05.png" },
   "wellness-06": { primary: "/images/kanso/products/wellness-06-isolated-v2.png", secondary: "/images/kanso/products/wellness-06.png" },
+  "face-03": {
+    primary: "/images/kanso/products/face-03-isolated.png",
+    secondary: "/images/kanso/products/face-03-atmosphere.png",
+    gallery: ["/images/kanso/products/face-03-atmosphere.png"],
+  },
+  "face-04": {
+    primary: "/images/kanso/products/face-04-isolated.png",
+    secondary: "/images/kanso/products/face-04-atmosphere.png",
+    gallery: ["/images/kanso/products/face-04-atmosphere.png"],
+  },
+  "face-05": {
+    primary: "/images/kanso/products/face-05-isolated.png",
+    secondary: "/images/kanso/products/face-05-atmosphere.png",
+    gallery: ["/images/kanso/products/face-05-atmosphere.png"],
+  },
+  "face-06": {
+    primary: "/images/kanso/products/face-06-isolated.png",
+    secondary: "/images/kanso/products/face-06-atmosphere.png",
+    gallery: ["/images/kanso/products/face-06-atmosphere.png"],
+  },
+  "hair-03": {
+    primary: "/images/kanso/products/hair-03-isolated.png",
+    secondary: "/images/kanso/products/hair-03-atmosphere.png",
+    gallery: ["/images/kanso/products/hair-03-atmosphere.png"],
+  },
 };
