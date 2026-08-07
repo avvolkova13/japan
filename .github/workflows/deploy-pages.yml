@@ -3,7 +3,7 @@ name: Deploy KANSO to GitHub Pages
 on:
   push:
     branches:
-      - codex/editorial-video-scroll
+      - main
   workflow_dispatch:
 
 permissions:
