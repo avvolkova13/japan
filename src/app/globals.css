@@ -2122,8 +2122,9 @@ html[data-motion-reduced="true"] .motion-reveal {
 
 .product-price {
   display: block;
-  color: var(--muted);
-  font-size: 0.75rem;
+  color: var(--cinnabar);
+  font-size: 1rem;
+  font-weight: 650;
   line-height: 1.12;
   white-space: nowrap;
 }
@@ -3728,7 +3729,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .product-media { aspect-ratio: 0.78; }
   .product-meta { gap: 8px; }
   .product-meta h3 { font-size: 0.82rem; }
-  .product-price { font-size: 0.72rem; }
+  .product-price { font-size: 0.82rem; }
   .quick-add { position: static; display: block; width: calc(100% - 24px); margin: 10px 12px 12px; opacity: 1; transform: none; }
   .product-media .quick-add { bottom: 0; }
   .rail-heading { align-items: flex-start; }
@@ -3752,7 +3753,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .collection-products .product-media { aspect-ratio: 0.68; }
   .collection-products .product-meta { padding-top: 9px; }
   .collection-products .product-meta h3 { font-size: 0.68rem; }
-  .collection-products .product-price { font-size: 0.58rem; }
+  .collection-products .product-price { font-size: 0.72rem; }
   .collection-products .product-badge,
   .collection-products .wishlist-button { display: none; }
   .collection-products .quick-add { display: block; }
