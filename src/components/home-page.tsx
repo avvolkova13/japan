@@ -472,7 +472,7 @@ export function HomePage() {
 
         <section className="brand-rail section-pad-small" id="brands" aria-label="Избранные бренды">
           <p className="micro-label">Продуманная подборка</p>
-          <div className="brand-list">{brands.map((brand) => <a className="brand-list-link" key={brand} href={`/catalog?brand=${encodeURIComponent(brand)}`}>{brand}</a>)}</div>
+          <div className="brand-list">{brands.map((brand) => <Link className="brand-list-link" key={brand} href={`/catalog?brand=${encodeURIComponent(brand)}`}>{brand}</Link>)}</div>
         </section>
 
         <section className="section-pad category-section" id="category" aria-labelledby="category-title">
@@ -481,10 +481,10 @@ export function HomePage() {
           </div>
           <div className="category-grid">
             {categories.map(([category, copy, tone, image]) => (
-              <a className="category-card" href={`/catalog?category=${encodeURIComponent(category)}`} key={category}>
+              <Link className="category-card" href={`/catalog?category=${encodeURIComponent(category)}`} key={category}>
                 <VisualImage label={`Категория: ${categoryLabels[category]}`} src={image} tone={tone} sizes="(max-width: 767px) 50vw, 33vw" />
                 <div className="category-card-copy"><div><h3>{categoryLabels[category]}</h3><p>{copy}</p></div><span className="round-arrow" aria-hidden="true">↗</span></div>
-              </a>
+              </Link>
             ))}
           </div>
         </section>
