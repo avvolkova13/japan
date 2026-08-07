@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLayoutEffect, useRef } from "react";
 import { getEditorialScrollState } from "@/lib/editorial-scroll";
+import { publicPath } from "@/lib/public-path";
 
 type OriginGeometry = {
   left: number;
@@ -129,7 +130,11 @@ export function EditorialVideoScroll() {
       <div ref={stageRef} className="editorial-scroll-stage">
         <div className="editorial-scroll-grid section-pad">
           <div ref={originRef} className="editorial-scroll-origin">
-            <div ref={mediaRef} className="editorial-scroll-media">
+            <div
+              ref={mediaRef}
+              className="editorial-scroll-media"
+              style={{ backgroundImage: `url(${publicPath("/images/kanso/editorial-ritual.png")})` }}
+            >
               <video
                 ref={videoRef}
                 autoPlay
@@ -137,11 +142,11 @@ export function EditorialVideoScroll() {
                 loop
                 playsInline
                 preload="metadata"
-                poster="/videos/kanso/editorial-ritual-poster.jpg"
+                poster={publicPath("/videos/kanso/editorial-ritual-poster.jpg")}
                 aria-hidden="true"
                 onError={() => mediaRef.current?.classList.add("has-video-error")}
               >
-                <source src="/videos/kanso/editorial-ritual.mp4" type="video/mp4" />
+                <source src={publicPath("/videos/kanso/editorial-ritual.mp4")} type="video/mp4" />
               </video>
               <div className="editorial-scroll-shade" aria-hidden="true" />
               <div className="editorial-scroll-overlay">

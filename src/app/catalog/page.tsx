@@ -1,27 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { demoProducts } from "@/data/demo-products";
 import { CatalogEditorialGrid } from "@/components/catalog-editorial-grid";
 import { CatalogToolbar } from "@/components/catalog-toolbar";
 import { CartNavLink } from "@/components/cart-nav-link";
-import { createPageMetadata } from "@/lib/seo";
-
-export const metadata = createPageMetadata({
-  title: "Каталог японской косметики",
-  description: "Демонстрационный каталог японского ухода, косметики и wellness-продукции KANSO.",
-  path: "/catalog",
-});
-
-type CatalogPageProps = {
-  searchParams: Promise<{ brand?: string | string[]; category?: string | string[]; new?: string | string[]; focus?: string | string[]; sort?: string | string[] }>;
-};
-
-export default async function CatalogPage({ searchParams }: CatalogPageProps) {
-  const params = await searchParams;
-  const rawBrand = Array.isArray(params.brand) ? params.brand[0] : params.brand;
-  const rawCategory = Array.isArray(params.category) ? params.category[0] : params.category;
-  const rawNew = Array.isArray(params.new) ? params.new[0] : params.new;
-  const rawFocus = Array.isArray(params.focus) ? params.focus[0] : params.focus;
-  const rawSort = Array.isArray(params.sort) ? params.sort[0] : params.sort;
+function CatalogPageContent() {
+  const params = useSearchParams();
+  const rawBrand = params.get("brand");
+  const rawCategory = params.get("category");
+  const rawNew = params.get("new");
+  const rawFocus = params.get("focus");
+  const rawSort = params.get("sort");
   const brand = rawBrand?.trim() ?? "";
   const category = rawCategory?.trim() ?? "";
   const isNew = rawNew === "true";
@@ -71,4 +63,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       </section>
     </main>
   );
+}
+
+export default function CatalogPage() {
+  return <Suspense fallback={<main className="catalog-page" aria-busy="true" />}><CatalogPageContent /></Suspense>;
 }
