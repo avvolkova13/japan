@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>KANSO editorial video renderer</title>
+  </head>
+  <body>
+    <p id="status">Loading frames…</p>
+    <canvas id="canvas" width="1920" height="1080" hidden></canvas>
+    <script>
+      const frameNames = [
+        "01-formula-macro.png",
+        "02-filling-line.png",
+        "03-packaging-line.png",
+        "05-store-arrival.png",
+        "06-store-purchase.png",
+        "07-bathroom-ritual.png",
+        "08-application-close.png",
+        "09-texture-loop.png",
+      ];
+
+      const canvas = document.querySelector("#canvas");
+      const context = canvas.getContext("2d", { alpha: false });
+      const status = document.querySelector("#status");
+      const fps = 30;
+      const secondsPerScene = 2.05;
+      const transitionDuration = 0.38;
+      const sceneStride = secondsPerScene - transitionDuration;
+      const duration = (frameNames.length - 1) * sceneStride + secondsPerScene;
+      let loadedCount = 0;
+
+      const clamp = (value, minimum = 0, maximum = 1) =>
+        Math.min(Math.max(value, minimum), maximum);
+
+      function loadImage(name) {
+        return new Promise((resolve, reject) => {
+          const image = new Image();
+          image.onload = () => {
+            loadedCount += 1;
+            status.textContent = `Loaded ${loadedCount}/${frameNames.length}`;
+            resolve(image);
+          };
+          image.onerror = (event) => {
+            status.textContent = `ERROR loading ${name}`;
+            reject(event);
+          };
+          image.src = new URL(`../public/images/kanso/editorial-film/${name}`, location.href).href;
+        });
+      }
+
+      function drawScene(image, index, progress, alpha = 1) {
+        const baseScale = Math.max(canvas.width / image.width, canvas.height / image.height);
+        const zoom = 1 + 0.045 * progress;
+        const drawWidth = image.width * baseScale * zoom;
+        const drawHeight = image.height * baseScale * zoom;
+        const availableX = Math.max(0, drawWidth - canvas.width);
+        const availableY = Math.max(0, drawHeight - canvas.height);
+        const direction = index % 2 === 0 ? 1 : -1;
+        const travelX = Math.min(availableX * 0.42, 30) * direction * (progress * 2 - 1);
+        const travelY = Math.min(availableY * 0.28, 18) * (progress * 2 - 1);
+
+        context.globalAlpha = alpha;
+        context.drawImage(
+          image,
+          (canvas.width - drawWidth) / 2 - travelX,
+          (canvas.height - drawHeight) / 2 - travelY,
+          drawWidth,
+          drawHeight,
+        );
+        context.globalAlpha = 1;
+      }
+
+      function drawFrame(images, elapsed) {
+        const sceneIndex = Math.min(Math.floor(elapsed / sceneStride), images.length - 1);
+        const sceneStart = sceneIndex * sceneStride;
+        const localTime = elapsed - sceneStart;
+        const sceneProgress = clamp(localTime / secondsPerScene);
+
+        context.fillStyle = "#e7eff0";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        drawScene(images[sceneIndex], sceneIndex, sceneProgress);
+
+        if (sceneIndex < images.length - 1 && localTime >= sceneStride) {
+          const blend = clamp((localTime - sceneStride) / transitionDuration);
+          const nextProgress = clamp(
+            (elapsed - (sceneIndex + 1) * sceneStride) / secondsPerScene,
+          );
+          drawScene(images[sceneIndex + 1], sceneIndex + 1, nextProgress, blend);
+        }
+      }
+
+      async function render() {
+        const images = await Promise.all(frameNames.map(loadImage));
+        drawFrame(images, 0);
+
+        const mimeType = "video/mp4;codecs=avc1.42E01E";
+        if (!MediaRecorder.isTypeSupported(mimeType)) {
+          throw new Error(`Unsupported output codec: ${mimeType}`);
+        }
+
+        const stream = canvas.captureStream(fps);
+        const recorder = new MediaRecorder(stream, {
+          mimeType,
+          videoBitsPerSecond: 8_000_000,
+        });
+        const chunks = [];
+        recorder.ondataavailable = (event) => {
+          if (event.data.size > 0) chunks.push(event.data);
+        };
+        recorder.onstop = () => {
+          const blob = new Blob(chunks, { type: "video/mp4" });
+          window.renderedBlob = blob;
+          status.textContent = `DONE ${blob.size}`;
+          document.title = "DONE";
+        };
+
+        recorder.start(1000);
+        const startedAt = performance.now();
+
+        function tick(now) {
+          const elapsed = Math.min((now - startedAt) / 1000, duration);
+          drawFrame(images, elapsed);
+          status.textContent = `Rendering ${Math.round((elapsed / duration) * 100)}%`;
+
+          if (elapsed < duration) {
+            requestAnimationFrame(tick);
+          } else {
+            recorder.stop();
+            stream.getTracks().forEach((track) => track.stop());
+          }
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      render().catch((error) => {
+        status.textContent = `ERROR ${error.message}`;
+        document.title = "ERROR";
+        throw error;
+      });
+    </script>
+  </body>
+</html>

@@ -68,7 +68,6 @@ export default function RitualPage() {
       </header>
       <section className="ritual-content" aria-labelledby="ritual-title">
         <div className="ritual-intro">
-          <p className="micro-label">Личный подбор</p>
           <h1 id="ritual-title">Найдите свой ритуал</h1>
           <p>Три коротких вопроса помогут собрать уход под ваш ритм и предпочтения.</p>
           <div className="ritual-progress" aria-label={`Шаг ${Math.min(step + 1, questions.length)} из ${questions.length}`}>
@@ -90,7 +89,11 @@ export default function RitualPage() {
           <div className="ritual-result">
             <div className="ritual-result-heading">
               <h2>Начните с этих средств</h2>
-              <p>Собрали спокойную основу, которую можно адаптировать под ваш ежедневный ритм.</p>
+              <p>
+                Собрали спокойную основу, которую можно
+                <br />
+                адаптировать под ваш ежедневный ритм.
+              </p>
             </div>
             <div className="ritual-products">
               {recommendations.map((product) => product && (

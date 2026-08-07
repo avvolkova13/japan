@@ -31,7 +31,7 @@ export function CartNavLink({ className }: { className?: string }) {
   return (
     <Link className={className} href="/cart" aria-label={count ? `Корзина, товаров: ${count}` : "Корзина"}>
       Корзина
-      {count > 0 && <span className="cart-count" aria-hidden="true">{count}</span>}
+      {count > 0 && <span className="cart-count" aria-hidden="true"><span className="cart-count-value">{count}</span></span>}
     </Link>
   );
 }

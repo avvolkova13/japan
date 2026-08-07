@@ -74,7 +74,7 @@ export function CatalogProductCard({ product, variant = "standard" }: { product:
           <Image className="catalog-product-image catalog-product-image-secondary" src={product.hoverImage} alt="" fill sizes="(max-width: 767px) 50vw, 25vw" aria-hidden="true" />
         </Link>
         <button className={`catalog-wishlist-button wishlist-button ${wished ? "is-active" : ""}`} type="button" onClick={toggleWishlist} aria-label={wished ? `Удалить ${product.name} из избранного` : `Добавить ${product.name} в избранное`} aria-pressed={wished}>
-          <svg className="wishlist-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.7c0 5.2-8.8 10.3-8.8 10.3S3.2 13.9 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z" /></svg>
+          <svg className="wishlist-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2S3.2 15.1 3.2 8.7C3.2 6 5.2 4 7.8 4c1.7 0 3.1.9 4.2 2.2C13.1 4.9 14.5 4 16.2 4c2.6 0 4.6 2 4.6 4.7C20.8 15.1 12 20.2 12 20.2Z" /></svg>
         </button>
         <button className="catalog-quick-add" type="button" onClick={toggleCart} aria-pressed={inCart}>
           {inCart ? "В корзине" : "В корзину"}

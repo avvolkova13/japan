@@ -61,8 +61,8 @@ export default function CartPage() {
               <div className="cart-list-heading"><span>Товар</span><span>Количество</span><span>Сумма</span></div>
               {uniqueProducts.map((product) => product && (
                 <article className="cart-item" key={product.id}>
-                  <div className="cart-item-image"><Image src={product.image} alt={`${product.brand} — ${product.name}`} fill sizes="120px" /></div>
-                  <div className="cart-item-copy"><p className="product-brand">{product.brand}</p><h2>{product.name}</h2><p>{product.volume}</p><button className="text-link-button cart-remove" type="button" onClick={() => remove(product.id)}>Удалить</button></div>
+                  <Link className="cart-item-image" href={`/product/${product.id}`} aria-label={`Открыть ${product.name}`}><Image src={product.image} alt={`${product.brand} — ${product.name}`} fill sizes="120px" /></Link>
+                  <div className="cart-item-copy"><p className="product-brand">{product.brand}</p><h2><Link href={`/product/${product.id}`}>{product.name}</Link></h2><p>{product.volume}</p><button className="text-link-button cart-remove" type="button" onClick={() => remove(product.id)}>Удалить</button></div>
                   <div className="cart-item-quantity"><div className="quantity-control" aria-label={`Количество: ${product.name}`}><button type="button" onClick={() => updateQuantity(product.id, -1)} aria-label={`Уменьшить количество: ${product.name}`}>−</button><span>{quantityFor(product.id)}</span><button type="button" onClick={() => updateQuantity(product.id, 1)} aria-label={`Увеличить количество: ${product.name}`}>+</button></div></div>
                   <strong className="cart-item-price">{new Intl.NumberFormat("ru-RU").format(product.price * quantityFor(product.id))} ₽</strong>
                 </article>

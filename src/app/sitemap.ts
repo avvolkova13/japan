@@ -4,6 +4,8 @@ import { informationSlugs } from "@/data/information-pages";
 import { journalStories } from "@/data/journal-stories";
 import { publicSiteUrl } from "@/lib/seo";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!publicSiteUrl) return [];
   const paths = [

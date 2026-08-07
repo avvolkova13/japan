@@ -20,6 +20,15 @@ function readWishlist() {
   }
 }
 
+function readCart() {
+  try {
+    const stored = window.localStorage.getItem(CART_KEY);
+    return stored ? JSON.parse(stored) as string[] : [];
+  } catch {
+    return [];
+  }
+}
+
 function formatPrice(price: number) {
   return `${new Intl.NumberFormat("ru-RU").format(price)} ₽`;
 }
@@ -31,8 +40,7 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
   const galleryDragRef = useRef({ active: false, startX: 0, moved: false });
   const relatedDragRef = useRef({ active: false, moved: false, startX: 0, startScrollLeft: 0 });
   const [activeSlide, setActiveSlide] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
+  const [quantity, setQuantity] = useState(0);
   const [wished, setWished] = useState(false);
   const [notice, setNotice] = useState("");
 
@@ -47,13 +55,27 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
     };
   }, [product.id]);
 
-  const addToCart = () => {
-    let ids: string[] = [];
-    try { ids = JSON.parse(window.localStorage.getItem(CART_KEY) ?? "[]"); } catch { ids = []; }
-    ids.push(...Array.from({ length: quantity }, () => product.id));
-    window.localStorage.setItem(CART_KEY, JSON.stringify(ids));
+  useEffect(() => {
+    const syncCart = () => setQuantity(readCart().filter((id) => id === product.id).length);
+    syncCart();
+    window.addEventListener("storage", syncCart);
+    window.addEventListener("kanso-cart-change", syncCart);
+    return () => {
+      window.removeEventListener("storage", syncCart);
+      window.removeEventListener("kanso-cart-change", syncCart);
+    };
+  }, [product.id]);
+
+  const setCartQuantity = (nextQuantity: number) => {
+    const otherIds = readCart().filter((id) => id !== product.id);
+    const nextIds = [...otherIds, ...Array.from({ length: Math.max(0, nextQuantity) }, () => product.id)];
+    window.localStorage.setItem(CART_KEY, JSON.stringify(nextIds));
+    setQuantity(Math.max(0, nextQuantity));
     window.dispatchEvent(new CustomEvent("kanso-cart-change"));
-    setAdded(true);
+  };
+
+  const addToCart = () => {
+    setCartQuantity(1);
     setNotice(`${product.name} добавлен в корзину.`);
   };
 
@@ -67,18 +89,14 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
   };
 
   const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity((current) => current - 1);
-      return;
-    }
+    const nextQuantity = Math.max(0, quantity - 1);
+    setCartQuantity(nextQuantity);
+    if (nextQuantity === 0) setNotice(`${product.name} удалён из корзины.`);
+  };
 
-    if (!added) return;
-
-    let ids: string[] = [];
-    try { ids = JSON.parse(window.localStorage.getItem(CART_KEY) ?? "[]"); } catch { ids = []; }
-    window.localStorage.setItem(CART_KEY, JSON.stringify(ids.filter((id) => id !== product.id)));
-    window.dispatchEvent(new CustomEvent("kanso-cart-change"));
-    setAdded(false);
+  const increaseQuantity = () => setCartQuantity(quantity + 1);
+  const removeFromCart = () => {
+    setCartQuantity(0);
     setNotice(`${product.name} удалён из корзины.`);
   };
 
@@ -117,7 +135,6 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
     const track = relatedTrackRef.current;
     if (!track) return;
     relatedDragRef.current = { active: true, moved: false, startX: event.clientX, startScrollLeft: track.scrollLeft };
-    track.setPointerCapture(event.pointerId);
   };
 
   const moveRelatedDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -125,7 +142,12 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
     const track = relatedTrackRef.current;
     if (!drag.active || !track) return;
     const distance = event.clientX - drag.startX;
-    if (Math.abs(distance) > 4) drag.moved = true;
+    if (Math.abs(distance) > 4) {
+      if (!drag.moved) {
+        drag.moved = true;
+        track.setPointerCapture(event.pointerId);
+      }
+    }
     track.scrollLeft = drag.startScrollLeft - distance;
   };
 
@@ -161,7 +183,7 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
   return (
     <main className="product-page">
       <header className="product-page-header"><Link className="brand-mark" href="/">KANSO</Link><nav className="product-page-actions" aria-label="Покупательская навигация"><Link href="/catalog">Каталог</Link><Link href="/account">Войти</Link><Link href="/favorites">Избранное</Link><CartNavLink /></nav></header>
-      <div className="product-breadcrumbs"><Link href="/catalog">Каталог</Link><span aria-hidden="true">/</span><span>{product.category}</span><span aria-hidden="true">/</span><span>{product.brand}</span><span className="product-breadcrumb-index">K-0{product.id.slice(-1)}</span></div>
+      <div className="product-breadcrumbs"><Link href="/catalog">Каталог</Link><span aria-hidden="true">/</span><span>{product.category}</span><span aria-hidden="true">/</span><span>{product.brand}</span></div>
       <section className="product-detail-layout" aria-labelledby="product-title">
         <div className="product-gallery-shell">
           <nav className="product-gallery-thumbnails" aria-label="Миниатюры товара">
@@ -172,16 +194,16 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
               <div className="product-gallery-track" style={{ transform: `translate3d(-${activeSlide * 100}%, 0, 0)` }}>
                 {gallery.map((image, index) => <figure className={`product-gallery-slide ${image.includes("-cutout") ? "is-cutout" : "is-full-bleed"}`} key={image}><Image src={image} alt={`${product.brand} — ${product.name}, изображение ${index + 1}`} fill priority={index === 0} sizes="(max-width: 767px) 92vw, 54vw" /></figure>)}
               </div>
+              <button className={`product-wishlist-button wishlist-button ${wished ? "is-active" : ""}`} type="button" onPointerDown={(event) => event.stopPropagation()} onClick={toggleWishlist} aria-label={wished ? `Удалить ${product.name} из избранного` : `Добавить ${product.name} в избранное`} aria-pressed={wished}>
+                <svg className="wishlist-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.2S3.2 15.1 3.2 8.7C3.2 6 5.2 4 7.8 4c1.7 0 3.1.9 4.2 2.2C13.1 4.9 14.5 4 16.2 4c2.6 0 4.6 2 4.6 4.7C20.8 15.1 12 20.2 12 20.2Z" /></svg>
+              </button>
             </div>
           </div>
         </div>
         <div className="product-info-panel">
-          <button className={`product-wishlist-button wishlist-button ${wished ? "is-active" : ""}`} type="button" onClick={toggleWishlist} aria-label={wished ? `Удалить ${product.name} из избранного` : `Добавить ${product.name} в избранное`} aria-pressed={wished}>
-            <svg className="wishlist-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.7c0 5.2-8.8 10.3-8.8 10.3S3.2 13.9 3.2 8.7A4.7 4.7 0 0 1 12 6.4a4.7 4.7 0 0 1 8.8 2.3Z" /></svg>
-          </button>
           <div className="product-summary-row">
             <div className="product-info-intro"><div className="product-heading-row"><div><p className="micro-label">{product.brand}</p><h1 id="product-title">{product.name}</h1><p className="product-detail-category">{product.category}</p></div><div className="product-detail-price product-detail-price--header">{formatPrice(product.price)}</div></div></div>
-            <div className="product-info-purchase"><div className="product-option"><span>Объём</span><button className="volume-option is-selected" type="button" disabled title="Для этого товара доступен один объём">{product.volume}</button></div><div className="product-purchase-row"><div className="quantity-control" aria-label="Количество"><button type="button" onClick={decreaseQuantity} disabled={quantity === 1 && !added} aria-label={quantity === 1 && added ? "Удалить товар из корзины" : "Уменьшить количество"}>−</button><span>{quantity}</span><button type="button" onClick={() => setQuantity(quantity + 1)} aria-label="Увеличить количество">+</button></div><button className="button button-dark product-add-button" type="button" onClick={addToCart}>{added ? "В корзине" : "Добавить в корзину"}</button></div>{notice && <p className="form-message" role="status">{notice} <Link href="/cart">Перейти в корзину</Link></p>}</div>
+            <div className="product-info-purchase"><div className="product-option"><span>Объём</span><button className="volume-option is-selected" type="button" disabled title="Для этого товара доступен один объём">{product.volume}</button></div><div className="product-purchase-row">{quantity > 0 && <div className="quantity-control" aria-label="Количество"><button type="button" onClick={decreaseQuantity} aria-label={quantity === 1 ? "Удалить товар из корзины" : "Уменьшить количество"}>−</button><span>{quantity}</span><button type="button" onClick={increaseQuantity} aria-label="Увеличить количество">+</button></div>}<button className="button button-dark product-add-button" type="button" onClick={quantity > 0 ? removeFromCart : addToCart}>{quantity > 0 ? "Убрать из корзины" : "Добавить в корзину"}</button></div>{notice && <p className="form-message" role="status">{notice} <Link href="/cart">Перейти в корзину</Link></p>}</div>
           </div>
           <div className="product-detail-pills">
             <details><summary>Описание <span aria-hidden="true">+</span></summary><p>{product.description}</p></details>
@@ -194,7 +216,7 @@ export function ProductDetail({ product }: { product: DemoProduct }) {
       <section className="product-related section-pad-small" aria-labelledby="related-title">
         <div className="product-related-header"><h2 className="micro-label" id="related-title">Другие предложения</h2><span>Прокрутите в сторону</span></div>
         <div className="product-related-track" ref={relatedTrackRef} onPointerDown={startRelatedDrag} onPointerMove={moveRelatedDrag} onPointerUp={finishRelatedDrag} onPointerCancel={finishRelatedDrag} onWheel={(event) => { if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) { event.preventDefault(); event.currentTarget.scrollBy({ left: event.deltaY, behavior: "smooth" }); } }} onKeyDown={handleRelatedKeyDown} onClick={(event) => { if (relatedDragRef.current.moved) { event.preventDefault(); relatedDragRef.current.moved = false; } }} role="region" aria-label="Похожие товары" tabIndex={0}>
-          {[...demoProducts.filter((item) => item.brand === product.brand && item.id !== product.id), ...demoProducts.filter((item) => item.id !== product.id)].slice(0, 6).map((item) => <Link className="related-card" href={`/product/${item.id}`} key={item.id}><div><Image src={item.image} alt={`${item.brand} — ${item.name}`} fill sizes="(max-width: 767px) 78vw, 34vw" /></div><p className="product-brand">{item.brand}</p><h3>{item.name}</h3><p className="related-card-meta">{item.volume}<span>{formatPrice(item.price)}</span></p></Link>)}
+          {[...demoProducts.filter((item) => item.brand === product.brand && item.id !== product.id), ...demoProducts.filter((item) => item.id !== product.id)].slice(0, 6).map((item) => <Link className="related-card" href={`/product/${item.id}`} key={item.id}><div><Image src={item.image} alt={`${item.brand} — ${item.name}`} fill sizes="(max-width: 767px) 78vw, 34vw" loading="eager" /></div><p className="product-brand">{item.brand}</p><h3>{item.name}</h3><p className="related-card-meta">{item.volume}<span>{formatPrice(item.price)}</span></p></Link>)}
         </div>
         <div className="product-related-controls"><button type="button" onClick={() => moveRelatedCards(-1)} aria-label="Предыдущие похожие товары">←</button><button type="button" onClick={() => moveRelatedCards(1)} aria-label="Следующие похожие товары">→</button></div>
       </section>

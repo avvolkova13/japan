@@ -1,27 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { demoProducts } from "@/data/demo-products";
-import { CatalogProductCard } from "@/components/catalog-product-card";
+import { CatalogEditorialGrid } from "@/components/catalog-editorial-grid";
 import { CatalogToolbar } from "@/components/catalog-toolbar";
 import { CartNavLink } from "@/components/cart-nav-link";
-import { createPageMetadata } from "@/lib/seo";
-
-export const metadata = createPageMetadata({
-  title: "Каталог японской косметики",
-  description: "Демонстрационный каталог японского ухода, косметики и wellness-продукции KANSO.",
-  path: "/catalog",
-});
-
-type CatalogPageProps = {
-  searchParams: Promise<{ brand?: string | string[]; category?: string | string[]; new?: string | string[]; focus?: string | string[]; sort?: string | string[] }>;
-};
-
-export default async function CatalogPage({ searchParams }: CatalogPageProps) {
-  const params = await searchParams;
-  const rawBrand = Array.isArray(params.brand) ? params.brand[0] : params.brand;
-  const rawCategory = Array.isArray(params.category) ? params.category[0] : params.category;
-  const rawNew = Array.isArray(params.new) ? params.new[0] : params.new;
-  const rawFocus = Array.isArray(params.focus) ? params.focus[0] : params.focus;
-  const rawSort = Array.isArray(params.sort) ? params.sort[0] : params.sort;
+function CatalogPageContent() {
+  const params = useSearchParams();
+  const rawBrand = params.get("brand");
+  const rawCategory = params.get("category");
+  const rawNew = params.get("new");
+  const rawFocus = params.get("focus");
+  const rawSort = params.get("sort");
   const brand = rawBrand?.trim() ?? "";
   const category = rawCategory?.trim() ?? "";
   const isNew = rawNew === "true";
@@ -45,16 +37,6 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
     { label: "Wellness", href: "/catalog?category=Wellness", active: category.toLowerCase() === "wellness" },
   ];
 
-  const editorialGroups: Array<{ small: typeof products; feature: typeof products }> = [];
-  let cursor = 0;
-  while (cursor < products.length) {
-    const small = products.slice(cursor, cursor + 4);
-    cursor += 4;
-    const feature = products.slice(cursor, cursor + 2);
-    cursor += 2;
-    editorialGroups.push({ small, feature });
-  }
-
   return (
     <main className="catalog-page">
       <header className="catalog-page-header">
@@ -63,19 +45,14 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       </header>
       <section className="catalog-page-content" aria-labelledby="catalog-title">
         <div className="catalog-editorial-hero">
-          <div className="catalog-editorial-side catalog-editorial-side--left"><span>Уход как ежедневный ритуал</span><p>ЯПОНСКАЯ ТОЧНОСТЬ<br />В КАЖДОЙ ФОРМУЛЕ</p></div>
+          <div className="catalog-editorial-side catalog-editorial-side--left"><p>ЯПОНСКАЯ ТОЧНОСТЬ<br />В КАЖДОЙ ФОРМУЛЕ</p><span>Уход как ежедневный ритуал</span></div>
           <h1 id="catalog-title">КАТАЛОГ</h1>
-          <div className="catalog-editorial-side catalog-editorial-side--right"><p>Японская косметика<br />для тихих ритуалов</p><span>KANSO / 2026</span></div>
+          <div className="catalog-editorial-side catalog-editorial-side--right"><p>Современная эстетика<br />продуманных деталей</p><span>KANSO / 2026</span></div>
         </div>
         <nav className="catalog-quick-tags" aria-label="Быстрые подборки">{quickTags.map((tag) => <Link className={tag.active ? "is-active" : ""} href={tag.href} key={tag.label} aria-current={tag.active ? "page" : undefined}>{tag.label}</Link>)}</nav>
         <CatalogToolbar category={category} brand={brand} sort={sort} categories={categories} brands={brands} />
         {products.length > 0 ? (
-          <div className="catalog-editorial-layout">
-            {editorialGroups.map((group, groupIndex) => <section className="catalog-editorial-group" aria-label={`Подборка товаров ${groupIndex + 1}`} key={`editorial-${groupIndex}`}>
-              {group.small.length > 0 && <div className="catalog-editorial-small-row">{group.small.map((product) => <CatalogProductCard key={product.id} product={product} variant="small" />)}</div>}
-              {group.feature.length > 0 && <div className="catalog-editorial-feature-row">{group.feature.map((product) => <CatalogProductCard key={product.id} product={product} variant="standard" />)}</div>}
-            </section>)}
-          </div>
+          <CatalogEditorialGrid products={products} />
         ) : (
           <div className="catalog-empty-state">
             <h2>В этой подборке нет позиций</h2>
@@ -86,4 +63,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       </section>
     </main>
   );
+}
+
+export default function CatalogPage() {
+  return <Suspense fallback={<main className="catalog-page" aria-busy="true" />}><CatalogPageContent /></Suspense>;
 }

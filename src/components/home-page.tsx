@@ -6,19 +6,9 @@ import Link from "next/link";
 import { demoProducts } from "@/data/demo-products";
 import { siteConfig } from "@/config/site";
 import { CartNavLink } from "@/components/cart-nav-link";
+import { EditorialVideoScroll } from "@/components/editorial-video-scroll";
 
-const brands = [
-  "Hada Labo",
-  "Rohto",
-  "FANCL",
-  "Shiseido",
-  "Senka",
-  "Biore",
-  "Curel",
-  "DHC",
-  "Kracie",
-  "KOSÉ",
-];
+const brands = [...new Set(demoProducts.map((product) => product.brand))];
 
 const categories = [
   ["Face", "Продуманный уход для кожи каждый день.", "tone-pearl", "/images/kanso/face.png"],
@@ -26,7 +16,7 @@ const categories = [
   ["Body", "Небольшие жесты заботы, выбранные осознанно.", "tone-stone", "/images/kanso/body.png"],
   ["Sun Care", "Лёгкие текстуры для ежедневной защиты.", "tone-sky", "/images/kanso/sun-care.png"],
   ["Wellness", "Простые средства для более мягкого ритма.", "tone-pearl-deep", "/images/kanso/wellness.png"],
-  ["Sets", "Собранные ритуалы, готовые стать подарком.", "tone-blue-soft", "/images/kanso/sets.png"],
+  ["Sets", "Собранные ритуалы, готовые стать подарком.", "tone-blue-soft", "/images/kanso/sets-category.png"],
 ] as const;
 
 const categoryLabels: Record<string, string> = {
@@ -41,13 +31,28 @@ const categoryLabels: Record<string, string> = {
 };
 
 const journalStories = [
-  ["РИТУАЛЫ", "Как выстроить простой японский уход", "Спокойная отправная точка для продуманной ежедневной рутины.", "tone-pearl", "/images/kanso/editorial.png", "japanese-approach"],
-  ["ТЕКСТУРЫ", "Солнцезащита каждый день: как выбрать текстуру", "О том, как найти комфортное покрытие для ежедневного ухода.", "tone-sky", "/images/kanso/sun-care.png", "sun-care-textures"],
-  ["УТРО", "Пять тихих ритуалов красоты для насыщенного утра", "Небольшие жесты, которые делают привычное утро более осознанным.", "tone-stone", "/images/kanso/wellness.png", "quiet-morning-rituals"],
+  ["РИТУАЛЫ", "Как выстроить простой японский уход", "Спокойная отправная точка для продуманной ежедневной рутины.", "tone-pearl", "/images/kanso/philosophy-mirror.png", "japanese-approach"],
+  ["ТЕКСТУРЫ", "Солнцезащита каждый день: как выбрать текстуру", "О том, как найти комфортное покрытие для ежедневного ухода.", "tone-sky", "/images/kanso/philosophy-texture.png", "sun-care-textures"],
+  ["УТРО", "Пять тихих ритуалов красоты для насыщенного утра", "Небольшие жесты, которые делают привычное утро более осознанным.", "tone-stone", "/images/kanso/philosophy-morning.png", "quiet-morning-rituals"],
 ] as const;
 
 const newArrivals = demoProducts.filter((product) => product.id.startsWith("new-"));
-const bestSellers = demoProducts.filter((product) => product.id.startsWith("best-"));
+const bestSellerIds = [
+  "best-01",
+  "best-02",
+  "best-03",
+  "best-04",
+  "best-05",
+  "face-01",
+  "face-02",
+  "hair-01",
+  "hair-02",
+  "body-01",
+];
+const bestSellers = bestSellerIds.flatMap((id) => {
+  const product = demoProducts.find((item) => item.id === id);
+  return product ? [product] : [];
+});
 const featuredProducts = demoProducts.filter((product) => ["new-01", "best-02", "best-04"].includes(product.id));
 const WISHLIST_KEY = "kanso-wishlist";
 
@@ -87,7 +92,7 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
       <div className="quiz-side-track quiz-side-track-left" aria-hidden="true">
         <div className="quiz-side-pin-range">
           <div className="quiz-side-image-sticky">
-            <VisualImage className="quiz-side-image" label="" src="/images/kanso/editorial.png" tone="tone-pearl" sizes="(max-width: 767px) 1px, (max-width: 1024px) 24vw, 17vw" />
+            <VisualImage className="quiz-side-image" label="" src="/images/kanso/quiz-profile.png" tone="tone-pearl" sizes="(max-width: 767px) 1px, (max-width: 1024px) 24vw, 17vw" />
           </div>
         </div>
       </div>
@@ -111,7 +116,7 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
       <div className="quiz-side-track quiz-side-track-right" aria-hidden="true">
         <div className="quiz-side-pin-range">
           <div className="quiz-side-image-sticky">
-            <VisualImage className="quiz-side-image" label="" src="/images/kanso/wellness.png" tone="tone-stone" sizes="(max-width: 767px) 1px, (max-width: 1024px) 24vw, 17vw" />
+            <VisualImage className="quiz-side-image" label="" src="/images/kanso/quiz-ritual.png" tone="tone-stone" sizes="(max-width: 767px) 1px, (max-width: 1024px) 24vw, 17vw" />
           </div>
         </div>
       </div>
@@ -197,7 +202,7 @@ function PhilosophyCarousel() {
               </article>
             ))}
             <div className="philosophy-trailing-image" aria-hidden="true">
-              <VisualImage label="" src={journalStories[0][4]} tone={journalStories[0][3]} sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1024px) 45vw, 31vw" />
+              <VisualImage label="" src="/images/kanso/philosophy-ending.png" tone="tone-pearl" sizes="(max-width: 767px) calc(100vw - 2rem), (max-width: 1024px) 45vw, 31vw" />
             </div>
           </div>
 
@@ -244,7 +249,7 @@ function ProductCard({
           onClick={onWishlist}
         >
           <svg className="wishlist-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M20.8 8.7c0 5.1-8.8 10.3-8.8 10.3S3.2 13.8 3.2 8.7C3.2 6 5.2 4 7.8 4c1.7 0 3.1.9 4.2 2.2C13.1 4.9 14.5 4 16.2 4c2.6 0 4.6 2 4.6 4.7Z" />
+            <path d="M12 20.2S3.2 15.1 3.2 8.7C3.2 6 5.2 4 7.8 4c1.7 0 3.1.9 4.2 2.2C13.1 4.9 14.5 4 16.2 4c2.6 0 4.6 2 4.6 4.7C20.8 15.1 12 20.2 12 20.2Z" />
           </svg>
         </button>
         <button className="quick-add" type="button" onClick={onQuickAdd}>
@@ -504,6 +509,8 @@ export function HomePage() {
           </div>
         </section>
 
+        <EditorialVideoScroll />
+
         <section className="section-pad best-sellers-section" id="best-sellers" aria-labelledby="best-sellers-title">
           <div className="section-heading rail-heading"><div><h2 id="best-sellers-title">Хиты продаж</h2></div><div className="rail-controls"><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(-1)} aria-label="Предыдущие хиты продаж">←</button><button className="round-arrow control-button" type="button" onClick={() => scrollBestSellers(1)} aria-label="Следующие хиты продаж">→</button></div></div>
           <div className="product-rail" ref={bestRailRef} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp} onWheel={handleBestRailWheel}>
@@ -511,24 +518,19 @@ export function HomePage() {
           </div>
         </section>
 
-        <section className="section-pad editorial-section" aria-labelledby="editorial-title">
-          <div className="editorial-large-visual"><VisualImage label="Редакционная композиция о красоте" src="/images/kanso/editorial.png" tone="tone-stone" sizes="(max-width: 767px) 100vw, 48vw" /></div>
-          <div className="editorial-copy"><p className="micro-label">Редакция</p><h2 id="editorial-title">Японский подход к ежедневному уходу.</h2><p>История о небольших повторяемых жестах, из которых складывается личный ритуал.</p><Link className="button button-dark" href="/journal/japanese-approach"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Читать историю</span></Link></div>
+        <section className="quiz-section" aria-labelledby="quiz-title">
+          <QuizPinnedScene onStartQuiz={() => setNotice("Квиз пока находится в демонстрационном состоянии.")} />
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">
           <div className="collection-inner"><div className="collection-copy"><h2 id="collection-title"><span>Увлажняющий</span><span>уход</span></h2><p>Лёгкие слои, щедрые текстуры и более мягкий ритм ежедневной заботы о коже.</p><a className="button button-dark" href="#new-arrivals"><span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span><span className="button-label">Смотреть коллекцию</span></a></div><div className="collection-visual"><VisualImage label="Композиция увлажняющей коллекции" src="/images/kanso/sets.png" tone="tone-sky" sizes="(max-width: 767px) 100vw, (max-width: 1024px) 100vw, 30vw" /></div><div className="collection-products">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} wished={wishlist.has(product.id)} added={added.has(product.id)} onWishlist={() => toggleWishlist(product.id, product.name)} onQuickAdd={() => toggleAdded(product.id, product.name)} imageSizes="(max-width: 767px) 33vw, (max-width: 1024px) 100vw, 14vw" />)}</div></div>
         </section>
 
-        <section className="quiz-section" aria-labelledby="quiz-title">
-          <QuizPinnedScene onStartQuiz={() => setNotice("Квиз пока находится в демонстрационном состоянии.")} />
-        </section>
-
         <PhilosophyCarousel />
       </main>
 
       <footer className="site-footer" id="footer">
-        <div className="footer-top"><div className="footer-brand"><span className="brand-mark">{siteConfig.publicBrandName}</span><p>Продуманная подборка японского ухода, красоты и средств для благополучия.</p></div><div className="footer-column"><p className="micro-label">Покупки</p><Link href="/catalog">Каталог</Link><a href="#new-arrivals">Новинки</a><a href="#best-sellers">Хиты продаж</a><a href="#brands">Бренды</a></div><div className="footer-column"><p className="micro-label">Помощь</p><Link href="/delivery">Доставка</Link><Link href="/payment">Оплата</Link><Link href="/faq">Вопросы и ответы</Link><Link href="/contacts">Контакты</Link></div><div className="footer-column"><p className="micro-label">О KANSO</p><Link href="/about">О бренде</Link><Link href="/journal">Журнал</Link><Link href="/privacy">Конфиденциальность</Link><Link href="/terms">Условия</Link></div><div className="footer-column"><p className="micro-label">Мы в сети</p><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Instagram</button><button type="button" onClick={() => setNotice("Ссылки на социальные сети пока находятся в демонстрационном состоянии.")}>Pinterest</button></div></div>
+        <div className="footer-top"><div className="footer-brand"><span className="brand-mark">{siteConfig.publicBrandName}</span><p>Продуманная подборка японского ухода, красоты и средств для благополучия.</p></div><div className="footer-column"><p className="micro-label">Покупки</p><Link href="/catalog">Каталог</Link><a href="#new-arrivals">Новинки</a><a href="#best-sellers">Хиты продаж</a><a href="#brands">Бренды</a></div><div className="footer-column"><p className="micro-label">Помощь</p><Link href="/delivery">Доставка</Link><Link href="/payment">Оплата</Link><Link href="/faq">Вопросы и ответы</Link><Link href="/contacts">Контакты</Link></div><div className="footer-column"><p className="micro-label">О KANSO</p><Link href="/about">О бренде</Link><Link href="/journal">Журнал</Link><Link href="/privacy">Конфиденциальность</Link><Link href="/terms">Условия</Link></div></div>
         <div className="footer-bottom"><span>© {new Date().getFullYear()} {siteConfig.publicBrandName}</span></div>
       </footer>
 
