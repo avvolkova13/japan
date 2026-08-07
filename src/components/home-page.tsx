@@ -86,7 +86,7 @@ function VisualImage({
   );
 }
 
-function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
+function QuizPinnedScene() {
   return (
     <div className="quiz-pinned-scene">
       <div className="quiz-side-track quiz-side-track-left" aria-hidden="true">
@@ -104,10 +104,10 @@ function QuizPinnedScene({ onStartQuiz }: { onStartQuiz: () => void }) {
             <div className="quiz-copy">
               <h2 id="quiz-title">Найти свой ритуал</h2>
               <p>Ответьте на вопросы и подберите уход для кожи.</p>
-              <button className="button button-dark" type="button" onClick={onStartQuiz}>
+              <Link className="button button-dark" href="/ritual">
                 <span className="button-arrow" aria-hidden="true"><svg className="button-arrow-icon" viewBox="0 0 20 20" fill="none" focusable="false"><path d="M3.67242 12.9971V2.5H4.67242V11.9971H15.7824L15.6133 11.9455L12.4346 8.69261L13.1494 7.99339L17.209 12.1477L17.5508 12.4973L17.209 12.8469L13.1494 17.0012L12.4346 16.302L15.6162 13.0452L15.7753 12.9971H3.67242Z" fill="currentColor" /></svg></span>
                 <span className="button-label">Пройти квиз</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -444,8 +444,8 @@ export function HomePage() {
         {searchOpen && (
           <div className="search-panel" role="search">
             <div className="search-panel-inner">
-              <label htmlFor="demo-search">Поиск по KANSO</label>
-              <input id="demo-search" type="search" value={searchQuery} placeholder="Название или бренд" onChange={(event) => setSearchQuery(event.target.value)} />
+              <label htmlFor="kanso-search">Поиск по KANSO</label>
+              <input id="kanso-search" type="search" value={searchQuery} placeholder="Название или бренд" onChange={(event) => setSearchQuery(event.target.value)} />
               {searchQuery.trim() && <div className="search-results" aria-live="polite">
                 {demoProducts.filter((product) => `${product.brand} ${product.name}`.toLowerCase().includes(searchQuery.trim().toLowerCase())).slice(0, 5).map((product) => <Link key={product.id} href={`/product/${product.id}`} onClick={() => setSearchOpen(false)}><span>{product.name}</span><small>{product.brand}</small></Link>)}
                 {!demoProducts.some((product) => `${product.brand} ${product.name}`.toLowerCase().includes(searchQuery.trim().toLowerCase())) && <p>Ничего не найдено</p>}
@@ -515,7 +515,7 @@ export function HomePage() {
         </section>
 
         <section className="quiz-section" aria-labelledby="quiz-title">
-          <QuizPinnedScene onStartQuiz={() => setNotice("Квиз пока находится в демонстрационном состоянии.")} />
+          <QuizPinnedScene />
         </section>
 
         <section className="collection-section section-pad" aria-labelledby="collection-title">

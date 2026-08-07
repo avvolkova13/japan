@@ -1561,9 +1561,10 @@ html[data-motion-reduced="true"] .motion-reveal {
 .account-auth-caption { display: flex; justify-content: space-between; margin-top: 12px; color: var(--muted); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; }
 .account-auth-panel { max-width: 30rem; }
 .account-auth-panel h1 { max-width: 9ch; margin: 0 0 20px; font-size: clamp(2.8rem, 5vw, 5.4rem); line-height: 0.9; }
-.account-auth-panel h1.account-auth-title--login,
-.account-auth-panel h1.account-auth-title--register { max-width: none; white-space: nowrap; }
+.account-auth-panel h1.account-auth-title--login { max-width: none; white-space: nowrap; }
+.account-auth-panel-register h1 { max-width: none; white-space: nowrap; }
 .account-auth-description { max-width: 24rem; margin: 0 0 34px; color: var(--muted); font-size: 1rem; line-height: 1.5; }
+.account-auth-note { max-width: 24rem; margin: -16px 0 24px; color: var(--muted); font-size: 0.76rem; line-height: 1.45; }
 .account-form { gap: 20px; }
 .account-form input { min-height: 54px; border-color: var(--stone); background: color-mix(in srgb, var(--white) 64%, transparent); transition: border-color 180ms ease, background 180ms ease; }
 .account-form input:focus { border-color: var(--graphite); background: var(--white); }
@@ -1745,6 +1746,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   transform: translateY(-2px);
 }
 .checkout-submit:active { transform: translateY(0); }
+.checkout-disclaimer { margin: -8px 0 0; color: var(--muted); font-size: 0.74rem; line-height: 1.45; }
 .checkout-summary { position: sticky; top: 24px; gap: 0; border: 0; border-top: 1px solid var(--graphite); padding: 16px 0 0; background: transparent; }
 .checkout-summary-items { display: grid; }
 .checkout-summary-row { align-items: start; border-bottom: 1px solid var(--stone); padding: 16px 0; }
@@ -1772,8 +1774,8 @@ html[data-motion-reduced="true"] .motion-reveal {
   .account-auth-layout { gap: 42px; }
   .account-auth-visual { min-height: 320px; }
   .account-auth-panel { max-width: none; }
-  .account-auth-panel h1.account-auth-title--login,
-  .account-auth-panel h1.account-auth-title--register { white-space: normal; }
+  .account-auth-panel h1.account-auth-title--login { white-space: normal; }
+  .account-auth-panel-register h1 { white-space: normal; }
   .account-dashboard { grid-template-columns: 1fr; gap: 38px; }
   .account-nav { min-height: 0; display: grid; grid-template-columns: repeat(3, auto); gap: 16px; border-right: 0; border-bottom: 1px solid var(--stone); padding: 0 0 16px; }
   .account-nav button { margin-top: 0; }
