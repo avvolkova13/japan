@@ -1,3 +1,4 @@
+@import "@fontsource-variable/literata/wght.css";
 @import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
 
 :root {
@@ -22,7 +23,7 @@
   --control-min: 44px;
   --accent-blue: #2f5fa7;
   --accent-blue-soft: #d3e7ff;
-  --font-display: Literature;
+  --font-display: Literata;
   --font-body: Onest;
 }
 
