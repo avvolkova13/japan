@@ -151,7 +151,7 @@ export default function AccountPage() {
               <div className="account-auth-visual"><Image src="/images/kanso/editorial.png" alt="Тихая композиция KANSO" fill sizes="(max-width: 767px) 100vw, 42vw" priority /></div>
             </div>
             <div className="account-auth-panel">
-              <h1 id="account-title" className={mode === "login" ? "account-auth-title--login" : undefined}>{title}</h1>
+              <h1 id="account-title" className={mode === "login" ? "account-auth-title--login" : mode === "register" ? "account-auth-title--register" : undefined}>{title}</h1>
               <p className="account-auth-description">{description}</p>
               <form className="account-form" onSubmit={submit}>
                 {mode === "register" && <label>Имя<input name="name" type="text" autoComplete="name" required /></label>}
