@@ -1855,6 +1855,11 @@ html[data-motion-reduced="true"] .motion-reveal {
   font-weight: 500;
 }
 
+.category-card h3 {
+  font-size: clamp(1.15rem, 1.4vw, 1.45rem);
+  line-height: 1.05;
+}
+
 .category-card p,
 .journal-card-copy > p:not(.micro-label) {
   max-width: 16rem;
@@ -3701,7 +3706,7 @@ html[data-motion-reduced="true"] .motion-reveal {
   .category-card:nth-child(5) { transform: translateY(24px); }
   .category-card .visual-placeholder { aspect-ratio: 0.74; }
   .category-card-copy { display: block; padding-top: 11px; }
-  .category-card h3 { font-size: 0.92rem; }
+  .category-card h3 { font-size: 1.08rem; }
   .category-card p { display: none; }
   .category-card .round-arrow { width: 30px; height: 30px; margin-top: 10px; font-size: 0.75rem; }
   .split-heading { display: block; }

@@ -14,4 +14,5 @@ test("uses Literature for headings and Onest for descriptive text", () => {
   assert.match(styles, /h1,\s*h2,\s*h3,\s*h4,\s*h5,\s*h6\s*\{[\s\S]*padding-bottom:\s*0\.12em/);
   assert.match(styles, /\.brand-mark\s*\{[^}]*font-family:\s*var\(--font-display\)/);
   assert.match(styles, /\.brand-mark\s*\{[^}]*letter-spacing:\s*0\.08em/);
+  assert.match(styles, /\.category-card h3\s*\{[^}]*font-size:\s*clamp\(1\.15rem,\s*1\.4vw,\s*1\.45rem\)/);
 });
